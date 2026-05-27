@@ -10,6 +10,9 @@ declare module 'react' {
       'sl-option': any;
       'sl-icon-button': any;
       'aspentech-appbar': any;
+      'aspentech-sidenav': any;
+      'aspentech-sidenav-item': any;
+      'aspentech-shell-template': any;
       'eds-slider': any;
       // Add more elements as needed for your project
     }

@@ -46,7 +46,42 @@ All margins, paddings, gaps, and structural offsets must adhere strictly to this
 
 ---
 
-## 3. THIRD-PARTY LIBRARY INTEGRATION
+## 3. FORMS (UI BUILDING INSTRUCTIONS)
+
+When building any form UI, follow these mandatory implementation rules:
+
+* **Use EDS/Shoelace Form Components Only:** Prefer approved components such as `sl-input`, `sl-textarea`, `sl-select`, `sl-option`, `sl-checkbox`, `sl-radio`, `sl-radio-group`, `sl-switch`, and `sl-button`. Do not recreate form controls with native primitives unless no EDS equivalent exists.
+* **Label Every Control:** Every form control must have an accessible label via component `label` attributes or explicit `aria-label` when a visible label is intentionally omitted.
+* **Use Help Text and Validation Messaging:** Provide contextual guidance with component help text slots/props and clear error text for invalid states. Error messages must describe the issue and correction path.
+* **Required and Optional Semantics:** Mark required fields explicitly and keep optional fields clearly indicated.
+* **Grouping and Structure:** Group related controls using semantic sections and EDS layout primitives (`Container`, `Grid`, `Flex`, `Box`) rather than ad-hoc wrappers.
+* **Token-Only Spacing/Typography:** Form spacing, field grouping gaps, and typography must use approved design tokens only.
+* **Action Hierarchy:** Use a clear primary action (`sl-button` primary variant) and secondary/cancel action ordering consistently.
+* **State Coverage:** Implement and verify default, focus, hover, disabled, read-only, error, and success states where applicable.
+* **Keyboard and Screen Reader Support:** Ensure logical tab order, visible focus indicators, and correct announcements for validation and dynamic form updates.
+
+### 3.1 Form Layout Baseline
+
+Use the following baseline pattern unless product requirements specify otherwise:
+
+* **Single-column default:** Stack fields in one column for narrow containers.
+* **Responsive expansion:** Move to 2-column grouping only when container width allows and readability remains strong.
+* **Inputs max-width:** The following inputs (input, combobox, dropdown) will have a max-width:30rem.
+* **Spacing scale:**
+  * Form element to Form element (for example: radio button groups, inputs, combox box, checkbox groups) gap: `var(--sl-spacing-medium)`
+  * Section-to-Section (form sections seperated by Headings) gap: `var(--sl-spacing-x-large)`
+
+### 3.2 Form Accessibility Checklist (Required)
+
+Before finalizing any form UI, verify all of the following:
+
+* Labels are programmatically associated with controls.
+* Validation errors are announced and visible without relying only on color.
+* Required fields are indicated both visually and semantically.
+* Submit actions are keyboard reachable and clearly named.
+* Form instructions and error summaries are readable by assistive technologies.
+
+## 4. THIRD-PARTY LIBRARY INTEGRATION
 
 ### 3.1 Apache ECharts (Data Visualization)
 When generating charts, you must explicitly bind the chart configuration options to the EDS theme context[cite: 1]. Never allow ECharts to fallback to its default color palettes or fonts[cite: 1].
@@ -71,7 +106,7 @@ const edsChartOptions = {
 
 ---
 
-## 4. RESPONSIVE & ACCESSIBILITY ENFORCEMENT
+## 5. RESPONSIVE & ACCESSIBILITY ENFORCEMENT
 
 * **Responsive UI Required:** All UI must be responsive across supported viewport sizes and device types. Components and layouts must adapt using EDS layout primitives and tokenized spacing/typography, not ad-hoc CSS.
 * **WCAG Level 2 Required:** All generated UI must satisfy WCAG 2.x Level AA accessibility expectations, including keyboard navigation, visible focus states, semantic structure, readable contrast, and accessible names/labels.
@@ -80,7 +115,7 @@ const edsChartOptions = {
 
 ---
 
-## 5. REQUIRED EDS PACKAGE STACK
+## 6. REQUIRED EDS PACKAGE STACK
 
 ### 5.1 EDS Packages
 * `@aspentech/pf-ui-core`

@@ -10,9 +10,11 @@ import { setBasePath } from "@shoelace-style/shoelace";
 import { registerIconLibrary } from "@shoelace-style/shoelace/dist/utilities/icon-library.js";
 
 import { defineCustomElements } from "@aspentech/pf-ui-core/loader";
+import { defineCustomElements as defineCompoundElements } from "@aspentech/pf-ui-compound/loader";
 
 // Initialize Web Components
 defineCustomElements();
+defineCompoundElements();
 
 // Icon Registry Setup
 const iconRegExp = /^(.*?)(_(round|sharp|filled))?$/;
