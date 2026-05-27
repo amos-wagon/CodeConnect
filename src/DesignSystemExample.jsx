@@ -87,7 +87,7 @@ const DesignSystemExample = () => {
           <sl-input label="Start date" type="date" />
           <sl-input label="Search" type="search" placeholder="Search agents" />
           <sl-select label="Agent status" placeholder="Select a status">
-            <sl-icon slot="expand-icon" library="system" name="chevron-down" />
+            <sl-icon library="material" name="expand_more" slot="expand-icon"></sl-icon>
             <sl-option value="active">Active</sl-option>
             <sl-option value="paused">Paused</sl-option>
             <sl-option value="archived">Archived</sl-option>
