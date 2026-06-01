@@ -66,7 +66,7 @@ Use the following baseline pattern unless product requirements specify otherwise
 
 * **Single-column default:** Stack fields in one column for narrow containers.
 * **Responsive expansion:** Move to 2-column grouping only when container width allows and readability remains strong.
-* **Inputs max-width:** The following inputs (input, combobox, dropdown) will have a max-width:30rem.
+* **Inputs max-width:** The following inputs (input, combobox, dropdown, date, datetime) will have a max-width:30rem.
 * **Spacing scale:**
   * Form element to Form element (for example: radio button groups, inputs, combox box, checkbox groups) gap: `var(--sl-spacing-medium)`
   * Section-to-Section (form sections seperated by Headings) gap: `var(--sl-spacing-x-large)`
@@ -83,7 +83,7 @@ Before finalizing any form UI, verify all of the following:
 
 ## 4. THIRD-PARTY LIBRARY INTEGRATION
 
-### 3.1 Apache ECharts (Data Visualization)
+### 4.1 Apache ECharts (Data Visualization)
 When generating charts, you must explicitly bind the chart configuration options to the EDS theme context[cite: 1]. Never allow ECharts to fallback to its default color palettes or fonts[cite: 1].
 
 * **Theme Color Order:** `['var(--eds-interactive-default)', 'var(--eds-interactive-hover)', 'var(--eds-text-link)']`
@@ -103,6 +103,15 @@ const edsChartOptions = {
   grid: { containLabel: true, top: 16, bottom: 16, left: 12, right: 12 }
 };
 ```
+
+### 4.2 AG Grid Community (Data Grid)
+For all data grid implementations, you must use **AG Grid Community** as the default grid library.
+
+* **Library Requirement:** Use `ag-grid-community` and approved framework bindings only. Do not replace with native table implementations for interactive grid use cases.
+* **EDS Styling Requirement:** Grid theming must use EDS design system variables only. Do not hardcode hex, rgb, pixel color values, or non-token typography/spacing values.
+* **Tokenized Theme Mapping:** Map all grid visual properties (text, headers, row backgrounds, borders, focus outlines, selection, hover, density spacing) to EDS/Shoelace tokens such as `var(--eds-text-default)`, `var(--eds-text-secondary)`, `var(--eds-background-default)`, `var(--eds-background-weak)`, `var(--eds-border-default)`, and `var(--sl-font-sans)`.
+* **No Default AG Grid Look:** Do not ship AG Grid with default Alpine/Balham appearance without token overrides aligned to EDS.
+* **Accessibility and Responsiveness:** Preserve keyboard navigation, focus visibility, and responsive behavior using tokenized values and EDS layout constraints.
 
 ---
 

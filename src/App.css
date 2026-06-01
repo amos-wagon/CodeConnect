@@ -10,6 +10,10 @@
   height: 100%;
 }
 
+aspentech-sidenav {
+  --sl-panel-background-color: var(--eds-background-weak);
+}
+
 .sidenav-shell {
   --height: 100%;
 }
@@ -93,4 +97,55 @@
   display: flex;
   justify-content: flex-end;
   gap: var(--sl-spacing-small);
+}
+
+.example3-layout {
+  display: grid;
+  gap: var(--sl-spacing-x-large);
+  padding: var(--sl-spacing-small) var(--sl-spacing-x-large);
+}
+
+.example3-section {
+  display: grid;
+  gap: var(--sl-spacing-medium);
+}
+
+.example3-section-label {
+  margin: 0;
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
+}
+
+.example3-card-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--sl-spacing-large) var(--sl-spacing-x-large);
+}
+
+.example3-card-grid aspentech-selectable-card {
+  min-height: 11.25rem;
+}
+
+.example3-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sl-spacing-2x-small);
+  margin-bottom: var(--sl-spacing-2x-small);
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
+}
+
+.example3-card-meta-icon {
+  color: var(--eds-text-secondary);
+  font-size: var(--sl-font-size-medium);
+}
+
+.example3-card-description {
+  margin: 0;
+  color: var(--eds-text-default);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
 }
