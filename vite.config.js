@@ -48,4 +48,31 @@ function copyAssetsPlugin() {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), copyAssetsPlugin()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+
+          if (id.includes('/react/') || id.includes('/react-dom/')) {
+            return 'react-vendor'
+          }
+
+          if (id.includes('/@aspentech/pf-ui-core/') || id.includes('/@aspentech/pf-ui-compound/')) {
+            return 'aspentech-vendor'
+          }
+
+          if (id.includes('/@shoelace-style/shoelace/')) {
+            return 'shoelace-vendor'
+          }
+
+          if (id.includes('/ag-grid-community/') || id.includes('/ag-grid-react/')) {
+            return 'ag-grid-vendor'
+          }
+
+          return 'vendor'
+        },
+      },
+    },
+  },
 })

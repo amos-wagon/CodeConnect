@@ -2,6 +2,10 @@
   text-align: left;
   width: 100%;
   height: 100%;
+  --aspentech-text-default: var(--eds-text-default);
+  --aspentech-text-secondary: var(--eds-text-secondary);
+  --aspentech-interactive-weak: var(--eds-interactive-weak);
+  --aspentech-interactive-default: var(--eds-interactive-default);
 }
 
 .app-shell-template {
@@ -12,6 +16,16 @@
 
 aspentech-sidenav {
   --sl-panel-background-color: var(--eds-background-weak);
+}
+
+aspentech-sidenav,
+aspentech-appbar,
+aspentech-page-header,
+aspentech-page-info {
+  --aspentech-text-default: var(--eds-text-default);
+  --aspentech-text-secondary: var(--eds-text-secondary);
+  --aspentech-interactive-weak: var(--eds-interactive-weak);
+  --aspentech-interactive-default: var(--eds-interactive-default);
 }
 
 .sidenav-shell {

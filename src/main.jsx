@@ -9,12 +9,15 @@ import '@aspentech/pf-ui-core/main.css';
 import { setBasePath } from "@shoelace-style/shoelace";
 import { registerIconLibrary } from "@shoelace-style/shoelace/dist/utilities/icon-library.js";
 
-import { defineCustomElements } from "@aspentech/pf-ui-core/loader";
-import { defineCustomElements as defineCompoundElements } from "@aspentech/pf-ui-compound/loader";
-
-// Initialize Web Components
-defineCustomElements();
-defineCompoundElements();
+// Register only the Aspentech components used by this app to keep bundles smaller.
+import "@aspentech/pf-ui-core/components/eds-slider";
+import "@aspentech/pf-ui-compound/components/aspentech-appbar";
+import "@aspentech/pf-ui-compound/components/aspentech-page-header";
+import "@aspentech/pf-ui-compound/components/aspentech-page-info";
+import "@aspentech/pf-ui-compound/components/aspentech-selectable-card";
+import "@aspentech/pf-ui-compound/components/aspentech-shell-template";
+import "@aspentech/pf-ui-compound/components/aspentech-sidenav";
+import "@aspentech/pf-ui-compound/components/aspentech-sidenav-item";
 
 // Icon Registry Setup
 const iconRegExp = /^(.*?)(_(round|sharp|filled))?$/;
