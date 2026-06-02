@@ -1,0 +1,165 @@
+.App {
+  text-align: left;
+  width: 100%;
+  height: 100%;
+  --aspentech-text-default: var(--eds-text-default);
+  --aspentech-text-secondary: var(--eds-text-secondary);
+  --aspentech-interactive-weak: var(--eds-interactive-weak);
+  --aspentech-interactive-default: var(--eds-interactive-default);
+}
+
+.app-shell-template {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+aspentech-sidenav {
+  --sl-panel-background-color: var(--eds-background-weak);
+}
+
+aspentech-sidenav,
+aspentech-appbar,
+aspentech-page-header,
+aspentech-page-info {
+  --aspentech-text-default: var(--eds-text-default);
+  --aspentech-text-secondary: var(--eds-text-secondary);
+  --aspentech-interactive-weak: var(--eds-interactive-weak);
+  --aspentech-interactive-default: var(--eds-interactive-default);
+}
+
+.sidenav-shell {
+  --height: 100%;
+}
+
+.sidenav-links {
+  display: grid;
+  gap: var(--sl-spacing-x-small);
+  padding: 0 var(--sl-spacing-small);
+}
+
+.content-area {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 800px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: var(--sl-spacing-medium-plus);
+}
+
+.content-area > * {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.example2-stage {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--sl-spacing-x-large) var(--sl-spacing-medium-plus);
+  background: var(--eds-background-weak);
+}
+
+.example2-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sl-spacing-medium);
+}
+
+.example2-title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sl-spacing-small);
+}
+
+.example2-title-icon {
+  font-size: var(--sl-font-size-x-large);
+  color: var(--eds-interactive-default);
+}
+
+.example2-title {
+  margin: 0;
+  color: var(--eds-text-default);
+  font-size: var(--sl-font-size-2x-large);
+  font-family: var(--sl-font-sans);
+}
+
+.example2-subtitle {
+  margin: var(--sl-spacing-2x-small) 0 0;
+  color: var(--eds-text-secondary);
+  font-size: var(--sl-font-size-medium);
+  font-family: var(--sl-font-sans);
+}
+
+.example2-body {
+  display: grid;
+  gap: var(--sl-spacing-medium-plus);
+}
+
+.example2-field-grid {
+  display: grid;
+  gap: var(--sl-spacing-medium);
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.example2-switches {
+  display: grid;
+  gap: var(--sl-spacing-medium);
+}
+
+.example2-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sl-spacing-small);
+}
+
+.example3-layout {
+  display: grid;
+  gap: var(--sl-spacing-x-large);
+  padding: var(--sl-spacing-small) var(--sl-spacing-x-large);
+}
+
+.example3-section {
+  display: grid;
+  gap: var(--sl-spacing-medium);
+}
+
+.example3-section-label {
+  margin: 0;
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
+}
+
+.example3-card-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--sl-spacing-large) var(--sl-spacing-x-large);
+}
+
+.example3-card-grid aspentech-selectable-card {
+  min-height: 11.25rem;
+}
+
+.example3-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sl-spacing-2x-small);
+  margin-bottom: var(--sl-spacing-2x-small);
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
+}
+
+.example3-card-meta-icon {
+  color: var(--eds-text-secondary);
+  font-size: var(--sl-font-size-medium);
+}
+
+.example3-card-description {
+  margin: 0;
+  color: var(--eds-text-default);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
+}
