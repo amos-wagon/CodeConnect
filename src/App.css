@@ -47,70 +47,109 @@ aspentech-page-info {
   padding: var(--sl-spacing-medium-plus);
 }
 
+.content-area.example2 {
+  max-width: 1140px;
+}
+
 .content-area > * {
   display: block;
   width: 100%;
   max-width: 100%;
 }
 
-.example2-stage {
-  display: flex;
-  align-items: flex-start;
-  padding: var(--sl-spacing-x-large) var(--sl-spacing-medium-plus);
-  background: var(--eds-background-weak);
-}
-
-.example2-header {
-  display: flex;
-  align-items: flex-start;
+.example1-form {
+  display: grid;
   gap: var(--sl-spacing-medium);
 }
 
-.example2-title-wrap {
-  display: flex;
-  align-items: flex-start;
+.example1-form sl-input {
+  max-width: 30rem;
+}
+
+.example1-form sl-button {
+  justify-self: start;
+}
+
+.example1-design-layout {
+  width: 100%;
+}
+
+.example1-sections {
+  display: grid;
+  gap: var(--sl-spacing-x-large);
+  padding-top: var(--sl-spacing-small);
+}
+
+.example1-section {
+  display: grid;
   gap: var(--sl-spacing-small);
 }
 
-.example2-title-icon {
-  font-size: var(--sl-font-size-x-large);
-  color: var(--eds-interactive-default);
-}
-
-.example2-title {
+.example1-section-title {
   margin: 0;
   color: var(--eds-text-default);
-  font-size: var(--sl-font-size-2x-large);
+  font-size: var(--sl-font-size-large);
+  font-family: var(--sl-font-sans);
+  font-weight: var(--sl-font-weight-semibold);
+}
+
+.example1-fields {
+  display: grid;
+  gap: var(--sl-spacing-medium);
+}
+
+.example1-fields sl-input,
+.example1-fields sl-select {
+  max-width: 30rem;
+}
+
+.example1-title {
+  margin: 0;
+  color: var(--eds-text-default);
+  font-size: var(--sl-font-size-large);
   font-family: var(--sl-font-sans);
 }
 
-.example2-subtitle {
-  margin: var(--sl-spacing-2x-small) 0 0;
+.example1-feedback {
+  margin: 0;
   color: var(--eds-text-secondary);
-  font-size: var(--sl-font-size-medium);
   font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
 }
 
-.example2-body {
+.example2-form {
   display: grid;
-  gap: var(--sl-spacing-medium-plus);
-}
-
-.example2-field-grid {
-  display: grid;
-  gap: var(--sl-spacing-medium);
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-}
-
-.example2-switches {
-  display: grid;
-  gap: var(--sl-spacing-medium);
-}
-
-.example2-footer {
-  display: flex;
-  justify-content: flex-end;
   gap: var(--sl-spacing-small);
+}
+
+.example2-panel::part(base) {
+  padding-inline: 0;
+}
+
+.example2-section {
+  display: grid;
+  gap: var(--sl-spacing-medium);
+  margin-top: var(--sl-spacing-x-large);
+}
+
+.example2-section-heading {
+  margin: 0;
+  color: var(--eds-text-default);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-large);
+  font-weight: var(--sl-font-weight-semibold);
+}
+
+.example2-form sl-input,
+.example2-form sl-select {
+  max-width: 30rem;
+}
+
+.example2-placeholder {
+  margin: var(--sl-spacing-medium) 0;
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
 }
 
 .example3-layout {

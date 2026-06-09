@@ -67,12 +67,9 @@ Use the following baseline pattern unless product requirements specify otherwise
 * **Single-column default:** Stack fields in one column for narrow containers.
 * **Responsive expansion:** Move to 2-column grouping only when container width allows and readability remains strong.
 * **Inputs max-width:** The following inputs (input, combobox, dropdown, date, datetime) will have a max-width:30rem.
-* **Spacing scale:**
-  * Form element to Form element (for example: radio button groups, inputs, combox box, checkbox groups) gap: `var(--sl-spacing-medium)`
-  * Section-to-Section (form sections seperated by Headings) gap: `var(--sl-spacing-x-large)`
 * **Two-level spacing is mandatory:**
-  * Section-to-section spacing MUST be `var(--sl-spacing-x-large)`.
-  * Control-to-control spacing inside each section MUST be `var(--sl-spacing-medium)`.
+  * Before heading (h1-5) spacing MUST be `var(--sl-spacing-x-large)`.
+  * Control-to-control (form elements like: input, combobox, dropdown, date, datetime) spacing MUST be `var(--sl-spacing-medium)`.
 * **Do not use a single parent container gap** to control both section spacing and field spacing.
 * **Use separate layout containers:**
   * One container for section stacking (`gap: var(--sl-spacing-x-large)`).

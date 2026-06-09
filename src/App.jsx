@@ -2,17 +2,8 @@ import './App.css'
 import { Suspense, lazy, useState } from 'react'
 import '@shoelace-style/shoelace/dist/components/card/card.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
-import '@shoelace-style/shoelace/dist/components/input/input.js'
-import '@shoelace-style/shoelace/dist/components/select/select.js'
-import '@shoelace-style/shoelace/dist/components/option/option.js'
-import '@shoelace-style/shoelace/dist/components/textarea/textarea.js'
-import '@shoelace-style/shoelace/dist/components/switch/switch.js'
 import '@shoelace-style/shoelace/dist/components/button/button.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
-import '@shoelace-style/shoelace/dist/components/divider/divider.js'
-import '@shoelace-style/shoelace/dist/components/radio/radio.js'
-import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js'
-import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js'
 
 const DesignSystemExample = lazy(() => import('./DesignSystemExample.jsx'))
 
@@ -30,29 +21,18 @@ function App() {
   const activePageTitle = {
     example1: 'Example 1',
     example2: 'Example 2',
+    example3: 'Example 3',
     example4: 'Example 4',
     example5: 'Example 5',
   }[activePage] ?? 'Example 1'
 
   const renderPageContent = () => {
-    if (activePage === 'example1') {
+    if (activePage === 'example5') {
       return (
         <Suspense fallback={<sl-card><div style={{ padding: 'var(--sl-spacing-medium-plus)' }}>Loading example...</div></sl-card>}>
           <DesignSystemExample />
         </Suspense>
       )
-    }
-
-    if (activePage === 'example2') {
-      return <div style={{ padding: 'var(--sl-spacing-medium-plus)' }}></div>
-    }
-
-    if (activePage === 'example4') {
-      return <div style={{ padding: 'var(--sl-spacing-medium-plus)' }}></div>
-    }
-
-    if (activePage === 'example5') {
-      return <div style={{ padding: 'var(--sl-spacing-medium-plus)' }}></div>
     }
 
     return (
@@ -91,6 +71,17 @@ function App() {
           ></aspentech-sidenav-item>
           <aspentech-sidenav-item
             type="node"
+            label="Example 3"
+            icon="auto_awesome"
+            href="#"
+            active={activePage === 'example3'}
+            onClick={(event) => {
+              event.preventDefault()
+              setActivePage('example3')
+            }}
+          ></aspentech-sidenav-item>
+          <aspentech-sidenav-item
+            type="node"
             label="Example 4"
             icon="grid_view"
             href="#"
@@ -122,7 +113,7 @@ function App() {
             onClick={toggleTheme}
           ></sl-icon-button>
         </aspentech-appbar>
-        <main className={`content-area ${themeClassName}`}>{renderPageContent()}</main>
+        <main className={`content-area ${themeClassName} ${activePage}`}>{renderPageContent()}</main>
       </aspentech-shell-template>
     </div>
   )
