@@ -1,14 +1,21 @@
 import './App.css'
-import { Suspense, lazy, useState } from 'react'
-import '@shoelace-style/shoelace/dist/components/card/card.js'
-import '@shoelace-style/shoelace/dist/components/icon/icon.js'
-import '@shoelace-style/shoelace/dist/components/button/button.js'
+import { useEffect, useState } from 'react'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
+import ExamplesContent from './ExamplesContent.jsx'
 
-const DesignSystemExample = lazy(() => import('./DesignSystemExample.jsx'))
+const VALID_PAGES = new Set(['example1', 'example2', 'example3', 'example4', 'example5'])
+
+const getPageFromHash = () => {
+  if (typeof window === 'undefined') {
+    return 'example1'
+  }
+
+  const pageFromHash = window.location.hash.replace('#', '')
+  return VALID_PAGES.has(pageFromHash) ? pageFromHash : 'example1'
+}
 
 function App() {
-  const [activePage, setActivePage] = useState('example1')
+  const [activePage, setActivePage] = useState(getPageFromHash)
   const [theme, setTheme] = useState('light')
 
   const isDarkTheme = theme === 'dark'
@@ -18,6 +25,34 @@ function App() {
     setTheme(currentTheme => (currentTheme === 'dark' ? 'light' : 'dark'))
   }
 
+  const navigateToPage = (page) => {
+    if (!VALID_PAGES.has(page)) {
+      return
+    }
+
+    if (window.location.hash !== `#${page}`) {
+      window.location.hash = page
+    }
+
+    setActivePage(page)
+  }
+
+  useEffect(() => {
+    const syncPageWithHash = () => {
+      setActivePage(getPageFromHash())
+    }
+
+    window.addEventListener('hashchange', syncPageWithHash)
+
+    if (!window.location.hash) {
+      window.history.replaceState(null, '', `#${activePage}`)
+    }
+
+    return () => {
+      window.removeEventListener('hashchange', syncPageWithHash)
+    }
+  }, [])
+
   const activePageTitle = {
     example1: 'Example 1',
     example2: 'Example 2',
@@ -25,20 +60,6 @@ function App() {
     example4: 'Example 4',
     example5: 'Example 5',
   }[activePage] ?? 'Example 1'
-
-  const renderPageContent = () => {
-    if (activePage === 'example5') {
-      return (
-        <Suspense fallback={<sl-card><div style={{ padding: 'var(--sl-spacing-medium-plus)' }}>Loading example...</div></sl-card>}>
-          <DesignSystemExample />
-        </Suspense>
-      )
-    }
-
-    return (
-      <div style={{ padding: 'var(--sl-spacing-medium-plus)' }}></div>
-    )
-  }
 
   return (
     <div
@@ -51,55 +72,55 @@ function App() {
             type="node"
             label="Example 1"
             icon="dashboard"
-            href="#"
+            href="#example1"
             active={activePage === 'example1'}
             onClick={(event) => {
               event.preventDefault()
-              setActivePage('example1')
+              navigateToPage('example1')
             }}
           ></aspentech-sidenav-item>
           <aspentech-sidenav-item
             type="node"
             label="Example 2"
             icon="tune"
-            href="#"
+            href="#example2"
             active={activePage === 'example2'}
             onClick={(event) => {
               event.preventDefault()
-              setActivePage('example2')
+              navigateToPage('example2')
             }}
           ></aspentech-sidenav-item>
           <aspentech-sidenav-item
             type="node"
             label="Example 3"
             icon="auto_awesome"
-            href="#"
+            href="#example3"
             active={activePage === 'example3'}
             onClick={(event) => {
               event.preventDefault()
-              setActivePage('example3')
+              navigateToPage('example3')
             }}
           ></aspentech-sidenav-item>
           <aspentech-sidenav-item
             type="node"
             label="Example 4"
             icon="grid_view"
-            href="#"
+            href="#example4"
             active={activePage === 'example4'}
             onClick={(event) => {
               event.preventDefault()
-              setActivePage('example4')
+              navigateToPage('example4')
             }}
           ></aspentech-sidenav-item>
           <aspentech-sidenav-item
             type="node"
             label="Example 5"
             icon="insights"
-            href="#"
+            href="#example5"
             active={activePage === 'example5'}
             onClick={(event) => {
               event.preventDefault()
-              setActivePage('example5')
+              navigateToPage('example5')
             }}
           ></aspentech-sidenav-item>
         </aspentech-sidenav>
@@ -113,7 +134,9 @@ function App() {
             onClick={toggleTheme}
           ></sl-icon-button>
         </aspentech-appbar>
-        <main className={`content-area ${themeClassName} ${activePage}`}>{renderPageContent()}</main>
+        <main className={`content-area ${themeClassName} ${activePage}`}>
+          <ExamplesContent activePage={activePage} />
+        </main>
       </aspentech-shell-template>
     </div>
   )

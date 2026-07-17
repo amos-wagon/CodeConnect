@@ -24,7 +24,9 @@ Use this skill whenever the task involves building, modifying, reviewing, or res
 - Use AG Grid Community for interactive data grids
 - Use ECharts only with EDS theme binding
 - Meet WCAG AA expectations
+- Follow content guidelines for all UI language and communication displayed in UI components
 
 ## Required supporting files
 - Read design.md
 - Read accessibilty.md
+- Read content.md
