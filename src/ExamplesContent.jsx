@@ -3,16 +3,63 @@ import * as echarts from 'echarts'
 import '@shoelace-style/shoelace/dist/components/card/card.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
 import '@shoelace-style/shoelace/dist/components/button/button.js'
+import '@shoelace-style/shoelace/dist/components/badge/badge.js'
 import '@shoelace-style/shoelace/dist/components/input/input.js'
 import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js'
 import '@shoelace-style/shoelace/dist/components/radio/radio.js'
 import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js'
+import '@shoelace-style/shoelace/dist/components/select/select.js'
+import '@shoelace-style/shoelace/dist/components/option/option.js'
 import '@shoelace-style/shoelace/dist/components/switch/switch.js'
-import '@shoelace-style/shoelace/dist/components/tab/tab.js'
-import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
-import '@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js'
+import '@shoelace-style/shoelace/dist/components/details/details.js'
 
 const DesignSystemExample = lazy(() => import('./DesignSystemExample.jsx'))
+
+const aspentechIntegrations = [
+  {
+    name: 'HYSYS 1',
+    description: 'Aspen HYSYS is a process simulation tool used to model and optimize oil, gas, and refining plants.'
+  },
+  {
+    name: 'ACCE',
+    description: 'Estimates project costs, equipment, and economics.'
+  },
+  {
+    name: 'ACCE',
+    description: 'Estimates project costs, equipment, and economics.'
+  },
+  {
+    name: 'Fidelis',
+    description: 'Predicts asset availability and quantifies financial risks using reliability modeling.'
+  },
+  {
+    name: 'EDR',
+    description: 'Provides rigorous thermal and mechanical design for heat exchangers.'
+  },
+  {
+    name: 'Aspen Properties',
+    description: 'Predicts physical and thermodynamic properties of chemical mixtures and fluids.'
+  },
+  {
+    name: 'OptiPlant',
+    description: 'Optimizes 3D plant layouts and piping routes for early-stage engineering.'
+  },
+  {
+    name: 'ABE',
+    description: 'Manages data flow between conceptual design and detailed engineering.'
+  }
+]
+
+const partnerIntegrations = [
+  {
+    name: 'IBM Maximo',
+    description: 'Enterprise asset management (EAM) software with IBM Maximo.'
+  },
+  {
+    name: 'Scheduler',
+    description: 'Manages project timelines, resource allocation, and task sequencing.'
+  }
+]
 
 function ExampleOneContent() {
   return (
@@ -366,6 +413,34 @@ function ExampleTwoContent() {
   )
 }
 
+function ExampleThreeContent() {
+  return <section className="example3-page" aria-label="Example 3"></section>
+}
+
+function ExampleFourContent() {
+  return (
+    <form className="example4-form" aria-label="Profile form">
+      <div className="example4-fields">
+        <sl-input
+          name="firstName"
+          label="First name"
+          help-text="Required"
+          required
+        ></sl-input>
+        <sl-input
+          name="dateOfBirth"
+          type="date"
+          label="Date of birth"
+          help-text="Required"
+          required
+        ></sl-input>
+      </div>
+
+      <sl-button variant="primary" type="submit">Submit</sl-button>
+    </form>
+  )
+}
+
 function ExamplesContent({ activePage }) {
   if (activePage === 'example1') {
     return <ExampleOneContent />
@@ -373,6 +448,14 @@ function ExamplesContent({ activePage }) {
 
   if (activePage === 'example2') {
     return <ExampleTwoContent />
+  }
+
+  if (activePage === 'example3') {
+    return <ExampleThreeContent />
+  }
+
+  if (activePage === 'example4') {
+    return <ExampleFourContent />
   }
 
   if (activePage === 'example5') {

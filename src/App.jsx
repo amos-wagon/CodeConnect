@@ -1,5 +1,5 @@
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import ExamplesContent from './ExamplesContent.jsx'
 
@@ -17,6 +17,8 @@ const getPageFromHash = () => {
 function App() {
   const [activePage, setActivePage] = useState(getPageFromHash)
   const [theme, setTheme] = useState('light')
+  const mainContentRef = useRef(null)
+  const hasInitializedFocus = useRef(false)
 
   const isDarkTheme = theme === 'dark'
   const themeClassName = isDarkTheme ? 'aspentech-dark sl-theme-dark' : 'sl-theme-light'
@@ -53,6 +55,15 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!hasInitializedFocus.current) {
+      hasInitializedFocus.current = true
+      return
+    }
+
+    mainContentRef.current?.focus()
+  }, [activePage])
+
   const activePageTitle = {
     example1: 'Example 1',
     example2: 'Example 2',
@@ -66,8 +77,9 @@ function App() {
       className={`App aspentech-base ${themeClassName}`}
       theme={theme}
     >
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <aspentech-shell-template className={`app-shell-template ${themeClassName}`} theme={theme}>
-        <aspentech-sidenav slot="sidenav" header-text="Examples" mode="expanded" logo="aspentech" className={themeClassName} theme={theme}>
+        <aspentech-sidenav slot="sidenav" role="navigation" aria-label="EDS Skill" header-text="EDS Skill" mode="expanded" logo="aspentech" className={themeClassName} theme={theme}>
           <aspentech-sidenav-item
             type="node"
             label="Example 1"
@@ -124,7 +136,7 @@ function App() {
             }}
           ></aspentech-sidenav-item>
         </aspentech-sidenav>
-        <aspentech-appbar slot="appbar" className={themeClassName} theme={theme}>
+        <aspentech-appbar slot="appbar" role="banner" className={themeClassName} theme={theme}>
           <aspentech-page-info slot="page-info" heading={activePageTitle} className={themeClassName} theme={theme}> </aspentech-page-info>
           <sl-icon-button
             slot="right"
@@ -134,7 +146,13 @@ function App() {
             onClick={toggleTheme}
           ></sl-icon-button>
         </aspentech-appbar>
-        <main className={`content-area ${themeClassName} ${activePage}`}>
+        <main
+          id="main-content"
+          ref={mainContentRef}
+          tabIndex={-1}
+          className={`content-area ${themeClassName} ${activePage}`}
+          aria-label="Example content"
+        >
           <ExamplesContent activePage={activePage} />
         </main>
       </aspentech-shell-template>
