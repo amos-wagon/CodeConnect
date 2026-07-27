@@ -12,54 +12,10 @@ import '@shoelace-style/shoelace/dist/components/select/select.js'
 import '@shoelace-style/shoelace/dist/components/option/option.js'
 import '@shoelace-style/shoelace/dist/components/switch/switch.js'
 import '@shoelace-style/shoelace/dist/components/details/details.js'
+import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
+import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
 
 const DesignSystemExample = lazy(() => import('./DesignSystemExample.jsx'))
-
-const aspentechIntegrations = [
-  {
-    name: 'HYSYS 1',
-    description: 'Aspen HYSYS is a process simulation tool used to model and optimize oil, gas, and refining plants.'
-  },
-  {
-    name: 'ACCE',
-    description: 'Estimates project costs, equipment, and economics.'
-  },
-  {
-    name: 'ACCE',
-    description: 'Estimates project costs, equipment, and economics.'
-  },
-  {
-    name: 'Fidelis',
-    description: 'Predicts asset availability and quantifies financial risks using reliability modeling.'
-  },
-  {
-    name: 'EDR',
-    description: 'Provides rigorous thermal and mechanical design for heat exchangers.'
-  },
-  {
-    name: 'Aspen Properties',
-    description: 'Predicts physical and thermodynamic properties of chemical mixtures and fluids.'
-  },
-  {
-    name: 'OptiPlant',
-    description: 'Optimizes 3D plant layouts and piping routes for early-stage engineering.'
-  },
-  {
-    name: 'ABE',
-    description: 'Manages data flow between conceptual design and detailed engineering.'
-  }
-]
-
-const partnerIntegrations = [
-  {
-    name: 'IBM Maximo',
-    description: 'Enterprise asset management (EAM) software with IBM Maximo.'
-  },
-  {
-    name: 'Scheduler',
-    description: 'Manages project timelines, resource allocation, and task sequencing.'
-  }
-]
 
 function ExampleOneContent() {
   return (
@@ -414,31 +370,11 @@ function ExampleTwoContent() {
 }
 
 function ExampleThreeContent() {
-  return <section className="example3-page" aria-label="Example 3"></section>
+  return <section aria-label="Example 3"></section>
 }
 
 function ExampleFourContent() {
-  return (
-    <form className="example4-form" aria-label="Profile form">
-      <div className="example4-fields">
-        <sl-input
-          name="firstName"
-          label="First name"
-          help-text="Required"
-          required
-        ></sl-input>
-        <sl-input
-          name="dateOfBirth"
-          type="date"
-          label="Date of birth"
-          help-text="Required"
-          required
-        ></sl-input>
-      </div>
-
-      <sl-button variant="primary" type="submit">Submit</sl-button>
-    </form>
-  )
+  return <section aria-label="Example 4"></section>
 }
 
 function ExamplesContent({ activePage }) {

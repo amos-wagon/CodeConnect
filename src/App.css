@@ -1,11 +1,8 @@
 .App {
   text-align: left;
+
   width: 100%;
   height: 100%;
-  --aspentech-text-default: var(--eds-text-default);
-  --aspentech-text-secondary: var(--eds-text-secondary);
-  --aspentech-interactive-weak: var(--eds-interactive-weak);
-  --aspentech-interactive-default: var(--eds-interactive-default);
 }
 
 .skip-link {
@@ -35,18 +32,8 @@
   height: 100%;
 }
 
-aspentech-sidenav {
+eds-sidenav {
   --sl-panel-background-color: var(--eds-background-weak);
-}
-
-aspentech-sidenav,
-aspentech-appbar,
-aspentech-page-header,
-aspentech-page-info {
-  --aspentech-text-default: var(--eds-text-default);
-  --aspentech-text-secondary: var(--eds-text-secondary);
-  --aspentech-interactive-weak: var(--eds-interactive-weak);
-  --aspentech-interactive-default: var(--eds-interactive-default);
 }
 
 .sidenav-shell {
@@ -445,23 +432,5 @@ aspentech-page-info {
     grid-template-columns: 1fr;
     justify-items: start;
   }
-}
-
-.example4-form {
-  display: grid;
-  gap: var(--sl-spacing-x-large);
-}
-
-.example4-fields {
-  display: grid;
-  gap: var(--sl-spacing-medium);
-}
-
-.example4-fields sl-input {
-  max-width: 30rem;
-}
-
-.example4-form sl-button {
-  justify-self: start;
 }
 

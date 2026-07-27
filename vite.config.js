@@ -59,7 +59,7 @@ export default defineConfig({
           }
 
           if (id.includes('/@aspentech/pf-ui-core/') || id.includes('/@aspentech/pf-ui-compound/')) {
-            return 'aspentech-vendor'
+            return 'eds-vendor'
           }
 
           if (id.includes('/@shoelace-style/shoelace/')) {

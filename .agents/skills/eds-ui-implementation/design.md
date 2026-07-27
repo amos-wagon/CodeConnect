@@ -16,7 +16,7 @@
 
 ### Application Layout
 * Use `eds-application-layout` for screens that need a main area with optional left and right panels.
-* Choose this when the page needs resizable side workspaces; choose `aspentech-shell-template` for global app chrome only.
+* Choose this when the page needs resizable side workspaces; choose `eds-shell-template` for global app chrome only.
 * Put main content in the default slot, and side content in `left-panel` and `right-panel`.
 * Control visibility with `open-left`/`openLeft` and `open-right`/`openRight`.
 * Control width with `left-size`, `right-size`, `left-max-width`, and `right-max-width`.
@@ -33,7 +33,7 @@
 * Defaults: `heading` empty, `subheading` empty, `closable` false, `close-label` Close.
 
 ### Shell Template
-* Use `aspentech-shell-template` for top-level app chrome.
+* Use `eds-shell-template` for top-level app chrome.
 * Use this for persistent navigation and app-level bars, not for per-page split-panel work areas.
 * Use the `sidenav` slot for navigation and the `appbar` slot for top actions/context.
 * Place page content in the default slot.
@@ -46,17 +46,15 @@
 * Use the `controls` slot for right-aligned page actions (for example, buttons or menus).
 * Keep page-header content concise and place only page-level actions in `controls`.
 * Do not build bespoke page title bars with manual `h1` + badge + action button layouts unless an explicit product requirement states page-header cannot be used.
-* Confirm the page uses `aspentech-page-header` and that breadcrumb, badge/status, and primary page actions are in page-header slots, not custom layout wrappers.
+* Confirm the page uses `eds-page-header` and that breadcrumb, badge/status, and primary page actions are in page-header slots, not custom layout wrappers.
 
 ### Card Layouts
-* Use approved EDS card component for card-based feature grids.
-* **Uniform Height Required:** Cards in the same layout group must use a fixed height to keep rows visually aligned.
+* Use approved EDS card components (sl-card, eds-selectable-card, eds-catalog-card) for card-based feature grids.
+* **Uniform Height Required:** Cards in the same layout group must use a uniform height to keep rows visually aligned, by stretching 100% to grid row height.
 * **Width Constraints Required:** Card layouts must define both minimum and maximum width behavior for card items, with the effective width constraint enforced by the layout/grid track definition.
 * **Track-Level Width Enforcement:** Apply card width constraints at the grid column/track level (for example, `grid-template-columns: repeat(auto-fit, minmax(minWidth, maxWidth))`) instead of relying only on child card `max-width`.
-* **Do Not Use `1fr` as the Max Track Size** when the layout is expected to visibly stop at a card max width; `1fr` will continue expanding tracks to fill the row.
 * **Tokenized Sizing Only:** Height, min-width, max-width, internal spacing, and typography must use EDS/Shoelace tokens (for example `var(--sl-spacing-*)`, `var(--sl-font-size-*)`) and not hardcoded px values.
-* **Responsive Grid Rule:** Use tokenized grid gaps and width constraints so cards reflow predictably across viewport sizes.
-* **Validation Gate (required):** If a card grid lacks fixed card height or lacks min/max width constraints, the implementation is non-compliant and must be corrected before finalizing.
+* **Responsive Grid Rule:** Use tokenized grid gaps so cards reflow predictably across viewport sizes.
 
 ---
 
