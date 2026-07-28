@@ -25,6 +25,7 @@ declare module 'react' {
       'eds-sidenav-item': any;
       'eds-shell-template': any;
       'eds-slider': any;
+      'eds-toast': any;
     }
   }
 }

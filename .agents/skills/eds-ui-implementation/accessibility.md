@@ -21,6 +21,7 @@ This document focuses on WCAG developer practices you apply directly in code and
 - Provide a skip link to jump to the main content region.
 - Use semantic landmarks: header, nav, main, aside, and footer.
 - Keep landmark structure clear and avoid incorrect nesting.
+- Treat landmarks/regions as structural containers, not interactive controls; avoid making entire regions focusable.
 
 ### Headings
 - Use one H1 for the page title.

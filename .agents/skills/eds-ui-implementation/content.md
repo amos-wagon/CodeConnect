@@ -171,3 +171,12 @@ Example: Documents, Images, Downloads.
 - Use clear, descriptive column headers and consistent representation rules (for example, decimals, units).
 - Use nouns for header captions.
 - Use singular or plural form depending on whether a single value is expected or multiple values.
+
+### Toasts
+
+- Keep Toast text brief, specific, and easy to scan.
+- Use Toasts to reinforce the result of a user action.
+- Example: "Document saved successfully." "Model run started."
+- Body text: Use default text style, avoid repeating title text, and limit to 1 to 2 sentences.
+- Full punctuation: Use periods for complete sentences and avoid exclamation points.
+- If users need more details or an action on another page, use a Link button
