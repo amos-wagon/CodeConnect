@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useEffect, useRef } from 'react'
 import * as echarts from 'echarts'
 import '@shoelace-style/shoelace/dist/components/card/card.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
@@ -371,43 +371,8 @@ function ExampleTwoContent() {
 }
 
 function ExampleThreeContent() {
-  const [urlValue, setUrlValue] = useState('')
-  const [keyValue, setKeyValue] = useState('')
-
-  const handleSave = (event) => {
-    event.preventDefault()
-
-    const toast = document.createElement('eds-toast')
-    toast.setAttribute('text', 'Connection saved.')
-    toast.classList.add('example3-toast')
-    document.body.appendChild(toast)
-
-    requestAnimationFrame(() => {
-      toast.classList.add('example3-toast-visible')
-    })
-  }
-
   return (
     <section className="example3-form-layout" aria-label="Example 3">
-      <form className="example3-form" onSubmit={handleSave}>
-        <sl-input
-          label="URL"
-          value={urlValue}
-          onSlInput={(event) => setUrlValue(event.target.value)}
-        ></sl-input>
-
-        <sl-input
-          label="Key"
-          type="password"
-          password-toggle
-          value={keyValue}
-          onSlInput={(event) => setKeyValue(event.target.value)}
-        ></sl-input>
-
-        <div className="example3-actions">
-          <sl-button variant="primary" type="submit">Save</sl-button>
-        </div>
-      </form>
     </section>
   )
 }
