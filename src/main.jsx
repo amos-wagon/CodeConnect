@@ -18,6 +18,7 @@ import "@aspentech/pf-ui-compound/components/eds-shell-template";
 import "@aspentech/pf-ui-compound/components/eds-sidenav";
 import "@aspentech/pf-ui-compound/components/eds-sidenav-item";
 import "@aspentech/pf-ui-compound/components/eds-slider";
+import "@aspentech/pf-ui-compound/components/eds-toast";
 
 // Icon Registry Setup
 const iconRegExp = /^(.*?)(_(round|sharp|filled))?$/;

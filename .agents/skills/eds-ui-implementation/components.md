@@ -33,3 +33,15 @@
 - Use the `summary` slot to render the section header content. Don't add custom headings.
 - In the `content` slot, use `gap: var(--sl-spacing-medium);` for spacing between child elements.
 
+## Toasts
+
+- Always use `eds-toast` for toast notifications.
+- Keep toast text short, specific, and action-result oriented (see `content.md`).
+- Set message content with `text`.
+- Use default lifetime (3000 ms) unless there is a clear product requirement to override it.
+- Position the toast at bottom center by styling `::part(base)` with bottom offset `var(--sl-spacing-2x-large)`.
+- Use a short ease-out entry transition with `transition` + `@starting-style` on `::part(base)`.
+- Do not use CSS `animation` on `::part(base)` because it can break the built-in fade-out.
+- Keep toasts non-blocking (no focus trap and no required interaction).
+- Imperative usage is required: create the element on trigger with `document.createElement('eds-toast')` and `appendChild`; never render toast as static markup.
+

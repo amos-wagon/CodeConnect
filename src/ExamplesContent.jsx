@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useRef } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import * as echarts from 'echarts'
 import '@shoelace-style/shoelace/dist/components/card/card.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
@@ -14,6 +14,7 @@ import '@shoelace-style/shoelace/dist/components/switch/switch.js'
 import '@shoelace-style/shoelace/dist/components/details/details.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
+import '@shoelace-style/shoelace/dist/components/alert/alert.js'
 
 const DesignSystemExample = lazy(() => import('./DesignSystemExample.jsx'))
 
@@ -370,48 +371,50 @@ function ExampleTwoContent() {
 }
 
 function ExampleThreeContent() {
-  return <section aria-label="Example 3"></section>
+  const [urlValue, setUrlValue] = useState('')
+  const [keyValue, setKeyValue] = useState('')
+
+  const handleSave = (event) => {
+    event.preventDefault()
+
+    const toast = document.createElement('eds-toast')
+    toast.setAttribute('text', 'Connection saved.')
+    toast.classList.add('example3-toast')
+    document.body.appendChild(toast)
+
+    requestAnimationFrame(() => {
+      toast.classList.add('example3-toast-visible')
+    })
+  }
+
+  return (
+    <section className="example3-form-layout" aria-label="Example 3">
+      <form className="example3-form" onSubmit={handleSave}>
+        <sl-input
+          label="URL"
+          value={urlValue}
+          onSlInput={(event) => setUrlValue(event.target.value)}
+        ></sl-input>
+
+        <sl-input
+          label="Key"
+          type="password"
+          password-toggle
+          value={keyValue}
+          onSlInput={(event) => setKeyValue(event.target.value)}
+        ></sl-input>
+
+        <div className="example3-actions">
+          <sl-button variant="primary" type="submit">Save</sl-button>
+        </div>
+      </form>
+    </section>
+  )
 }
 
 function ExampleFourContent() {
   return (
-    <section className="example4-page" aria-label="Settings connections">
-      <aside className="example4-sidebar" aria-label="Settings sections">
-        <div className="example4-sidebar-header">
-          <h2 className="example4-sidebar-title">Settings</h2>
-          <sl-icon-button library="material" name="view_sidebar" label="Sidebar view"></sl-icon-button>
-        </div>
-        <nav aria-label="Settings navigation">
-          <ul className="example4-nav-list">
-            <li className="example4-nav-item">General</li>
-            <li className="example4-nav-item">License manager</li>
-            <li className="example4-nav-item active" aria-current="page">Connections</li>
-          </ul>
-        </nav>
-      </aside>
-
-      <section className="example4-content" aria-label="Connections settings">
-        <header className="example4-header-row">
-          <div className="example4-heading-wrap">
-            <sl-icon library="material" name="view_sidebar" aria-hidden="true"></sl-icon>
-            <sl-icon library="material" name="view_sidebar" aria-hidden="true"></sl-icon>
-            <h1 className="example4-title">Connections</h1>
-          </div>
-          <sl-button variant="default">Upload</sl-button>
-        </header>
-
-        <div className="example4-form">
-          <sl-radio-group label="Label" value="option-1">
-            <sl-radio value="option-1">Option 1</sl-radio>
-            <sl-radio value="option-2">Option 2</sl-radio>
-            <sl-radio value="option-3">Option 3</sl-radio>
-          </sl-radio-group>
-
-          <sl-input label="Label"></sl-input>
-
-          <sl-button variant="default">Button</sl-button>
-        </div>
-      </section>
+    <section className="example4-form-layout" aria-label="Example 4">
     </section>
   )
 }
