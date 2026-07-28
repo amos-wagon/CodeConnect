@@ -28,5 +28,6 @@ Use this skill whenever the task involves building, modifying, reviewing, or res
 
 ## Required supporting files
 - Read design.md
-- Read accessibilty.md
+- Read accessibility.md
 - Read content.md
+- Read components.md

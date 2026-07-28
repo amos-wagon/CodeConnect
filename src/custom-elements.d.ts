@@ -17,13 +17,13 @@ declare module 'react' {
       'sl-select': any;
       'sl-switch': any;
       'sl-textarea': any;
-      'aspentech-appbar': any;
-      'aspentech-page-header': any;
-      'aspentech-page-info': any;
-      'aspentech-selectable-card': any;
-      'aspentech-sidenav': any;
-      'aspentech-sidenav-item': any;
-      'aspentech-shell-template': any;
+      'eds-appbar': any;
+      'eds-page-header': any;
+      'eds-page-info': any;
+      'eds-selectable-card': any;
+      'eds-sidenav': any;
+      'eds-sidenav-item': any;
+      'eds-shell-template': any;
       'eds-slider': any;
     }
   }

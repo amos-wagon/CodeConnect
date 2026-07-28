@@ -10,8 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@aspentech/pf-ui-compound": "^0.10.1",
-    "@aspentech/pf-ui-core": "^0.16.0",
+    "@aspentech/pf-ui-assistance": "^0.10.0",
+    "@aspentech/pf-ui-compound": "^0.15.0",
+    "@aspentech/pf-ui-core": "^0.21.0",
     "@material-design-icons/font": "^0.14.15",
     "@material-design-icons/svg": "^0.14.15",
     "@shoelace-style/shoelace": "^2.20.1",

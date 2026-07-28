@@ -166,7 +166,7 @@ Example: Documents, Images, Downloads.
 
 - Label should describe what happens when switched on, not the current state word.
 
-### Tablees
+### Tables
 
 - Use clear, descriptive column headers and consistent representation rules (for example, decimals, units).
 - Use nouns for header captions.

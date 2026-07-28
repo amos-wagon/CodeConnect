@@ -10,6 +10,53 @@
 * **No Raw CSS or Hardcoded Inline Styles:** You must NEVER write hardcoded hex values, RGB values, or pixel dimensions for colors, spacing, radius, or typography. You must exclusively use the approved EDS Design Tokens listed below.
 * **Layout Utilities Only:** Do not create ad-hoc layouts using vanilla `div` elements with custom margins or padding. You must build all page structures, sections, and item groups using official EDS Layout primitives (`<Flex>`, `<Grid>`, `<Container>`, `<Box>`).
 * **Zero Arbitrary Breakpoints:** Do not invent responsive breakpoints. Use the native, responsive token hooks embedded within EDS components or utility classes.
+* **Honor Request Scope:** When the user asks for a narrow additive UI change (for example, "add two inputs and a submit button"), implement only the requested controls and the minimal structure needed for accessibility and layout. Do not add extra cards, page headers, section titles, helper copy, or decorative framing unless the request explicitly asks for them or an existing surrounding pattern requires them.
+
+## Layouts
+
+### Application Layout
+* Use `eds-application-layout` for screens that need a main area with optional left and right panels.
+* Choose this when the page needs resizable side workspaces; choose `eds-shell-template` for global app chrome only.
+* Put main content in the default slot, and side content in `left-panel` and `right-panel`.
+* Control visibility with `open-left`/`openLeft` and `open-right`/`openRight`.
+* Control width with `left-size`, `right-size`, `left-max-width`, and `right-max-width`.
+* Disable resizing with `disable-left-resize` and `disable-right-resize` when required.
+* Defaults: `open-left` false, `open-right` false, `left-size` 240, `right-size` 300, `left-max-width` none, `right-max-width` none, `disable-left-resize` false, `disable-right-resize` false.
+
+### Panel Layout
+* Use `eds-panel-layout` for panel-style containers with optional header and footer.
+* Choose this for internal panel content regions, not for top-level app page framing.
+* Use `heading` and `subheading` for panel titles.
+* Use `closable` to show a close button, and set `close-label` for accessible close text.
+* Use slots: default for body content, `header-actions` for right-side header controls, and `footer` for footer actions/content.
+* Handle `eds-close` when the user selects the close button.
+* Defaults: `heading` empty, `subheading` empty, `closable` false, `close-label` Close.
+
+### Shell Template
+* Use `eds-shell-template` for top-level app chrome.
+* Use this for persistent navigation and app-level bars, not for per-page split-panel work areas.
+* Use the `sidenav` slot for navigation and the `appbar` slot for top actions/context.
+* Place page content in the default slot.
+* Keep landmark structure clear: navigation in sidenav, banner actions in appbar, and main content in the default content area.
+
+### Page
+* Use `eds-page-header` at the top of page content to provide page context and navigation cues.
+* Set the page title with the `heading` property.
+* Use `icon` for a left-side page icon, `breadcrumb` for hierarchy/navigation, and `badge` for status.
+* Use the `controls` slot for right-aligned page actions (for example, buttons or menus).
+* Keep page-header content concise and place only page-level actions in `controls`.
+* Do not build bespoke page title bars with manual `h1` + badge + action button layouts unless an explicit product requirement states page-header cannot be used.
+* Confirm the page uses `eds-page-header` and that breadcrumb, badge/status, and primary page actions are in page-header slots, not custom layout wrappers.
+
+### Card Layouts
+* Use approved EDS card components (sl-card, eds-selectable-card, eds-catalog-card) for card-based feature grids.
+* **Uniform Height Required:** Cards in the same layout group must use a uniform height to keep rows visually aligned, by stretching 100% to grid row height.
+* **Simple Grid Card Height Fix (Preferred):** For any EDS or Shoelace card in a grid, add `class="grid-card"` and set `::part(base)` to `height: 100%`.
+* **Required Pattern (Scoped):** `.card-grid .grid-card::part(base) { height: 100%; }`
+* **Width Constraints Required:** Card layouts must define both minimum and maximum width behavior for card items, with the effective width constraint enforced by the layout/grid track definition.
+* **Track-Level Width Enforcement:** Apply card width constraints at the grid column/track level (for example, `grid-template-columns: repeat(auto-fit, minmax(minWidth, maxWidth))`) instead of relying only on child card `max-width`.
+* **Tokenized Sizing Only:** Height, min-width, max-width, internal spacing, and typography must use EDS/Shoelace tokens (for example `var(--sl-spacing-*)`, `var(--sl-font-size-*)`) and not hardcoded px values.
+* **Responsive Grid Rule:** Use tokenized grid gaps so cards reflow predictably across viewport sizes.
 
 ---
 
@@ -38,6 +85,7 @@ All margins, paddings, gaps, and structural offsets must adhere strictly to this
 
 ### 2.3 Typography & Hierarchy
 * **Font Family:** `var(--sl-font-sans)`
+* **Paragraph Line Height:** `<p>` elements must use `var(--sl-line-height-dense)`.
 * **Font Sizes:**
   * Small (Captions/Meta): `var(--sl-font-size-small)`
   * Base (Default Body): `var(--sl-font-size-medium)`
@@ -51,12 +99,14 @@ All margins, paddings, gaps, and structural offsets must adhere strictly to this
 When building any form UI, follow these mandatory implementation rules:
 
 * **Use EDS/Shoelace Form Components Only:** Prefer approved components such as `sl-input`, `sl-textarea`, `sl-select`, `sl-option`, `sl-checkbox`, `sl-radio`, `sl-radio-group`, `sl-switch`, and `sl-button`. Do not recreate form controls with native primitives unless no EDS equivalent exists.
+* **Do Not Add Unrequested Form Framing:** If the task is limited to adding fields or actions inside an existing example or screen, do not introduce a new card, header, title, or descriptive block unless it is already part of that surface or is explicitly requested.
 * **Label Every Control:** Every form control must have an accessible label via component `label` attributes or explicit `aria-label` when a visible label is intentionally omitted.
 * **Use Help Text and Validation Messaging:** Provide contextual guidance with component help text slots/props and clear error text for invalid states. Error messages must describe the issue and correction path.
 * **Required and Optional Semantics:** Mark required fields explicitly and keep optional fields clearly indicated.
 * **Grouping and Structure:** Group related controls using semantic sections and EDS layout primitives (`Container`, `Grid`, `Flex`, `Box`) rather than ad-hoc wrappers.
 * **Token-Only Spacing/Typography:** Form spacing, field grouping gaps, and typography must use approved design tokens only.
 * **Action Hierarchy:** Use a clear primary action (`sl-button` primary variant) and secondary/cancel action ordering consistently.
+* **Button Width Behavior:** All buttons must use content-width by default (hug label text) and must not stretch to fill container width unless an explicit product requirement calls for full-width actions.
 * **State Coverage:** Implement and verify default, focus, hover, disabled, read-only, error, and success states where applicable.
 * **Keyboard and Screen Reader Support:** Ensure logical tab order, visible focus indicators, and correct announcements for validation and dynamic form updates.
 
@@ -113,10 +163,16 @@ const edsChartOptions = {
 For all data grid implementations, you must use **AG Grid Community** as the default grid library.
 
 * **Library Requirement:** Use `ag-grid-community` and approved framework bindings only. Do not replace with native table implementations for interactive grid use cases.
+* **Required Theming Mode (Emerson Standard):** Use AG Grid **legacy CSS-based theming** (theme CSS + tokenized CSS overrides), including on AG Grid v32+.
+* **Disallowed Theming Mode:** Do not use AG Grid modern TypeScript-based theme configuration for Emerson product implementations.
 * **EDS Styling Requirement:** Grid theming must use EDS design system variables only. Do not hardcode hex, rgb, pixel color values, or non-token typography/spacing values.
 * **Tokenized Theme Mapping:** Map all grid visual properties (text, headers, row backgrounds, borders, focus outlines, selection, hover, density spacing) to EDS/Shoelace tokens such as `var(--eds-text-default)`, `var(--eds-text-secondary)`, `var(--eds-background-default)`, `var(--eds-background-weak)`, `var(--eds-border-default)`, and `var(--sl-font-sans)`.
+* **Cross-Framework Consistency:** Keep theming in CSS so one theme implementation behaves consistently across React, Angular, Aurelia, and vanilla JS/web components.
+* **Upgrade Safety:** Keep visual behavior controlled by the design system CSS layer so AG Grid upgrades remain predictable and regressions are easier to isolate.
 * **No Default AG Grid Look:** Do not ship AG Grid with default Alpine/Balham appearance without token overrides aligned to EDS.
+* **Pagination Is Optional, Not Default:** Do not recommend or enable pagination unless there is an explicit product requirement for paged datasets.
 * **Accessibility and Responsiveness:** Preserve keyboard navigation, focus visibility, and responsive behavior using tokenized values and EDS layout constraints.
+* **Enforcement:** For screen implementations (for example, parameter matrices, summary datasets, and operational tables), do not use native `<table>` for production UI. Use AG Grid with EDS tokenized theming unless an explicit requirement documents a non-grid exception.
 
 ---
 

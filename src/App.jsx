@@ -1,5 +1,5 @@
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import ExamplesContent from './ExamplesContent.jsx'
 
@@ -17,9 +17,11 @@ const getPageFromHash = () => {
 function App() {
   const [activePage, setActivePage] = useState(getPageFromHash)
   const [theme, setTheme] = useState('light')
+  const mainContentRef = useRef(null)
+  const hasInitializedFocus = useRef(false)
 
   const isDarkTheme = theme === 'dark'
-  const themeClassName = isDarkTheme ? 'aspentech-dark sl-theme-dark' : 'sl-theme-light'
+  const themeClassName = isDarkTheme ? 'eds-dark sl-theme-dark' : 'sl-theme-light'
 
   const toggleTheme = () => {
     setTheme(currentTheme => (currentTheme === 'dark' ? 'light' : 'dark'))
@@ -53,6 +55,15 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!hasInitializedFocus.current) {
+      hasInitializedFocus.current = true
+      return
+    }
+
+    mainContentRef.current?.focus()
+  }, [activePage])
+
   const activePageTitle = {
     example1: 'Example 1',
     example2: 'Example 2',
@@ -63,12 +74,13 @@ function App() {
 
   return (
     <div
-      className={`App aspentech-base ${themeClassName}`}
+      className={`App eds-base ${themeClassName}`}
       theme={theme}
     >
-      <aspentech-shell-template className={`app-shell-template ${themeClassName}`} theme={theme}>
-        <aspentech-sidenav slot="sidenav" header-text="Examples" mode="expanded" logo="aspentech" className={themeClassName} theme={theme}>
-          <aspentech-sidenav-item
+      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <eds-shell-template className={`app-shell-template ${themeClassName}`} theme={theme}>
+        <eds-sidenav slot="sidenav" role="navigation" aria-label="EDS Skill" header-text="EDS Skill" mode="expanded" logo="aspentech" className={themeClassName} theme={theme}>
+          <eds-sidenav-item
             type="node"
             label="Example 1"
             icon="dashboard"
@@ -78,8 +90,8 @@ function App() {
               event.preventDefault()
               navigateToPage('example1')
             }}
-          ></aspentech-sidenav-item>
-          <aspentech-sidenav-item
+          ></eds-sidenav-item>
+          <eds-sidenav-item
             type="node"
             label="Example 2"
             icon="tune"
@@ -89,8 +101,8 @@ function App() {
               event.preventDefault()
               navigateToPage('example2')
             }}
-          ></aspentech-sidenav-item>
-          <aspentech-sidenav-item
+          ></eds-sidenav-item>
+          <eds-sidenav-item
             type="node"
             label="Example 3"
             icon="auto_awesome"
@@ -100,8 +112,8 @@ function App() {
               event.preventDefault()
               navigateToPage('example3')
             }}
-          ></aspentech-sidenav-item>
-          <aspentech-sidenav-item
+          ></eds-sidenav-item>
+          <eds-sidenav-item
             type="node"
             label="Example 4"
             icon="grid_view"
@@ -111,8 +123,8 @@ function App() {
               event.preventDefault()
               navigateToPage('example4')
             }}
-          ></aspentech-sidenav-item>
-          <aspentech-sidenav-item
+          ></eds-sidenav-item>
+          <eds-sidenav-item
             type="node"
             label="Example 5"
             icon="insights"
@@ -122,10 +134,10 @@ function App() {
               event.preventDefault()
               navigateToPage('example5')
             }}
-          ></aspentech-sidenav-item>
-        </aspentech-sidenav>
-        <aspentech-appbar slot="appbar" className={themeClassName} theme={theme}>
-          <aspentech-page-info slot="page-info" heading={activePageTitle} className={themeClassName} theme={theme}> </aspentech-page-info>
+          ></eds-sidenav-item>
+        </eds-sidenav>
+        <eds-appbar slot="appbar" role="banner" className={themeClassName} theme={theme}>
+          <eds-page-info slot="page-info" heading={activePageTitle} className={themeClassName} theme={theme}> </eds-page-info>
           <sl-icon-button
             slot="right"
             library="material"
@@ -133,11 +145,17 @@ function App() {
             label={isDarkTheme ? 'Dark Mode' : 'Light Mode'}
             onClick={toggleTheme}
           ></sl-icon-button>
-        </aspentech-appbar>
-        <main className={`content-area ${themeClassName} ${activePage}`}>
+        </eds-appbar>
+        <main
+          id="main-content"
+          ref={mainContentRef}
+          tabIndex={-1}
+          className={`content-area ${themeClassName} ${activePage}`}
+          aria-label="Example content"
+        >
           <ExamplesContent activePage={activePage} />
         </main>
-      </aspentech-shell-template>
+      </eds-shell-template>
     </div>
   )
 }
