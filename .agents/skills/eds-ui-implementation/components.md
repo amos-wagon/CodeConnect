@@ -16,14 +16,15 @@
 
 ## Page headers
 
-- Use `eds-page-header` for page-level headings and top-level page actions.
-- Do not build a custom page header from ad-hoc containers, headings, badges, and buttons when `eds-page-header` is available.
-- Use the component slots correctly:
-	- `breadcrumb` for hierarchy/navigation context.
-	- `badge` for status.
-	- `controls` for page-level actions.
-- Set the page title with the `heading` property.
-- Keep header actions concise and use content-width buttons unless an explicit requirement calls for another pattern.
+- Use `eds-appbar` for application header composition when breadcrumb + page info + right-side actions are needed.
+- Match this slot structure:
+	- `breadcrumb` slot: use `sl-breadcrumb`.
+	- Add a separator with `<span slot="separator">/</span>`.
+	- Use `sl-breadcrumb-item` entries for path segments.
+	- `page-info` slot: use `eds-page-info` and set `heading`.
+	- `right` slot: place utility actions such as `sl-icon-button` and `sl-avatar`.
+- Keep appbar actions concise and content-width.
+- For page-level headings inside content regions (not the app shell/appbar), use `eds-page-header`.
 
 ## Expand and collapse
 

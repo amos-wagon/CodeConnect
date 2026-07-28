@@ -374,7 +374,46 @@ function ExampleThreeContent() {
 }
 
 function ExampleFourContent() {
-  return <section aria-label="Example 4"></section>
+  return (
+    <section className="example4-page" aria-label="Settings connections">
+      <aside className="example4-sidebar" aria-label="Settings sections">
+        <div className="example4-sidebar-header">
+          <h2 className="example4-sidebar-title">Settings</h2>
+          <sl-icon-button library="material" name="view_sidebar" label="Sidebar view"></sl-icon-button>
+        </div>
+        <nav aria-label="Settings navigation">
+          <ul className="example4-nav-list">
+            <li className="example4-nav-item">General</li>
+            <li className="example4-nav-item">License manager</li>
+            <li className="example4-nav-item active" aria-current="page">Connections</li>
+          </ul>
+        </nav>
+      </aside>
+
+      <section className="example4-content" aria-label="Connections settings">
+        <header className="example4-header-row">
+          <div className="example4-heading-wrap">
+            <sl-icon library="material" name="view_sidebar" aria-hidden="true"></sl-icon>
+            <sl-icon library="material" name="view_sidebar" aria-hidden="true"></sl-icon>
+            <h1 className="example4-title">Connections</h1>
+          </div>
+          <sl-button variant="default">Upload</sl-button>
+        </header>
+
+        <div className="example4-form">
+          <sl-radio-group label="Label" value="option-1">
+            <sl-radio value="option-1">Option 1</sl-radio>
+            <sl-radio value="option-2">Option 2</sl-radio>
+            <sl-radio value="option-3">Option 3</sl-radio>
+          </sl-radio-group>
+
+          <sl-input label="Label"></sl-input>
+
+          <sl-button variant="default">Button</sl-button>
+        </div>
+      </section>
+    </section>
+  )
 }
 
 function ExamplesContent({ activePage }) {

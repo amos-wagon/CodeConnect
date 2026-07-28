@@ -51,6 +51,8 @@
 ### Card Layouts
 * Use approved EDS card components (sl-card, eds-selectable-card, eds-catalog-card) for card-based feature grids.
 * **Uniform Height Required:** Cards in the same layout group must use a uniform height to keep rows visually aligned, by stretching 100% to grid row height.
+* **Simple Grid Card Height Fix (Preferred):** For any EDS or Shoelace card in a grid, add `class="grid-card"` and set `::part(base)` to `height: 100%`.
+* **Required Pattern (Scoped):** `.card-grid .grid-card::part(base) { height: 100%; }`
 * **Width Constraints Required:** Card layouts must define both minimum and maximum width behavior for card items, with the effective width constraint enforced by the layout/grid track definition.
 * **Track-Level Width Enforcement:** Apply card width constraints at the grid column/track level (for example, `grid-template-columns: repeat(auto-fit, minmax(minWidth, maxWidth))`) instead of relying only on child card `max-width`.
 * **Tokenized Sizing Only:** Height, min-width, max-width, internal spacing, and typography must use EDS/Shoelace tokens (for example `var(--sl-spacing-*)`, `var(--sl-font-size-*)`) and not hardcoded px values.
