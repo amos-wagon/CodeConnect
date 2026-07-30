@@ -9,6 +9,7 @@ Use this file as the implementation contract for UI work in this repository.
 - Use design tokens for color, spacing, typography, and borders.
 - Do not hardcode hex, rgb, or pixel values for visual design properties.
 - Honor request scope: implement only what was asked unless existing patterns require otherwise.
+- Do not add new headers, intro text, or section titles unless explicitly requested or required for accessibility/context.
 
 ## 2) Layout guidance
 
@@ -21,7 +22,11 @@ Use this file as the implementation contract for UI work in this repository.
 ## 3) Card layout rules
 
 - Use approved card components (`sl-card`, `eds-selectable-card`, `eds-catalog-card`) based on behavior.
-- In card grids, enforce equal card height with `::part(base) { height: 100%; }`.
+- Use `var(--sl-spacing-large)` for both horizontal and vertical spacing between cards (for example, `column-gap` and `row-gap` in card grids).
+- Cards in the same row must render at equal height.
+- If the card `base` part is styleable, set `::part(base) { height: 100%; }`.
+- If the card is wrapped or its `base` is not directly styleable, use `grid-auto-rows: 1fr` and item wrapper `height: 100%`, then apply `::part(base) { height: 100%; }` inside the component boundary when possible.
+- Verify card heights in the browser on at least two rows before finalizing.
 - Enforce card width at grid track level (for example with tokenized minmax tracks).
 - Keep card sizing and spacing tokenized.
 
