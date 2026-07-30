@@ -8,6 +8,7 @@ declare module 'react' {
       'sl-card': any;
       'sl-checkbox': any;
       'sl-divider': any;
+      'sl-dialog': any;
       'sl-icon': any;
       'sl-icon-button': any;
       'sl-input': any;
@@ -17,7 +18,14 @@ declare module 'react' {
       'sl-select': any;
       'sl-switch': any;
       'sl-textarea': any;
+      'sl-tooltip': any;
+      'ava-input': any;
+      'ava-layout': any;
+      'ava-response-message': any;
+      'ava-user-message': any;
+      'ava-welcome-message': any;
       'eds-appbar': any;
+      'eds-button-card': any;
       'eds-page-header': any;
       'eds-page-info': any;
       'eds-selectable-card': any;
