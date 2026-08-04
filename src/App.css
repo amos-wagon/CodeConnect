@@ -32,20 +32,6 @@
   height: 100%;
 }
 
-eds-sidenav {
-  --sl-panel-background-color: var(--eds-background-weak);
-}
-
-.sidenav-shell {
-  --height: 100%;
-}
-
-.sidenav-links {
-  display: grid;
-  gap: var(--sl-spacing-x-small);
-  padding: 0 var(--sl-spacing-small);
-}
-
 .content-area {
   box-sizing: border-box;
   width: 100%;
@@ -63,6 +49,58 @@ eds-sidenav {
   display: block;
   width: 100%;
   max-width: 100%;
+}
+
+.content-area.application1 {
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.app-shell-template.application1 {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-shell-template.application1 > eds-sidenav[mode='modal']:not(.sidenav--visible) {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.content-area.application1 > eds-application-layout {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.content-area.application1 > eds-application-layout > [slot='left-panel'],
+.content-area.application1 > eds-application-layout > [slot='right-panel'] {
+  block-size: 100%;
+}
+
+/* Ensure vertical Shoelace tabs fill container width, not label width. */
+sl-tab-group:is([placement='start'], [placement='end'])::part(nav),
+sl-tab-group:is([placement='start'], [placement='end']) sl-tab,
+sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
+  inline-size: 100%;
+  gap: 0;
+}
+
+.centered-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  font-family: var(--sl-font-sans);
+  color: var(--eds-text-default);
 }
 
 .example1-form {
@@ -558,4 +596,71 @@ eds-toast::part(base) {
   }
 }
 
+/* Example 3 — Integrations */
+.example3-integrations {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.example3-page-header {
+  margin-bottom: var(--sl-spacing-large);
+}
+
+.content-area.application1 .page-content {
+  padding-inline: var(--sl-spacing-x-large);
+}
+
+.example3-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-large);
+}
+
+.example3-section-label {
+  margin: 0;
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
+}
+
+.example3-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  column-gap: var(--sl-spacing-large);
+  row-gap: var(--sl-spacing-large);
+  grid-auto-rows: 1fr;
+}
+
+.example3-card {
+  height: 100%;
+}
+
+.example3-card::part(base) {
+  height: 100%;
+}
+
+.example3-card-description {
+  margin: 0;
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
+}
+
+/* Example 4 — Select and combo inputs */
+.example4-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.example4-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-medium);
+}
+
+.example4-field {
+  max-width: 30rem;
+}
 

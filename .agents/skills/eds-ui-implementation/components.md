@@ -7,6 +7,74 @@
 - Angular: use `class` or `[ngClass]` on custom elements so styling hooks bind to the host class list.
 - If sizing or alignment rules appear ignored, inspect host attributes first (for example `class` vs `classname`) before changing tokenized layout styles.
 
+## Layout
+
+### Core layout guidance
+
+- Use `eds-shell-template` for app-level chrome.
+- Use `eds-application-layout` for resizable left/right work panels.
+- Use `eds-panel-layout` for panel containers with optional header/footer.
+- Use `eds-page-header` for page-level context and actions inside content.
+- Keep landmark structure clear: nav in sidenav, app actions in appbar, content in main.
+
+### Portal layout
+
+### Application layout
+
+- For application layout opened from app navigation, use `eds-shell-template` and omit the `sidenav` slot.
+- Implement `eds-appbar` in the `appbar` slot with `show-menu-button` and `is-application`.
+- In the `icon` slot, use `sl-icon` with the Material icon set for the application glyph.
+- In the `breadcrumb` slot, use `sl-breadcrumb` with a separator (`<span slot="separator">/</span>`) and `sl-breadcrumb-item` entries.
+- In the `page-info` slot, use `eds-page-info` with `heading` set to the application page heading.
+- In `eds-page-info`, place optional menu options in `heading-menu-items` using `sl-menu-item`.
+- In `eds-page-info`, place optional state badges in the `badge` slot using `sl-badge`.
+- In the `center` slot, use `sl-tab-group` for application-level tabs. Keep tab labels concise and noun-based.
+- In the `right` slot, use concise utility actions such as `sl-button` and `sl-icon-button`.
+- In the default content area (`main`), implement `eds-application-layout` as the primary layout container.
+- For application pages, remove content-area padding and width constraints so the layout is full-bleed.
+- Render `eds-application-layout` as a direct child of the application content area (avoid extra wrapper containers that can constrain sizing).
+- Ensure `eds-application-layout` takes all available horizontal and vertical space (`inline-size: 100%`, `block-size: 100%`).
+- Ensure slotted side panels also stretch vertically (`[slot='left-panel']` and `[slot='right-panel']` with `block-size: 100%`).
+- For all application pages, implement a modal `eds-sidenav` (use `mode="modal"`) and keep it hidden by default.
+- Trigger the modal sidenav from the appbar menu button: provide a slotted menu button in `eds-appbar` (`slot="menu-button"`) and open the sidenav only on user click using `sidenav.show()`.
+- Use the same navigation structure in the modal sidenav as the primary app sidenav (nodes, divider, section headings, and app items) to keep behavior consistent.
+- On modal sidenav item click, navigate to the target route and then close the modal with `sidenav.hide()`.
+- Support default modal dismissal behaviors (Esc key and outside click) and keep the sidenav focus-managed after opening.
+- Prevent default-on-load visibility for modal sidenav (no automatic open during initialization; enforce hidden state before first user interaction).
+
+### Page layout
+
+- A page layout should include two clear regions: `page-header` and `page-content`.
+- Use `eds-page-header` as the `page-header` region.
+- Place all primary page body elements (cards, tables, forms, lists, charts) inside the `page-content` container.
+- Do not place page body content directly beside the header without a `page-content` wrapper.
+- Apply horizontal padding to `page-content` using `padding-inline: var(--sl-spacing-x-large)`.
+- Keep page-content spacing tokenized and scoped to the page container to avoid global side effects.
+- When using `eds-application-layout` with a left side panel (`slot='left-panel'`), include a view-sidebar icon button in the page header: `<sl-icon-button slot="icon" library="material" name="view_sidebar" label="View sidebar"></sl-icon-button>`.
+- The page-header view-sidebar icon button should toggle the left side panel visibility.
+- Implement toggle behavior by checking whether `eds-application-layout` has the `open-left` attribute.
+- Toggle `open-left`: remove it when present to collapse the left side panel, and add it when absent to show the left side panel.
+
+### Card layout rules
+
+- Use approved card components (`sl-card`, `eds-selectable-card`, `eds-catalog-card`) based on behavior.
+- Use `var(--sl-spacing-large)` for both horizontal and vertical spacing between cards (for example, `column-gap` and `row-gap` in card grids).
+- Cards in the same row must render at equal height.
+- If the card `base` part is styleable, set `::part(base) { height: 100%; }`.
+- If the card is wrapped or its `base` is not directly styleable, use `grid-auto-rows: 1fr` and item wrapper `height: 100%`, then apply `::part(base) { height: 100%; }` inside the component boundary when possible.
+- Verify card heights in the browser on at least two rows before finalizing.
+- Enforce card width at grid track level (for example with tokenized minmax tracks).
+- Keep card sizing and spacing tokenized.
+
+### Form layout baseline
+
+- Prefer single-column form flow; expand to two columns only when space and readability support it.
+- Keep form control max width at 30rem for typical input/select controls unless requirement differs.
+- Use two spacing levels:
+- Section-to-section spacing: `var(--sl-spacing-x-large)`.
+- Control-to-control spacing: `var(--sl-spacing-medium)`.
+- Use separate wrappers for section spacing vs field spacing.
+
 ## Buttons
 
 - Use `sl-button` for button actions unless an explicit requirement states otherwise.
@@ -32,6 +100,28 @@
 	- `right` slot: place utility actions such as `sl-icon-button` and `sl-avatar`.
 - Keep appbar actions concise and content-width.
 - For page-level headings inside content regions (not the app shell/appbar), use `eds-page-header`.
+
+## Tabs
+
+- Use `sl-tab-group` with `sl-tab` and `sl-tab-panel` for tabbed navigation and grouped content.
+- Every tab must map to a panel: set `panel` on each `sl-tab` and a matching `name` on each `sl-tab-panel`.
+- Keep tab labels short, scannable, and sentence case.
+- For horizontal tabs, use default placement unless a requirement specifies otherwise.
+- For vertical tabs, set `placement="start"` or `placement="end"` explicitly.
+- Vertical tabs should always fill the container width.
+- If tab navigation is used only as a section picker (no body content), hide or collapse panel content intentionally rather than omitting panel elements.
+- Keep active-tab styling token-based; avoid hard-coded colors when EDS tokens exist.
+
+## Sidenav
+
+- Use `eds-sidenav` for app-level navigation inside `eds-shell-template` via `slot="sidenav"`.
+- Do not add custom sidebar styling by default (no inline style/class hooks or sidenav-specific CSS overrides) unless a clear requirement exists.
+- Set `header-text` and `logo` when app branding/context is required.
+- Build navigation entries with `eds-sidenav-item` and use sentence case labels.
+- Use `type="node"` for standard sidebar navigation items.
+- To add a new sidebar section, place `<sl-divider></sl-divider>` after the previous group, then add `<eds-sidenav-item type="heading" label="Section name"></eds-sidenav-item>` before that section's items.
+- Keep a single source of truth for nav items (for example, an array of `{ page, label, icon }`) and render items from it.
+- For hash or client-side routing, keep the active item state synchronized with the current route.
 
 ## Expand and collapse
 

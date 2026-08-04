@@ -405,9 +405,63 @@ function ExampleTwoContent() {
   )
 }
 
+const aspenTechIntegrations = [
+  { id: 'hysys1', heading: 'HYSYS 1', description: 'Aspen HYSYS is a process simulation tool used to model and optimize oil, gas, and refining plants.' },
+  { id: 'acce', heading: 'ACCE', description: 'Estimates project costs, equipment, and economics.' },
+  { id: 'acce2', heading: 'ACCE', description: 'Estimates project costs, equipment, and economics.' },
+  { id: 'fidelis', heading: 'Fidelis', description: 'Predicts asset availability and quantifies financial risks using reliability modeling.' },
+  { id: 'edr', heading: 'EDR', description: 'Provides rigorous thermal and mechanical design for heat exchangers.' },
+  { id: 'aspen-properties', heading: 'Aspen Properties', description: 'Predicts physical and thermodynamic properties of chemical mixtures and fluids.' },
+  { id: 'optiplant', heading: 'OptiPlant', description: 'Optimizes 3D plant layouts and piping routes for early-stage engineering.' },
+  { id: 'abe', heading: 'ABE', description: 'Manages data flow between conceptual design and detailed engineering.' },
+]
+
+const partnerIntegrations = [
+  { id: 'ibm-maximo', heading: 'IBM Maximo', description: 'Enterprise asset management (EAM) software with IBM Maximo.' },
+  { id: 'scheduler', heading: 'Scheduler', description: 'Manages project timelines, resource allocation, and task sequencing.' },
+  { id: 'mybi', heading: 'MyBI', description: 'Manages project timelines, resource allocation, and task sequencing.' },
+]
+
 function ExampleThreeContent() {
   return (
-    <section className="example3-form-layout" aria-label="Example 3">
+    <section className="example3-integrations" aria-label="Integrations">
+      <eds-page-header heading="Integrations" className="example3-page-header">
+        <sl-breadcrumb slot="breadcrumb">
+          <sl-breadcrumb-item>Home</sl-breadcrumb-item>
+        </sl-breadcrumb>
+        <sl-badge slot="badge" variant="success">Active</sl-badge>
+        <sl-button slot="controls" variant="default">Add</sl-button>
+      </eds-page-header>
+
+      <div className="example3-content">
+        <p className="example3-section-label">AspenTech</p>
+        <div className="example3-card-grid">
+          {aspenTechIntegrations.map(({ id, heading, description }) => (
+            <eds-selectable-card
+              key={id}
+              control="switch"
+              heading={heading}
+              className="example3-card"
+            >
+              <p className="example3-card-description">{description}</p>
+            </eds-selectable-card>
+          ))}
+        </div>
+
+        <p className="example3-section-label">Partners</p>
+        <div className="example3-card-grid">
+          {partnerIntegrations.map(({ id, heading, description }) => (
+            <eds-selectable-card
+              key={id}
+              control="switch"
+              heading={heading}
+              className="example3-card"
+            >
+              <p className="example3-card-description">{description}</p>
+            </eds-selectable-card>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

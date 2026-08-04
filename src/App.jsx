@@ -1,9 +1,19 @@
 import './App.css'
 import { useEffect, useRef, useState } from 'react'
+import '@shoelace-style/shoelace/dist/components/divider/divider.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
+import ApplicationOnePage from './ApplicationOnePage.jsx'
 import ExamplesContent from './ExamplesContent.jsx'
 
-const VALID_PAGES = new Set(['example1', 'example2', 'example3', 'example4', 'example5'])
+const VALID_PAGES = new Set(['example1', 'example2', 'example3', 'example4', 'example5', 'application1'])
+
+const SIDE_NAV_ITEMS = [
+  { page: 'example1', label: 'Example 1', icon: 'dashboard' },
+  { page: 'example2', label: 'Example 2', icon: 'tune' },
+  { page: 'example3', label: 'Example 3', icon: 'auto_awesome' },
+  { page: 'example4', label: 'Example 4', icon: 'grid_view' },
+  { page: 'example5', label: 'Example 5', icon: 'insights' },
+]
 
 const getPageFromHash = () => {
   if (typeof window === 'undefined') {
@@ -70,7 +80,21 @@ function App() {
     example3: 'Example 3',
     example4: 'Example 4',
     example5: 'Example 5',
+    application1: 'Application Heading',
   }[activePage] ?? 'Example 1'
+
+  if (activePage === 'application1') {
+    return (
+      <ApplicationOnePage
+        theme={theme}
+        themeClassName={themeClassName}
+        mainContentRef={mainContentRef}
+        sideNavItems={SIDE_NAV_ITEMS}
+        activePage={activePage}
+        onNavigate={navigateToPage}
+      />
+    )
+  }
 
   return (
     <div
@@ -79,60 +103,32 @@ function App() {
     >
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <eds-shell-template className={`app-shell-template ${themeClassName}`} theme={theme}>
-        <eds-sidenav slot="sidenav" role="navigation" aria-label="EDS Skill" header-text="EDS Skill" mode="expanded" logo="aspentech" className={themeClassName} theme={theme}>
+        <eds-sidenav slot="sidenav" role="navigation" aria-label="EDS Skill" header-text="EDS Skill" mode="expanded" logo="aspentech">
+          {SIDE_NAV_ITEMS.map(({ page, label, icon }) => (
+            <eds-sidenav-item
+              key={page}
+              type="node"
+              label={label}
+              icon={icon}
+              href={`#${page}`}
+              active={activePage === page}
+              onClick={(event) => {
+                event.preventDefault()
+                navigateToPage(page)
+              }}
+            ></eds-sidenav-item>
+          ))}
+          <sl-divider></sl-divider>
+          <eds-sidenav-item type="heading" label="Apps"></eds-sidenav-item>
           <eds-sidenav-item
             type="node"
-            label="Example 1"
-            icon="dashboard"
-            href="#example1"
-            active={activePage === 'example1'}
+            label="Application 1"
+            icon="apps"
+            href="#application1"
+            active={activePage === 'application1'}
             onClick={(event) => {
               event.preventDefault()
-              navigateToPage('example1')
-            }}
-          ></eds-sidenav-item>
-          <eds-sidenav-item
-            type="node"
-            label="Example 2"
-            icon="tune"
-            href="#example2"
-            active={activePage === 'example2'}
-            onClick={(event) => {
-              event.preventDefault()
-              navigateToPage('example2')
-            }}
-          ></eds-sidenav-item>
-          <eds-sidenav-item
-            type="node"
-            label="Example 3"
-            icon="auto_awesome"
-            href="#example3"
-            active={activePage === 'example3'}
-            onClick={(event) => {
-              event.preventDefault()
-              navigateToPage('example3')
-            }}
-          ></eds-sidenav-item>
-          <eds-sidenav-item
-            type="node"
-            label="Example 4"
-            icon="grid_view"
-            href="#example4"
-            active={activePage === 'example4'}
-            onClick={(event) => {
-              event.preventDefault()
-              navigateToPage('example4')
-            }}
-          ></eds-sidenav-item>
-          <eds-sidenav-item
-            type="node"
-            label="Example 5"
-            icon="insights"
-            href="#example5"
-            active={activePage === 'example5'}
-            onClick={(event) => {
-              event.preventDefault()
-              navigateToPage('example5')
+              navigateToPage('application1')
             }}
           ></eds-sidenav-item>
         </eds-sidenav>
