@@ -14,6 +14,8 @@ import "@aspentech/pf-ui-compound/components/eds-appbar";
 import "@aspentech/pf-ui-compound/components/eds-page-header";
 import "@aspentech/pf-ui-compound/components/eds-page-info";
 import "@aspentech/pf-ui-compound/components/eds-application-layout";
+import "@aspentech/pf-ui-compound/components/eds-panel-layout";
+import "@aspentech/pf-ui-compound/components/eds-button-card";
 import "@aspentech/pf-ui-compound/components/eds-combobox";
 import "@aspentech/pf-ui-compound/components/eds-selectable-card";
 import "@aspentech/pf-ui-compound/components/eds-shell-template";

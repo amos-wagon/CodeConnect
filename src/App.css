@@ -5,6 +5,14 @@
   height: 100%;
 }
 
+p {
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
+  font-weight: var(--sl-font-weight-normal);
+  line-height: var(--sl-line-height-dense);
+  color: var(--eds-text-default);
+}
+
 .skip-link {
   position: absolute;
   left: var(--sl-spacing-medium);
@@ -51,7 +59,8 @@
   max-width: 100%;
 }
 
-.content-area.application1 {
+.content-area.application1,
+.content-area.application2 {
   box-sizing: border-box;
   inline-size: 100%;
   max-width: none;
@@ -61,7 +70,8 @@
   min-block-size: 0;
 }
 
-.app-shell-template.application1 {
+.app-shell-template.application1,
+.app-shell-template.application2 {
   display: block;
   inline-size: 100%;
   block-size: 100%;
@@ -69,12 +79,14 @@
   overflow: hidden;
 }
 
-.app-shell-template.application1 > eds-sidenav[mode='modal']:not(.sidenav--visible) {
+.app-shell-template.application1 > eds-sidenav[mode='modal']:not(.sidenav--visible),
+.app-shell-template.application2 > eds-sidenav[mode='modal']:not(.sidenav--visible) {
   visibility: hidden;
   pointer-events: none;
 }
 
-.content-area.application1 > eds-application-layout {
+.content-area.application1 > eds-application-layout,
+.content-area.application2 > eds-application-layout {
   display: block;
   inline-size: 100%;
   block-size: 100%;
@@ -82,7 +94,9 @@
 }
 
 .content-area.application1 > eds-application-layout > [slot='left-panel'],
-.content-area.application1 > eds-application-layout > [slot='right-panel'] {
+.content-area.application1 > eds-application-layout > [slot='right-panel'],
+.content-area.application2 > eds-application-layout > [slot='left-panel'],
+.content-area.application2 > eds-application-layout > [slot='right-panel'] {
   block-size: 100%;
 }
 
@@ -609,6 +623,45 @@ eds-toast::part(base) {
 
 .content-area.application1 .page-content {
   padding-inline: var(--sl-spacing-x-large);
+}
+
+.content-area.application2 .page-content {
+  padding-inline: var(--sl-spacing-x-large);
+}
+
+.application2-default-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.application2-page-header {
+  margin-bottom: var(--sl-spacing-large);
+}
+
+.application2-page-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.application2-content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--sl-spacing-large);
+}
+
+.application2-left-panel,
+.application2-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-2x-small);
+}
+
+.application2-panel-title {
+  margin: 0;
+  color: var(--eds-text-default);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
 }
 
 .example3-content {

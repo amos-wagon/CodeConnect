@@ -35,6 +35,7 @@
 - Render `eds-application-layout` as a direct child of the application content area (avoid extra wrapper containers that can constrain sizing).
 - Ensure `eds-application-layout` takes all available horizontal and vertical space (`inline-size: 100%`, `block-size: 100%`).
 - Ensure slotted side panels also stretch vertically (`[slot='left-panel']` and `[slot='right-panel']` with `block-size: 100%`).
+- Keep the right panel hidden by default and open it only from an explicit trigger in the main content area (for example, selecting a card or action item).
 - For all application pages, implement a modal `eds-sidenav` (use `mode="modal"`) and keep it hidden by default.
 - Trigger the modal sidenav from the appbar menu button: provide a slotted menu button in `eds-appbar` (`slot="menu-button"`) and open the sidenav only on user click using `sidenav.show()`.
 - Use the same navigation structure in the modal sidenav as the primary app sidenav (nodes, divider, section headings, and app items) to keep behavior consistent.
@@ -84,10 +85,20 @@
 
 ## Cards
 
+- Use `eds-button-card` when the entire card triggers one action (for example open details, navigate, or start a flow) and does not represent a persistent selected state.
 - Use `eds-selectable-card` when the card itself represents a selectable option or toggleable state.
 - Set `heading` for the card title and use `control="checkbox"` or `control="switch"` based on the interaction pattern.
 - Do not compose a selectable tile manually from `sl-card` plus a separate checkbox or switch unless a documented component limitation requires it.
 - Use generic `sl-card` only for non-selectable, presentational containers.
+
+## Panels
+
+- Use `eds-panel-layout` for panel content that must stay contained inside layout slots (for example, `slot='left-panel'` or `slot='right-panel'` in `eds-application-layout`).
+- When using `eds-panel-layout` inside a slot container, remove extra container padding because `eds-panel-layout` already includes internal spacing.
+- For `eds-panel-layout` with `closable`, close the parent slot panel on the `eds-close` event.
+- Use `eds-panel` for fixed drawer overlay UI that should float over content rather than remain constrained by slot boundaries.
+- Do not use `eds-panel` when the panel must remain visually contained inside the left or right slot region.
+- For `eds-panel` overlays, manage visibility via its open state and close behavior via the `eds-hide` event.
 
 ## Page headers
 
@@ -100,6 +111,14 @@
 	- `right` slot: place utility actions such as `sl-icon-button` and `sl-avatar`.
 - Keep appbar actions concise and content-width.
 - For page-level headings inside content regions (not the app shell/appbar), use `eds-page-header`.
+
+## Dialogs
+
+- Use `sl-dialog` for modal dialogs.
+- Set a clear `label` for the dialog title.
+- Open dialogs from explicit user actions (for example, button click) using `show()`.
+- Close dialogs with explicit footer actions using `hide()`.
+- Use footer actions in this order: `sl-button` variant `default` for Cancel, then `sl-button` variant `primary` for the confirmation action.
 
 ## Tabs
 

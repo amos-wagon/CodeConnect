@@ -4,12 +4,12 @@ import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
 import '@shoelace-style/shoelace/dist/components/button/button.js'
 import '@shoelace-style/shoelace/dist/components/divider/divider.js'
+import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import '@shoelace-style/shoelace/dist/components/menu-item/menu-item.js'
 import '@shoelace-style/shoelace/dist/components/tab/tab.js'
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
-import '@shoelace-style/shoelace/dist/components/tab-panel/tab-panel.js'
 
 const aspenTechIntegrations = [
   {
@@ -75,6 +75,7 @@ const partnerIntegrations = [
 function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItems, activePage, onNavigate }) {
   const modalSidenavRef = useRef(null)
   const applicationLayoutRef = useRef(null)
+  const addDialogRef = useRef(null)
 
   useEffect(() => {
     modalSidenavRef.current?.hide?.()
@@ -111,6 +112,14 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
     layout.setAttribute('open-left', '')
   }
 
+  const openAddDialog = () => {
+    addDialogRef.current?.show?.()
+  }
+
+  const closeAddDialog = () => {
+    addDialogRef.current?.hide?.()
+  }
+
   return (
     <div className={`App eds-base ${themeClassName}`} theme={theme}>
       <a className="skip-link" href="#main-content">Skip to main content</a>
@@ -134,11 +143,11 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
             <sl-menu-item slot="heading-menu-items" onClick={() => {}}>Option 2</sl-menu-item>
             <sl-badge variant="success" slot="badge">New</sl-badge>
           </eds-page-info>
-          <sl-tab-group activation="manual" slot="center">
-            <sl-tab slot="nav" active>Design</sl-tab>
-            <sl-tab slot="nav">Case Studies</sl-tab>
-            <sl-tab slot="nav" disabled>Settings</sl-tab>
-          </sl-tab-group>
+            <sl-tab-group activation="manual" slot="center">
+              <sl-tab slot="nav">Design</sl-tab>
+              <sl-tab slot="nav">Case Studies</sl-tab>
+              <sl-tab slot="nav">Settings</sl-tab>
+            </sl-tab-group>
           <sl-button slot="right">Share</sl-button>
           <sl-icon-button slot="right" library="material" name="more_horiz" label="More"></sl-icon-button>
         </eds-appbar>
@@ -171,6 +180,14 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
             active={activePage === 'application1'}
             onClick={(event) => navigateFromModal(event, 'application1')}
           ></eds-sidenav-item>
+          <eds-sidenav-item
+            type="node"
+            label="Application 2"
+            icon="apps"
+            href="#application2"
+            active={activePage === 'application2'}
+            onClick={(event) => navigateFromModal(event, 'application2')}
+          ></eds-sidenav-item>
         </eds-sidenav>
         <main
           id="main-content"
@@ -197,8 +214,14 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
                   <sl-breadcrumb-item>Home</sl-breadcrumb-item>
                 </sl-breadcrumb>
                 <sl-badge slot="badge" variant="success">Active</sl-badge>
-                <sl-button slot="controls" variant="default">Add</sl-button>
+                <sl-button slot="controls" variant="default" onClick={openAddDialog}>Add</sl-button>
               </eds-page-header>
+
+              <sl-dialog ref={addDialogRef} label="Add integration">
+                Add integration details here.
+                <sl-button slot="footer" variant="default" onClick={closeAddDialog}>Cancel</sl-button>
+                <sl-button slot="footer" variant="primary" onClick={closeAddDialog}>Submit</sl-button>
+              </sl-dialog>
 
               <div className="page-content example3-content">
                 <p className="example3-section-label">AspenTech</p>

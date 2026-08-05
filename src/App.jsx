@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from 'react'
 import '@shoelace-style/shoelace/dist/components/divider/divider.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import ApplicationOnePage from './ApplicationOnePage.jsx'
+import ApplicationTwoPage from './ApplicationTwoPage.jsx'
 import ExamplesContent from './ExamplesContent.jsx'
 
-const VALID_PAGES = new Set(['example1', 'example2', 'example3', 'example4', 'example5', 'application1'])
+const VALID_PAGES = new Set(['example1', 'example2', 'example3', 'example4', 'example5', 'application1', 'application2'])
 
 const SIDE_NAV_ITEMS = [
   { page: 'example1', label: 'Example 1', icon: 'dashboard' },
@@ -81,11 +82,25 @@ function App() {
     example4: 'Example 4',
     example5: 'Example 5',
     application1: 'Application Heading',
+    application2: 'Application 2',
   }[activePage] ?? 'Example 1'
 
   if (activePage === 'application1') {
     return (
       <ApplicationOnePage
+        theme={theme}
+        themeClassName={themeClassName}
+        mainContentRef={mainContentRef}
+        sideNavItems={SIDE_NAV_ITEMS}
+        activePage={activePage}
+        onNavigate={navigateToPage}
+      />
+    )
+  }
+
+  if (activePage === 'application2') {
+    return (
+      <ApplicationTwoPage
         theme={theme}
         themeClassName={themeClassName}
         mainContentRef={mainContentRef}
@@ -129,6 +144,17 @@ function App() {
             onClick={(event) => {
               event.preventDefault()
               navigateToPage('application1')
+            }}
+          ></eds-sidenav-item>
+          <eds-sidenav-item
+            type="node"
+            label="Application 2"
+            icon="apps"
+            href="#application2"
+            active={activePage === 'application2'}
+            onClick={(event) => {
+              event.preventDefault()
+              navigateToPage('application2')
             }}
           ></eds-sidenav-item>
         </eds-sidenav>
