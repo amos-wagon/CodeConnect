@@ -417,53 +417,10 @@ const partnerIntegrations = [
   { id: 'mybi', heading: 'MyBI', description: 'Manages project timelines, resource allocation, and task sequencing.' },
 ]
 
-const projectOptions = [
-  {
-    id: 'start-new',
-    heading: 'Start new',
-    description: 'Start from existing documents (P&IDs, PFDs, datasheets. etc.)'
-  },
-  {
-    id: 'design-process',
-    heading: 'Design process simulation',
-    description: 'Simulate process performance and efficiency.'
-  },
-  {
-    id: 'equipment-sizing',
-    heading: 'Equipment sizing',
-    description: 'Determine optimal dimensions for process equipment.'
-  },
-  {
-    id: 'cost-estimate',
-    heading: 'Develop a Cost Estimate',
-    description: 'Estimate project capital and operating costs.'
-  },
-  {
-    id: 'pre-feed',
-    heading: 'Pre-FEED/FEED Project',
-    description: 'Analyze project environmental and economic impact.'
-  },
-  {
-    id: 'digital-twin',
-    heading: 'Deploy a Digital Twin',
-    description: 'Arrange equipment for maximum efficiency.'
-  },
-]
 
 function ExampleThreeContent() {
   return (
-    <section className="example3-options" aria-label="Project options">
-      <div className="example3-option-grid">
-        {projectOptions.map(({ id, heading, description }) => (
-          <eds-button-card
-            key={id}
-            className="example3-option-card"
-            heading={heading}
-          >
-            <p className="example3-card-description">{description}</p>
-          </eds-button-card>
-        ))}
-      </div>
+    <section className="example3-form-layout" aria-label="Example 3">
     </section>
   )
 }
