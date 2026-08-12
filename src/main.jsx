@@ -13,12 +13,19 @@ import { registerIconLibrary } from "@shoelace-style/shoelace/dist/utilities/ico
 import "@aspentech/pf-ui-compound/components/eds-appbar";
 import "@aspentech/pf-ui-compound/components/eds-page-header";
 import "@aspentech/pf-ui-compound/components/eds-page-info";
+import "@aspentech/pf-ui-compound/components/eds-application-layout";
+import "@aspentech/pf-ui-compound/components/eds-panel-layout";
+import "@aspentech/pf-ui-compound/components/eds-button-card";
+import "@aspentech/pf-ui-compound/components/eds-combobox";
 import "@aspentech/pf-ui-compound/components/eds-selectable-card";
 import "@aspentech/pf-ui-compound/components/eds-shell-template";
 import "@aspentech/pf-ui-compound/components/eds-sidenav";
 import "@aspentech/pf-ui-compound/components/eds-sidenav-item";
 import "@aspentech/pf-ui-compound/components/eds-slider";
-import "@aspentech/pf-ui-compound/components/eds-toast";
+import "@aspentech/pf-ui-compound/components/eds-toast"
+
+import '@shoelace-style/shoelace/dist/components/tree/tree.js'
+import '@shoelace-style/shoelace/dist/components/tree-item/tree-item.js';
 
 // Icon Registry Setup
 const iconRegExp = /^(.*?)(_(round|sharp|filled))?$/;
