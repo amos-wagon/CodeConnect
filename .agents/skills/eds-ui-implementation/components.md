@@ -69,6 +69,12 @@
 - Use two spacing levels: section-to-section `var(--sl-spacing-x-large)` and control-to-control `var(--sl-spacing-medium)`.
 - Use separate wrappers for section spacing vs field spacing.
 
+## Radio group
+
+- Use `sl-radio-group` with `sl-radio` children for mutually exclusive selections. Do not build custom radio controls from buttons or divs.
+- Always set the `label` attribute on `sl-radio-group`. Do not omit it.
+- Set a `value` attribute on each `sl-radio` to identify the selected option.
+
 ## Buttons
 
 - Use `sl-button` for button actions unless an explicit requirement states otherwise.
