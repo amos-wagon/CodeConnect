@@ -1,12 +1,5 @@
 # Components
 
-## React and Angular with web components
-
-- Always confirm the web component host receives a real `class` attribute in rendered DOM.
-- React: do not rely on `className` for custom elements when styling hooks are required; verify output on the host element.
-- Angular: use `class` or `[ngClass]` on custom elements so styling hooks bind to the host class list.
-- If sizing or alignment rules appear ignored, inspect host attributes first (for example `class` vs `classname`) before changing tokenized layout styles.
-
 ## Layout
 
 ### Core layout guidance
@@ -21,7 +14,7 @@
 
 ### Application layout
 
-- For application layout opened from app navigation, use `eds-shell-template` and omit the `sidenav` slot.
+- For application layout opened from app navigation, use `eds-shell-template` and omit the fixed `sidenav` slot.
 - Implement `eds-appbar` in the `appbar` slot with `show-menu-button` and `is-application`.
 - In the `icon` slot, use `sl-icon` with the Material icon set for the application glyph.
 - In the `breadcrumb` slot, use `sl-breadcrumb` with a separator (`<span slot="separator">/</span>`) and `sl-breadcrumb-item` entries.
@@ -35,7 +28,9 @@
 - Render `eds-application-layout` as a direct child of the application content area (avoid extra wrapper containers that can constrain sizing).
 - Ensure `eds-application-layout` takes all available horizontal and vertical space (`inline-size: 100%`, `block-size: 100%`).
 - Ensure slotted side panels also stretch vertically (`[slot='left-panel']` and `[slot='right-panel']` with `block-size: 100%`).
+- Set `overflow-y: auto` on the left panel's scrollable content container so overflow content scrolls rather than wraps or overflows the panel boundary.
 - Keep the right panel hidden by default and open it only from an explicit trigger in the main content area (for example, selecting a card or action item).
+- Do not set `open-right` on initial `eds-application-layout` markup; add it only in response to an explicit user action.
 - For all application pages, implement a modal `eds-sidenav` (use `mode="modal"`) and keep it hidden by default.
 - Trigger the modal sidenav from the appbar menu button: provide a slotted menu button in `eds-appbar` (`slot="menu-button"`) and open the sidenav only on user click using `sidenav.show()`.
 - Use the same navigation structure in the modal sidenav as the primary app sidenav (nodes, divider, section headings, and app items) to keep behavior consistent.
@@ -46,15 +41,15 @@
 ### Page layout
 
 - A page layout should include two clear regions: `page-header` and `page-content`.
-- Use `eds-page-header` as the `page-header` region.
+- Use `eds-page-header` as the `page-header` region, and do not apply padding to it.
 - Place all primary page body elements (cards, tables, forms, lists, charts) inside the `page-content` container.
 - Do not place page body content directly beside the header without a `page-content` wrapper.
 - Apply horizontal padding to `page-content` using `padding-inline: var(--sl-spacing-x-large)`.
+- Apply vertical padding to `page-content` using `padding-block: var(--sl-spacing-large)`.
 - Keep page-content spacing tokenized and scoped to the page container to avoid global side effects.
 - When using `eds-application-layout` with a left side panel (`slot='left-panel'`), include a view-sidebar icon button in the page header: `<sl-icon-button slot="icon" library="material" name="view_sidebar" label="View sidebar"></sl-icon-button>`.
-- The page-header view-sidebar icon button should toggle the left side panel visibility.
-- Implement toggle behavior by checking whether `eds-application-layout` has the `open-left` attribute.
-- Toggle `open-left`: remove it when present to collapse the left side panel, and add it when absent to show the left side panel.
+- The view-sidebar icon button should toggle `open-left` on `eds-application-layout`: remove the attribute when present to collapse the left panel, add it when absent to show the left panel.
+- If tabs or a tree in `slot='left-panel'` drive main-region navigation, update the main-region content and the `eds-page-header` heading together from one active state.
 
 ### Card layout rules
 
@@ -71,9 +66,7 @@
 
 - Prefer single-column form flow; expand to two columns only when space and readability support it.
 - Keep form control max width at 30rem for typical input/select controls unless requirement differs.
-- Use two spacing levels:
-- Section-to-section spacing: `var(--sl-spacing-x-large)`.
-- Control-to-control spacing: `var(--sl-spacing-medium)`.
+- Use two spacing levels: section-to-section `var(--sl-spacing-x-large)` and control-to-control `var(--sl-spacing-medium)`.
 - Use separate wrappers for section spacing vs field spacing.
 
 ## Buttons
@@ -93,42 +86,33 @@
 
 ## Panels
 
-- Use `eds-panel-layout` for panel content that must stay contained inside layout slots (for example, `slot='left-panel'` or `slot='right-panel'` in `eds-application-layout`).
+- Always use `eds-panel-layout` for panel content that must stay contained inside layout slots (for example, `slot='left-panel'` or `slot='right-panel'` in `eds-application-layout`).
+- Do not place raw content directly in left/right slots; wrap slot content with `eds-panel-layout`.
 - When using `eds-panel-layout` inside a slot container, remove extra container padding because `eds-panel-layout` already includes internal spacing.
 - For `eds-panel-layout` with `closable`, close the parent slot panel on the `eds-close` event.
 - Use `eds-panel` for fixed drawer overlay UI that should float over content rather than remain constrained by slot boundaries.
 - Do not use `eds-panel` when the panel must remain visually contained inside the left or right slot region.
 - For `eds-panel` overlays, manage visibility via its open state and close behavior via the `eds-hide` event.
 
-## Page headers
-
-- Use `eds-appbar` for application header composition when breadcrumb + page info + right-side actions are needed.
-- Match this slot structure:
-	- `breadcrumb` slot: use `sl-breadcrumb`.
-	- Add a separator with `<span slot="separator">/</span>`.
-	- Use `sl-breadcrumb-item` entries for path segments.
-	- `page-info` slot: use `eds-page-info` and set `heading`.
-	- `right` slot: place utility actions such as `sl-icon-button` and `sl-avatar`.
-- Keep appbar actions concise and content-width.
-- For page-level headings inside content regions (not the app shell/appbar), use `eds-page-header`.
-
 ## Dialogs
 
 - Use `sl-dialog` for modal dialogs.
-- Set a clear `label` for the dialog title.
-- Open dialogs from explicit user actions (for example, button click) using `show()`.
-- Close dialogs with explicit footer actions using `hide()`.
-- Use footer actions in this order: `sl-button` variant `default` for Cancel, then `sl-button` variant `primary` for the confirmation action.
+- Set a clear `label` attribute for the dialog title.
+- Open dialogs with `show()` only on explicit user actions (for example, button click).
+- Close dialogs with `hide()` from explicit footer actions or dismiss events (Esc key works by default).
+- Always include a footer with two buttons in this order:
+  1. `<sl-button>` with variant `default` for "Cancel"
+  2. `<sl-button>` with variant `primary` for the confirmation action (for example, "Add", "Save", "Delete")
+- Use a `<div slot="footer">` wrapper for footer actions with flex layout for right alignment.
 
 ## Tabs
 
-- Use `sl-tab-group` with `sl-tab` and `sl-tab-panel` for tabbed navigation and grouped content.
-- Every tab must map to a panel: set `panel` on each `sl-tab` and a matching `name` on each `sl-tab-panel`.
+- Use `sl-tab-group` with `sl-tab` only.
+- Never use `sl-tab-panel` components.
 - Keep tab labels short, scannable, and sentence case.
 - For horizontal tabs, use default placement unless a requirement specifies otherwise.
-- For vertical tabs, set `placement="start"` or `placement="end"` explicitly.
+- For vertical tabs, always use `placement="end"`.
 - Vertical tabs should always fill the container width.
-- If tab navigation is used only as a section picker (no body content), hide or collapse panel content intentionally rather than omitting panel elements.
 - Keep active-tab styling token-based; avoid hard-coded colors when EDS tokens exist.
 
 ## Sidenav
@@ -141,6 +125,16 @@
 - To add a new sidebar section, place `<sl-divider></sl-divider>` after the previous group, then add `<eds-sidenav-item type="heading" label="Section name"></eds-sidenav-item>` before that section's items.
 - Keep a single source of truth for nav items (for example, an array of `{ page, label, icon }`) and render items from it.
 - For hash or client-side routing, keep the active item state synchronized with the current route.
+
+## Tree
+
+- Use `sl-tree` with `sl-tree-item` for hierarchical tree navigation. Do not build custom tree controls from buttons or divs.
+- Set `selection="single"` on `sl-tree` for single-item selection; use `"multiple"` or `"leaf"` only when the interaction explicitly requires it.
+- Add a `value` attribute to each `sl-tree-item` to identify the node on selection and query events.
+- Nest `sl-tree-item` elements directly inside a parent `sl-tree-item` to create child levels; `sl-tree` manages expand/collapse controls automatically.
+- Do not set `expanded` or `selected` as declarative React props — re-renders will overwrite the component's internal state. Set initial values imperatively after mount by querying `sl-tree-item[value="id"]` inside a `window.customElements.whenDefined('sl-tree-item').then(...)` callback.
+- Listen to `sl-selection-change` on the `sl-tree` ref to update React state. Access the selected node via `e.detail.selection[0]` and read its `value` attribute.
+- When the tree in `slot='left-panel'` drives main-region content, derive the `eds-page-header` heading from the same selected state.
 
 ## Expand and collapse
 

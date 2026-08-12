@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as echarts from 'echarts'
 import '@shoelace-style/shoelace/dist/components/card/card.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
@@ -15,6 +15,7 @@ import '@shoelace-style/shoelace/dist/components/details/details.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
 import '@shoelace-style/shoelace/dist/components/alert/alert.js'
+import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
 
 function ExampleOneContent() {
   return (
@@ -43,23 +44,17 @@ function ExampleOneContent() {
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
               <sl-tab-group>
-                <sl-tab slot="nav" panel="bad-docs">Documents list</sl-tab>
-                <sl-tab slot="nav" panel="bad-images">View Images</sl-tab>
-                <sl-tab slot="nav" panel="bad-downloads">Download options</sl-tab>
-                <sl-tab-panel name="bad-docs"></sl-tab-panel>
-                <sl-tab-panel name="bad-images"></sl-tab-panel>
-                <sl-tab-panel name="bad-downloads"></sl-tab-panel>
+                <sl-tab slot="nav">Documents list</sl-tab>
+                <sl-tab slot="nav">View Images</sl-tab>
+                <sl-tab slot="nav">Download options</sl-tab>
               </sl-tab-group>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
               <sl-tab-group>
-                <sl-tab slot="nav" panel="good-docs">Documents</sl-tab>
-                <sl-tab slot="nav" panel="good-images">Images</sl-tab>
-                <sl-tab slot="nav" panel="good-downloads">Downloads</sl-tab>
-                <sl-tab-panel name="good-docs"></sl-tab-panel>
-                <sl-tab-panel name="good-images"></sl-tab-panel>
-                <sl-tab-panel name="good-downloads"></sl-tab-panel>
+                <sl-tab slot="nav">Documents</sl-tab>
+                <sl-tab slot="nav">Images</sl-tab>
+                <sl-tab slot="nav">Downloads</sl-tab>
               </sl-tab-group>
             </div>
           </div>
@@ -422,45 +417,52 @@ const partnerIntegrations = [
   { id: 'mybi', heading: 'MyBI', description: 'Manages project timelines, resource allocation, and task sequencing.' },
 ]
 
+const projectOptions = [
+  {
+    id: 'start-new',
+    heading: 'Start new',
+    description: 'Start from existing documents (P&IDs, PFDs, datasheets. etc.)'
+  },
+  {
+    id: 'design-process',
+    heading: 'Design process simulation',
+    description: 'Simulate process performance and efficiency.'
+  },
+  {
+    id: 'equipment-sizing',
+    heading: 'Equipment sizing',
+    description: 'Determine optimal dimensions for process equipment.'
+  },
+  {
+    id: 'cost-estimate',
+    heading: 'Develop a Cost Estimate',
+    description: 'Estimate project capital and operating costs.'
+  },
+  {
+    id: 'pre-feed',
+    heading: 'Pre-FEED/FEED Project',
+    description: 'Analyze project environmental and economic impact.'
+  },
+  {
+    id: 'digital-twin',
+    heading: 'Deploy a Digital Twin',
+    description: 'Arrange equipment for maximum efficiency.'
+  },
+]
+
 function ExampleThreeContent() {
   return (
-    <section className="example3-integrations" aria-label="Integrations">
-      <eds-page-header heading="Integrations" className="example3-page-header">
-        <sl-breadcrumb slot="breadcrumb">
-          <sl-breadcrumb-item>Home</sl-breadcrumb-item>
-        </sl-breadcrumb>
-        <sl-badge slot="badge" variant="success">Active</sl-badge>
-        <sl-button slot="controls" variant="default">Add</sl-button>
-      </eds-page-header>
-
-      <div className="example3-content">
-        <p className="example3-section-label">AspenTech</p>
-        <div className="example3-card-grid">
-          {aspenTechIntegrations.map(({ id, heading, description }) => (
-            <eds-selectable-card
-              key={id}
-              control="switch"
-              heading={heading}
-              className="example3-card"
-            >
-              <p className="example3-card-description">{description}</p>
-            </eds-selectable-card>
-          ))}
-        </div>
-
-        <p className="example3-section-label">Partners</p>
-        <div className="example3-card-grid">
-          {partnerIntegrations.map(({ id, heading, description }) => (
-            <eds-selectable-card
-              key={id}
-              control="switch"
-              heading={heading}
-              className="example3-card"
-            >
-              <p className="example3-card-description">{description}</p>
-            </eds-selectable-card>
-          ))}
-        </div>
+    <section className="example3-options" aria-label="Project options">
+      <div className="example3-option-grid">
+        {projectOptions.map(({ id, heading, description }) => (
+          <eds-button-card
+            key={id}
+            className="example3-option-card"
+            heading={heading}
+          >
+            <p className="example3-card-description">{description}</p>
+          </eds-button-card>
+        ))}
       </div>
     </section>
   )

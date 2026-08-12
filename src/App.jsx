@@ -4,9 +4,10 @@ import '@shoelace-style/shoelace/dist/components/divider/divider.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import ApplicationOnePage from './ApplicationOnePage.jsx'
 import ApplicationTwoPage from './ApplicationTwoPage.jsx'
+import ApplicationThreePage from './ApplicationThreePage.jsx'
 import ExamplesContent from './ExamplesContent.jsx'
 
-const VALID_PAGES = new Set(['example1', 'example2', 'example3', 'example4', 'example5', 'application1', 'application2'])
+const VALID_PAGES = new Set(['example1', 'example2', 'example3', 'example4', 'example5', 'application1', 'application2', 'application3'])
 
 const SIDE_NAV_ITEMS = [
   { page: 'example1', label: 'Example 1', icon: 'dashboard' },
@@ -81,8 +82,9 @@ function App() {
     example3: 'Example 3',
     example4: 'Example 4',
     example5: 'Example 5',
-    application1: 'Application Heading',
+    application1: 'Application 1',
     application2: 'Application 2',
+    application3: 'Application 3',
   }[activePage] ?? 'Example 1'
 
   if (activePage === 'application1') {
@@ -101,6 +103,19 @@ function App() {
   if (activePage === 'application2') {
     return (
       <ApplicationTwoPage
+        theme={theme}
+        themeClassName={themeClassName}
+        mainContentRef={mainContentRef}
+        sideNavItems={SIDE_NAV_ITEMS}
+        activePage={activePage}
+        onNavigate={navigateToPage}
+      />
+    )
+  }
+
+  if (activePage === 'application3') {
+    return (
+      <ApplicationThreePage
         theme={theme}
         themeClassName={themeClassName}
         mainContentRef={mainContentRef}
@@ -157,6 +172,18 @@ function App() {
               navigateToPage('application2')
             }}
           ></eds-sidenav-item>
+          <eds-sidenav-item
+            type="node"
+            label="Application 3"
+            icon="apps"
+            href="#application3"
+            active={activePage === 'application3'}
+            onClick={(event) => {
+              event.preventDefault()
+              navigateToPage('application3')
+            }}
+          ></eds-sidenav-item>
+
         </eds-sidenav>
         <eds-appbar slot="appbar" role="banner" className={themeClassName} theme={theme}>
           <eds-page-info slot="page-info" heading={activePageTitle} className={themeClassName} theme={theme}> </eds-page-info>

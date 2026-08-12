@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '@shoelace-style/shoelace/dist/components/badge/badge.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
@@ -10,6 +10,42 @@ import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import '@shoelace-style/shoelace/dist/components/menu-item/menu-item.js'
 import '@shoelace-style/shoelace/dist/components/tab/tab.js'
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
+
+const generalItems = [
+  {
+    id: 'general-access',
+    heading: 'Access',
+    description: 'Manage role-based access and default permissions.'
+  },
+  {
+    id: 'general-branding',
+    heading: 'Branding',
+    description: 'Configure logos, labels, and shared presentation settings.'
+  },
+  {
+    id: 'general-regions',
+    heading: 'Regions',
+    description: 'Set regional defaults for units, locale, and language.'
+  }
+]
+
+const licenseManagerItems = [
+  {
+    id: 'license-pool',
+    heading: 'License pool',
+    description: 'Track allocation and availability across active users.'
+  },
+  {
+    id: 'license-usage',
+    heading: 'Usage policy',
+    description: 'Define assignment rules and license checkout behavior.'
+  },
+  {
+    id: 'license-audit',
+    heading: 'Audit log',
+    description: 'Review recent license changes and administrator actions.'
+  }
+]
 
 const aspenTechIntegrations = [
   {
@@ -72,13 +108,108 @@ const partnerIntegrations = [
   },
 ]
 
+const leftPanelPages = [
+  {
+    id: 'general',
+    label: 'General',
+    groups: [
+      {
+        label: 'Configuration',
+        items: generalItems
+      }
+    ]
+  },
+  {
+    id: 'license-manager',
+    label: 'License manager',
+    groups: [
+      {
+        label: 'Licensing',
+        items: licenseManagerItems
+      }
+    ]
+  },
+  {
+    id: 'connections',
+    label: 'Connections',
+    groups: [
+      {
+        label: 'AspenTech',
+        items: aspenTechIntegrations
+      },
+      {
+        label: 'Partners',
+        items: partnerIntegrations
+      }
+    ]
+  }
+]
+
 function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItems, activePage, onNavigate }) {
   const modalSidenavRef = useRef(null)
   const applicationLayoutRef = useRef(null)
   const addDialogRef = useRef(null)
+  const rightPanelRef = useRef(null)
+  const leftTabGroupRef = useRef(null)
+  const [activeLeftPageId, setActiveLeftPageId] = useState('connections')
+
+  const activeLeftPage = leftPanelPages.find((page) => page.id === activeLeftPageId) ?? leftPanelPages[0]
 
   useEffect(() => {
     modalSidenavRef.current?.hide?.()
+  }, [])
+
+  useEffect(() => {
+    const rightPanel = rightPanelRef.current
+
+    if (!rightPanel) {
+      return
+    }
+
+    rightPanel.addEventListener('eds-close', closeRightPanel)
+
+    return () => {
+      rightPanel.removeEventListener('eds-close', closeRightPanel)
+    }
+  }, [])
+
+  useEffect(() => {
+    const tabGroup = leftTabGroupRef.current
+
+    if (!tabGroup) {
+      return
+    }
+
+    const tabs = tabGroup.querySelectorAll('sl-tab[slot="nav"]')
+
+    tabs.forEach((tab) => {
+      const isActive = tab.getAttribute('data-nav-id') === activeLeftPageId
+
+      if (isActive) {
+        tab.setAttribute('active', '')
+        return
+      }
+
+      tab.removeAttribute('active')
+    })
+  }, [activeLeftPageId])
+
+  useEffect(() => {
+    const dialog = addDialogRef.current
+    if (!dialog) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        e.stopPropagation()
+        dialog.hide()
+      }
+    }
+
+    dialog.addEventListener('keydown', handleKeyDown, true)
+    return () => {
+      dialog.removeEventListener('keydown', handleKeyDown, true)
+    }
   }, [])
 
   const openModalSidenav = () => {
@@ -116,8 +247,24 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
     addDialogRef.current?.show?.()
   }
 
-  const closeAddDialog = () => {
-    addDialogRef.current?.hide?.()
+  const openRightPanel = () => {
+    const layout = applicationLayoutRef.current
+
+    if (!layout) {
+      return
+    }
+
+    layout.setAttribute('open-right', '')
+  }
+
+  const closeRightPanel = () => {
+    const layout = applicationLayoutRef.current
+
+    if (!layout) {
+      return
+    }
+
+    layout.removeAttribute('open-right')
   }
 
   return (
@@ -196,64 +343,65 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
           className={`content-area ${themeClassName} application1`}
           aria-label="Application content"
         >
-        <eds-application-layout ref={applicationLayoutRef} open-left open-right>
-            <div slot="left-panel">
-              <sl-tab-group placement="end" activation="manual" aria-label="Settings sections">
-                <sl-tab slot="nav" panel="general">General</sl-tab>
-                <sl-tab slot="nav" panel="license-manager">License manager</sl-tab>
-                <sl-tab slot="nav" panel="connections" active>Connections</sl-tab>
-                <sl-tab-panel name="general"></sl-tab-panel>
-                <sl-tab-panel name="license-manager"></sl-tab-panel>
-                <sl-tab-panel name="connections"></sl-tab-panel>
-              </sl-tab-group>
+        <eds-application-layout ref={applicationLayoutRef} open-left>
+            <div slot="left-panel" className="application1-left-panel">
+              <eds-panel-layout heading="Navigation">
+                <sl-tab-group ref={leftTabGroupRef} placement="end" activation="manual" aria-label="Settings sections">
+                  {leftPanelPages.map((page) => (
+                    <sl-tab
+                      key={page.id}
+                      slot="nav"
+                      data-nav-id={page.id}
+                      onClick={() => setActiveLeftPageId(page.id)}
+                    >
+                      {page.label}
+                    </sl-tab>
+                  ))}
+                </sl-tab-group>
+              </eds-panel-layout>
             </div>
             <section className="example3-integrations" aria-label="Integrations">
-              <eds-page-header heading="Integrations" className="example3-page-header">
+              <eds-page-header heading={activeLeftPage.label} className="example3-page-header">
                 <sl-icon-button slot="icon" library="material" name="view_sidebar" label="View sidebar" onClick={toggleLeftPanel}></sl-icon-button>
                 <sl-breadcrumb slot="breadcrumb">
                   <sl-breadcrumb-item>Home</sl-breadcrumb-item>
                 </sl-breadcrumb>
                 <sl-badge slot="badge" variant="success">Active</sl-badge>
+                <sl-button slot="controls" variant="default" onClick={openRightPanel}>View details</sl-button>
                 <sl-button slot="controls" variant="default" onClick={openAddDialog}>Add</sl-button>
               </eds-page-header>
 
               <sl-dialog ref={addDialogRef} label="Add integration">
                 Add integration details here.
-                <sl-button slot="footer" variant="default" onClick={closeAddDialog}>Cancel</sl-button>
-                <sl-button slot="footer" variant="primary" onClick={closeAddDialog}>Submit</sl-button>
+                <sl-button slot="footer" variant="default" onClick={() => addDialogRef.current?.hide()}>Cancel</sl-button>
+                <sl-button slot="footer" variant="primary" onClick={() => addDialogRef.current?.hide()}>Submit</sl-button>
               </sl-dialog>
 
               <div className="page-content example3-content">
-                <p className="example3-section-label">AspenTech</p>
-                <div className="example3-card-grid">
-                  {aspenTechIntegrations.map(({ id, heading, description }) => (
-                    <eds-selectable-card
-                      key={id}
-                      control="switch"
-                      heading={heading}
-                      className="example3-card"
-                    >
-                      <p className="example3-card-description">{description}</p>
-                    </eds-selectable-card>
-                  ))}
-                </div>
-
-                <p className="example3-section-label">Partners</p>
-                <div className="example3-card-grid">
-                  {partnerIntegrations.map(({ id, heading, description }) => (
-                    <eds-selectable-card
-                      key={id}
-                      control="switch"
-                      heading={heading}
-                      className="example3-card"
-                    >
-                      <p className="example3-card-description">{description}</p>
-                    </eds-selectable-card>
-                  ))}
-                </div>
+                {activeLeftPage.groups.map((group) => (
+                  <section key={group.label} aria-label={group.label}>
+                    <p className="example3-section-label">{group.label}</p>
+                    <div className="example3-card-grid">
+                      {group.items.map(({ id, heading, description }) => (
+                        <eds-selectable-card
+                          key={id}
+                          control="switch"
+                          heading={heading}
+                          className="example3-card"
+                        >
+                          <p className="example3-card-description">{description}</p>
+                        </eds-selectable-card>
+                      ))}
+                    </div>
+                  </section>
+                ))}
               </div>
             </section>
-            <div slot="right-panel" className="centered-text">Right Panel Content</div>
+            <div slot="right-panel" className="application1-right-panel">
+              <eds-panel-layout ref={rightPanelRef} heading="Details" closable close-label="Close details">
+                <p className="example3-card-description">Right panel content</p>
+              </eds-panel-layout>
+            </div>
         </eds-application-layout>
         </main>
       </eds-shell-template>

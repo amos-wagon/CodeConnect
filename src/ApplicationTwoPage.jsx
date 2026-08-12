@@ -9,32 +9,131 @@ import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import '@shoelace-style/shoelace/dist/components/tab/tab.js'
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
 
-const defaultCards = [
+const sectionPages = [
   {
-    id: 'summary',
-    title: 'Summary',
-    description: 'Use this area for application-level status and key details.',
-    detailTitle: 'Summary details',
-    detailBody: 'This panel can show selected summary metrics, ownership, and next actions.'
+    id: 'assets',
+    label: 'Assets',
+    heading: 'Assets',
+    status: 'Default',
+    cards: [
+      {
+        id: 'asset-summary',
+        title: 'Asset summary',
+        description: 'Review active equipment, health status, and ownership.',
+        detailTitle: 'Asset summary details',
+        detailBody: 'View equipment status, ownership, and current alerts for this asset group.'
+      },
+      {
+        id: 'asset-performance',
+        title: 'Asset performance',
+        description: 'Track efficiency and reliability trends across core assets.',
+        detailTitle: 'Asset performance details',
+        detailBody: 'Analyze trend data and performance baselines for selected assets.'
+      }
+    ]
   },
   {
-    id: 'recent-activity',
-    title: 'Recent activity',
-    description: 'Show recent events, updates, or workflow highlights here.',
-    detailTitle: 'Recent activity details',
-    detailBody: 'This panel can show timestamped events, user actions, and contextual links.'
+    id: 'operations',
+    label: 'Operations',
+    heading: 'Operations',
+    status: 'Active',
+    cards: [
+      {
+        id: 'daily-reports',
+        title: 'Daily reports',
+        description: 'Monitor shift summaries, throughput, and handoff notes.',
+        detailTitle: 'Daily reports details',
+        detailBody: 'Open consolidated shift data, throughput highlights, and exceptions.'
+      },
+      {
+        id: 'work-queue',
+        title: 'Work queue',
+        description: 'Prioritize open tasks and operational follow-up actions.',
+        detailTitle: 'Work queue details',
+        detailBody: 'Review action priority, due dates, and ownership for current tasks.'
+      }
+    ]
+  },
+  {
+    id: 'settings',
+    label: 'Settings',
+    heading: 'Settings',
+    status: 'Configured',
+    cards: [
+      {
+        id: 'panel-preferences',
+        title: 'Panel preferences',
+        description: 'Adjust panel defaults and visibility behavior.',
+        detailTitle: 'Panel preferences details',
+        detailBody: 'Manage panel open behavior, saved views, and navigation defaults.'
+      },
+      {
+        id: 'notification-rules',
+        title: 'Notification rules',
+        description: 'Define what events trigger operational notifications.',
+        detailTitle: 'Notification rules details',
+        detailBody: 'Configure event thresholds and notification routing for this page.'
+      }
+    ]
   }
 ]
+
+const emptyCard = {
+  id: 'empty',
+  title: 'No details',
+  description: '',
+  detailTitle: 'Details',
+  detailBody: 'Select a card to view details.'
+}
 
 function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItems, activePage, onNavigate }) {
   const modalSidenavRef = useRef(null)
   const applicationLayoutRef = useRef(null)
   const rightPanelRef = useRef(null)
+  const leftTabGroupRef = useRef(null)
+  const [activeSectionId, setActiveSectionId] = useState(sectionPages[0].id)
   const [selectedCardId, setSelectedCardId] = useState(null)
+
+  const activeSection = sectionPages.find((section) => section.id === activeSectionId) ?? sectionPages[0]
+  const activeCards = activeSection.cards
 
   useEffect(() => {
     modalSidenavRef.current?.hide?.()
   }, [])
+
+  useEffect(() => {
+    const tabGroup = leftTabGroupRef.current
+
+    if (!tabGroup) {
+      return
+    }
+
+    const tabs = tabGroup.querySelectorAll('sl-tab[slot="nav"]')
+
+    tabs.forEach((tab) => {
+      const isActive = tab.getAttribute('data-nav-id') === activeSectionId
+
+      if (isActive) {
+        tab.setAttribute('active', '')
+        return
+      }
+
+      tab.removeAttribute('active')
+    })
+  }, [activeSectionId])
+
+  useEffect(() => {
+    const layout = applicationLayoutRef.current
+
+    if (!activeCards.length) {
+      setSelectedCardId(null)
+      layout?.removeAttribute('open-right')
+      return
+    }
+
+    setSelectedCardId(activeCards[0].id)
+    layout?.removeAttribute('open-right')
+  }, [activeSectionId])
 
   useEffect(() => {
     const rightPanel = rightPanelRef.current
@@ -102,7 +201,7 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
     layout.removeAttribute('open-right')
   }
 
-  const selectedCard = defaultCards.find(card => card.id === selectedCardId) ?? defaultCards[0]
+  const selectedCard = activeCards.find((card) => card.id === selectedCardId) ?? activeCards[0] ?? emptyCard
 
   return (
     <div className={`App eds-base ${themeClassName}`} theme={theme}>
@@ -178,11 +277,22 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
           <eds-application-layout ref={applicationLayoutRef} open-left>
             <div slot="left-panel" className="application2-left-panel">
               <eds-panel-layout heading="Navigation">
-                <p className="application2-panel-copy">Default left panel content.</p>
+                <sl-tab-group ref={leftTabGroupRef} placement="end" activation="manual" aria-label="Left panel navigation">
+                  {sectionPages.map((section) => (
+                    <sl-tab
+                      key={section.id}
+                      slot="nav"
+                      data-nav-id={section.id}
+                      onClick={() => setActiveSectionId(section.id)}
+                    >
+                      {section.label}
+                    </sl-tab>
+                  ))}
+                </sl-tab-group>
               </eds-panel-layout>
             </div>
             <section className="application2-default-page" aria-label="Application 2 content">
-              <eds-page-header heading="Overview" className="application2-page-header">
+              <eds-page-header heading={activeSection.heading} className="application2-page-header">
                 <sl-icon-button
                   slot="icon"
                   library="material"
@@ -190,12 +300,10 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
                   label="View sidebar"
                   onClick={toggleLeftPanel}
                 ></sl-icon-button>
-                <sl-badge slot="badge" variant="success">Default</sl-badge>
-                <sl-button slot="controls" variant="default">Open</sl-button>
               </eds-page-header>
               <div className="page-content application2-page-content">
-                <section className="application2-content-grid" aria-label="Default sections">
-                  {defaultCards.map((card) => (
+                <section className="application2-content-grid" aria-label={`${activeSection.heading} sections`}>
+                  {activeCards.map((card) => (
                     <eds-button-card
                       key={card.id}
                       heading={card.title}
