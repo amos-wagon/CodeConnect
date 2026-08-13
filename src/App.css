@@ -277,24 +277,6 @@ sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
   max-width: 30rem;
 }
 
-.example3-form-layout {
-  display: grid;
-  padding: var(--sl-spacing-medium-plus);
-}
-
-.example3-form {
-  display: grid;
-  gap: var(--sl-spacing-medium);
-}
-
-.example3-form sl-input {
-  max-width: 30rem;
-}
-
-.example3-save-button {
-  justify-self: start;
-}
-
 eds-toast::part(base) {
   bottom: var(--sl-spacing-2x-large);
   transform: translate(-50%, 0);
@@ -310,12 +292,6 @@ eds-toast::part(base) {
 }
 
 @media (max-width: 1024px) {
-}
-
-@media (max-width: 640px) {
-  .example3-form-layout {
-    padding: var(--sl-spacing-medium);
-  }
 }
 
 .example2-placeholder {

@@ -4,7 +4,6 @@ import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
 import '@shoelace-style/shoelace/dist/components/button/button.js'
 import '@shoelace-style/shoelace/dist/components/divider/divider.js'
-import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import '@shoelace-style/shoelace/dist/components/menu-item/menu-item.js'
@@ -148,11 +147,9 @@ const leftPanelPages = [
 function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItems, activePage, onNavigate }) {
   const modalSidenavRef = useRef(null)
   const applicationLayoutRef = useRef(null)
-  const addDialogRef = useRef(null)
   const rightPanelRef = useRef(null)
   const leftTabGroupRef = useRef(null)
   const [activeLeftPageId, setActiveLeftPageId] = useState('connections')
-
   const activeLeftPage = leftPanelPages.find((page) => page.id === activeLeftPageId) ?? leftPanelPages[0]
 
   useEffect(() => {
@@ -194,24 +191,6 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
     })
   }, [activeLeftPageId])
 
-  useEffect(() => {
-    const dialog = addDialogRef.current
-    if (!dialog) return
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        e.stopPropagation()
-        dialog.hide()
-      }
-    }
-
-    dialog.addEventListener('keydown', handleKeyDown, true)
-    return () => {
-      dialog.removeEventListener('keydown', handleKeyDown, true)
-    }
-  }, [])
-
   const openModalSidenav = () => {
     const sidenav = modalSidenavRef.current
 
@@ -241,20 +220,6 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
     }
 
     layout.setAttribute('open-left', '')
-  }
-
-  const openAddDialog = () => {
-    addDialogRef.current?.show?.()
-  }
-
-  const openRightPanel = () => {
-    const layout = applicationLayoutRef.current
-
-    if (!layout) {
-      return
-    }
-
-    layout.setAttribute('open-right', '')
   }
 
   const closeRightPanel = () => {
@@ -361,22 +326,16 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
               </eds-panel-layout>
             </div>
             <section className="example3-integrations" aria-label="Integrations">
-              <eds-page-header heading={activeLeftPage.label} className="example3-page-header">
-                <sl-icon-button slot="icon" library="material" name="view_sidebar" label="View sidebar" onClick={toggleLeftPanel}></sl-icon-button>
-                <sl-breadcrumb slot="breadcrumb">
-                  <sl-breadcrumb-item>Home</sl-breadcrumb-item>
-                </sl-breadcrumb>
-                <sl-badge slot="badge" variant="success">Active</sl-badge>
-                <sl-button slot="controls" variant="default" onClick={openRightPanel}>View details</sl-button>
-                <sl-button slot="controls" variant="default" onClick={openAddDialog}>Add</sl-button>
+              <eds-page-header heading={activeLeftPage.label}>
+                <sl-icon-button
+                  slot="icon"
+                  library="material"
+                  name="view_sidebar"
+                  label="Toggle navigation panel"
+                  onClick={toggleLeftPanel}
+                ></sl-icon-button>
+                <sl-button slot="controls" variant="default">Add</sl-button>
               </eds-page-header>
-
-              <sl-dialog ref={addDialogRef} label="Add integration">
-                Add integration details here.
-                <sl-button slot="footer" variant="default" onClick={() => addDialogRef.current?.hide()}>Cancel</sl-button>
-                <sl-button slot="footer" variant="primary" onClick={() => addDialogRef.current?.hide()}>Submit</sl-button>
-              </sl-dialog>
-
               <div className="page-content example3-content">
                 {activeLeftPage.groups.map((group) => (
                   <section key={group.label} aria-label={group.label}>
@@ -387,7 +346,7 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
                           key={id}
                           control="switch"
                           heading={heading}
-                          className="example3-card"
+                          class="example3-card"
                         >
                           <p className="example3-card-description">{description}</p>
                         </eds-selectable-card>
@@ -399,7 +358,6 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
             </section>
             <div slot="right-panel" className="application1-right-panel">
               <eds-panel-layout ref={rightPanelRef} heading="Details" closable close-label="Close details">
-                <p className="example3-card-description">Right panel content</p>
               </eds-panel-layout>
             </div>
         </eds-application-layout>

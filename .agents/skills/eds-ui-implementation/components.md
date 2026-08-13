@@ -65,9 +65,10 @@
 ### Form layout baseline
 
 - Prefer single-column form flow; expand to two columns only when space and readability support it.
-- Keep form control max width at 30rem for typical input/select controls unless requirement differs.
-- Use two spacing levels: section-to-section `var(--sl-spacing-x-large)` and control-to-control `var(--sl-spacing-medium)`.
-- Use separate wrappers for section spacing vs field spacing.
+- Keep typical `sl-input`, `sl-select`, and other form controls at `max-width: 30rem`; do not use unconstrained `width: 100%` on the controls unless the design explicitly requires full-width fields.
+- Use two spacing levels: section-to-section `var(--sl-spacing-x-large)` and control-to-control `var(--sl-spacing-medium)`. Do not use `var(--sl-spacing-3x-small)` or `var(--sl-spacing-2x-small)` as the default form field gap.
+- Use separate wrappers for section spacing vs field spacing: the section wrapper owns `var(--sl-spacing-x-large)`, and the field wrapper owns `var(--sl-spacing-medium)`.
+- Before finalizing a form, verify both the rendered control width and the measured vertical gap between two adjacent fields against these rules.
 
 ## Radio group
 
@@ -79,8 +80,10 @@
 
 - Use `sl-button` for button actions unless an explicit requirement states otherwise.
 - Default button size is `medium`.
-- Keep button width content-based by default; do not stretch to full width unless explicitly required.
+- All buttons must remain content-fit to their labels; never stretch a button to full width unless explicitly required.
 - Keep labels concise and action-oriented.
+- In React, use the literal `class` attribute rather than `className` on Shoelace and EDS custom elements when a CSS class hook is required; verify the rendered custom element has the expected class before relying on that selector.
+- Before finalizing a form, verify that every button is content-fit in the rendered layout and that any custom-element CSS hook is present on the element.
 
 ## Cards
 

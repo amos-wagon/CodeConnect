@@ -11,6 +11,13 @@ Use this file as the implementation contract for UI work in this repository.
 - Honor request scope: implement only what was asked unless existing patterns require otherwise.
 - Do not add new headers, intro text, or section titles unless explicitly requested or required for accessibility/context.
 
+### Figma and EDS conflicts
+
+- Treat Figma as the source of visual intent for layout, hierarchy, content, and interaction states.
+- When Figma conflicts with EDS components, design tokens, accessibility, or responsive requirements, EDS constraints take precedence.
+- Preserve the closest possible Figma appearance using the approved EDS component or token rather than recreating a control or hardcoding a visual value.
+- Record meaningful visual deviations in the implementation summary when an exact match is not possible.
+
 ## 2) Token mapping defaults
 
 Use these as first-choice tokens:
