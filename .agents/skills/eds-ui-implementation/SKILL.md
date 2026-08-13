@@ -27,19 +27,20 @@ Always use this skill whenever the task involves building, modifying, reviewing,
 - Follow content guidelines for all UI language and communication displayed in UI components
 
 ## Required supporting files
-- Read design.md
 - Read accessibility.md
 - Read content.md
 - Read components.md
+- Read implementation.md
 
 ## Mandatory execution order
-1. Read all four supporting files before proposing or writing UI code.
+1. Read all five supporting files before proposing or writing UI code.
 2. Extract required component rules for the specific request and list them in working notes.
 3. Implement with EDS/Shoelace components first, then apply token-only styling.
 4. Run a compliance self-check against the required component rules before finalizing.
 
 ## Definition of done for UI changes
-- Required EDS components are used where mandated by `components.md` and `design.md`.
+- Required EDS components are used where mandated by `components.md`.
 - No custom composition is used where an explicit EDS component requirement exists.
 - Styling uses EDS/Shoelace tokens only for color, spacing, and typography.
 - Accessibility and content checks from `accessibility.md` and `content.md` are satisfied.
+- Implementation guidance from `implementation.md` is applied and validated for the UI change.
