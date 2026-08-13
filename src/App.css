@@ -5,6 +5,14 @@
   height: 100%;
 }
 
+p {
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
+  font-weight: var(--sl-font-weight-normal);
+  line-height: var(--sl-line-height-dense);
+  color: var(--eds-text-default);
+}
+
 .skip-link {
   position: absolute;
   left: var(--sl-spacing-medium);
@@ -32,20 +40,6 @@
   height: 100%;
 }
 
-eds-sidenav {
-  --sl-panel-background-color: var(--eds-background-weak);
-}
-
-.sidenav-shell {
-  --height: 100%;
-}
-
-.sidenav-links {
-  display: grid;
-  gap: var(--sl-spacing-x-small);
-  padding: 0 var(--sl-spacing-small);
-}
-
 .content-area {
   box-sizing: border-box;
   width: 100%;
@@ -63,6 +57,64 @@ eds-sidenav {
   display: block;
   width: 100%;
   max-width: 100%;
+}
+
+.content-area.application1,
+.content-area.application2 {
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.app-shell-template.application1,
+.app-shell-template.application2 {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-shell-template.application1 > eds-sidenav[mode='modal']:not(.sidenav--visible),
+.app-shell-template.application2 > eds-sidenav[mode='modal']:not(.sidenav--visible) {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.content-area.application1 > eds-application-layout,
+.content-area.application2 > eds-application-layout {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.content-area.application1 > eds-application-layout > [slot='left-panel'],
+.content-area.application1 > eds-application-layout > [slot='right-panel'],
+.content-area.application2 > eds-application-layout > [slot='left-panel'],
+.content-area.application2 > eds-application-layout > [slot='right-panel'] {
+  block-size: 100%;
+}
+
+/* Ensure vertical Shoelace tabs fill container width, not label width. */
+sl-tab-group:is([placement='start'], [placement='end'])::part(nav),
+sl-tab-group:is([placement='start'], [placement='end']) sl-tab,
+sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
+  inline-size: 100%;
+  gap: 0;
+}
+
+.centered-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  font-family: var(--sl-font-sans);
+  color: var(--eds-text-default);
 }
 
 .example1-form {
@@ -463,11 +515,6 @@ eds-toast::part(base) {
   gap: var(--sl-spacing-medium);
 }
 
-.example4-page-header::part(base) {
-  padding: var(--sl-spacing-large);
-  padding-bottom: var(--sl-spacing-medium);
-}
-
 .example4-breadcrumb::part(base) {
   font-size: var(--sl-font-size-small);
 }
@@ -558,4 +605,307 @@ eds-toast::part(base) {
   }
 }
 
+/* Example 3 — Integrations */
+.example3-integrations {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.example3-options {
+  display: block;
+  width: 100%;
+}
+
+.example3-option-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--sl-spacing-large);
+  row-gap: var(--sl-spacing-large);
+  grid-auto-rows: 1fr;
+}
+
+.example3-option-card {
+  height: 100%;
+}
+
+.example3-option-card::part(base) {
+  height: 100%;
+}
+
+@media (max-width: 860px) {
+  .example3-option-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .example3-option-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.content-area.application1 .page-content {
+  padding-inline: var(--sl-spacing-x-large);
+}
+
+.content-area.application2 .page-content {
+  padding-inline: var(--sl-spacing-x-large);
+}
+
+.application2-default-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.application2-page-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.application2-content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--sl-spacing-large);
+}
+
+.application1-left-panel,
+.application1-right-panel,
+.application2-left-panel,
+.application2-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-2x-small);
+  block-size: 100%;
+  min-block-size: 0;
+  overflow-y: auto;
+}
+
+.application2-panel-title {
+  margin: 0;
+  color: var(--eds-text-default);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
+}
+
+.example3-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-large);
+}
+
+.example3-section-label {
+  margin: 0;
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
+}
+
+.example3-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  column-gap: var(--sl-spacing-large);
+  row-gap: var(--sl-spacing-large);
+  grid-auto-rows: 1fr;
+}
+
+.example3-card {
+  height: 100%;
+}
+
+.example3-card::part(base) {
+  height: 100%;
+}
+
+.example3-card-description {
+  margin: 0;
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-small);
+}
+
+/* Example 4 — Select and combo inputs */
+.example4-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.example4-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-medium);
+}
+
+.example4-field-group sl-input {
+  max-width: 30rem;
+}
+
+/* ── Application 3 ────────────────────────────────────────────────── */
+
+.content-area.application3 {
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.app-shell-template.application3 {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-shell-template.application3 > eds-sidenav[mode='modal']:not(.sidenav--visible) {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.content-area.application3 > eds-application-layout {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.content-area.application3 > eds-application-layout > [slot='left-panel'] {
+  block-size: 100%;
+}
+
+/* App icon in appbar */
+.application3-app-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 32px;
+  block-size: 32px;
+  background-color: var(--sl-color-primary-600);
+  border-radius: var(--sl-border-radius-medium);
+  color: #fff;
+}
+
+/* Left panel */
+.application3-left-panel {
+  block-size: 100%;
+  overflow-y: auto;
+}
+
+.application3-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-small);
+}
+
+.application3-case-tree {
+  display: block;
+  margin-block-start: var(--sl-spacing-2x-small);
+}
+
+/* Main section */
+.application3-main-section {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+.application3-page-header {
+  flex-shrink: 0;
+}
+
+/* Content area below page header */
+.application3-content {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sub-tabs (Purchases / Sales / ...) – remove default tab body padding */
+.application3-content-tabs {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+.application3-content-tabs::part(body) {
+  padding: 0;
+  flex: 1 1 auto;
+  overflow: visible;
+}
+
+.application3-content-tabs::part(nav) {
+  padding-inline: var(--sl-spacing-x-large);
+}
+
+/* Tab panels */
+.application3-tab-panel {
+  display: block;
+}
+
+.application3-tab-panel::part(base) {
+  padding: 0;
+}
+
+/* Purchases tab content */
+.application3-purchases-controls {
+  display: flex;
+  gap: 0;
+  padding-inline: var(--sl-spacing-x-large);
+  padding-block: var(--sl-spacing-small);
+  border-block-end: 1px solid var(--eds-border-default);
+}
+
+/* View toggle uses sl-radio-group with sl-radio-button; no custom styles needed */
+
+/* AG Grid wrapper */
+.application3-grid-wrapper {
+  padding-inline: var(--sl-spacing-x-large);
+  padding-block: var(--sl-spacing-medium);
+}
+
+/* Link-style cells in the grid */
+.application3-grid-link {
+  color: var(--eds-text-link);
+  text-decoration: none;
+}
+
+.application3-grid-link:hover {
+  text-decoration: underline;
+}
+
+/* AG Grid EDS token overrides */
+.application3-grid-wrapper.ag-theme-quartz {
+  --ag-font-family: var(--sl-font-sans);
+  --ag-font-size: var(--sl-font-size-small);
+  --ag-foreground-color: var(--eds-text-default);
+  --ag-secondary-foreground-color: var(--eds-text-secondary);
+  --ag-background-color: var(--eds-background-default);
+  --ag-odd-row-background-color: var(--eds-background-weak);
+  --ag-header-background-color: var(--eds-background-default);
+  --ag-border-color: var(--eds-border-default);
+  --ag-row-border-color: var(--eds-border-default);
+  --ag-header-foreground-color: var(--eds-text-default);
+  --ag-row-hover-color: var(--eds-interactive-weak);
+  --ag-selected-row-background-color: var(--eds-interactive-weak);
+  --ag-row-height: 38px;
+  --ag-header-height: 48px;
+}
+
+/* Empty panel placeholder text */
+.application3-empty-panel {
+  margin: var(--sl-spacing-large);
+  color: var(--eds-text-secondary);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
+}
 

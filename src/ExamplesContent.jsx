@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as echarts from 'echarts'
 import '@shoelace-style/shoelace/dist/components/card/card.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
@@ -15,6 +15,7 @@ import '@shoelace-style/shoelace/dist/components/details/details.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
 import '@shoelace-style/shoelace/dist/components/alert/alert.js'
+import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
 
 function ExampleOneContent() {
   return (
@@ -43,23 +44,17 @@ function ExampleOneContent() {
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
               <sl-tab-group>
-                <sl-tab slot="nav" panel="bad-docs">Documents list</sl-tab>
-                <sl-tab slot="nav" panel="bad-images">View Images</sl-tab>
-                <sl-tab slot="nav" panel="bad-downloads">Download options</sl-tab>
-                <sl-tab-panel name="bad-docs"></sl-tab-panel>
-                <sl-tab-panel name="bad-images"></sl-tab-panel>
-                <sl-tab-panel name="bad-downloads"></sl-tab-panel>
+                <sl-tab slot="nav">Documents list</sl-tab>
+                <sl-tab slot="nav">View Images</sl-tab>
+                <sl-tab slot="nav">Download options</sl-tab>
               </sl-tab-group>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
               <sl-tab-group>
-                <sl-tab slot="nav" panel="good-docs">Documents</sl-tab>
-                <sl-tab slot="nav" panel="good-images">Images</sl-tab>
-                <sl-tab slot="nav" panel="good-downloads">Downloads</sl-tab>
-                <sl-tab-panel name="good-docs"></sl-tab-panel>
-                <sl-tab-panel name="good-images"></sl-tab-panel>
-                <sl-tab-panel name="good-downloads"></sl-tab-panel>
+                <sl-tab slot="nav">Documents</sl-tab>
+                <sl-tab slot="nav">Images</sl-tab>
+                <sl-tab slot="nav">Downloads</sl-tab>
               </sl-tab-group>
             </div>
           </div>
@@ -404,6 +399,24 @@ function ExampleTwoContent() {
     </section>
   )
 }
+
+const aspenTechIntegrations = [
+  { id: 'hysys1', heading: 'HYSYS 1', description: 'Aspen HYSYS is a process simulation tool used to model and optimize oil, gas, and refining plants.' },
+  { id: 'acce', heading: 'ACCE', description: 'Estimates project costs, equipment, and economics.' },
+  { id: 'acce2', heading: 'ACCE', description: 'Estimates project costs, equipment, and economics.' },
+  { id: 'fidelis', heading: 'Fidelis', description: 'Predicts asset availability and quantifies financial risks using reliability modeling.' },
+  { id: 'edr', heading: 'EDR', description: 'Provides rigorous thermal and mechanical design for heat exchangers.' },
+  { id: 'aspen-properties', heading: 'Aspen Properties', description: 'Predicts physical and thermodynamic properties of chemical mixtures and fluids.' },
+  { id: 'optiplant', heading: 'OptiPlant', description: 'Optimizes 3D plant layouts and piping routes for early-stage engineering.' },
+  { id: 'abe', heading: 'ABE', description: 'Manages data flow between conceptual design and detailed engineering.' },
+]
+
+const partnerIntegrations = [
+  { id: 'ibm-maximo', heading: 'IBM Maximo', description: 'Enterprise asset management (EAM) software with IBM Maximo.' },
+  { id: 'scheduler', heading: 'Scheduler', description: 'Manages project timelines, resource allocation, and task sequencing.' },
+  { id: 'mybi', heading: 'MyBI', description: 'Manages project timelines, resource allocation, and task sequencing.' },
+]
+
 
 function ExampleThreeContent() {
   return (
