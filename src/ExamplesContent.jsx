@@ -16,6 +16,8 @@ import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
 import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
 import '@shoelace-style/shoelace/dist/components/alert/alert.js'
 import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
+import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
+import '@shoelace-style/shoelace/dist/components/tab/tab.js'
 
 function ExampleOneContent() {
   return (
@@ -167,10 +169,9 @@ function ExampleOneContent() {
 function ExampleTwoContent() {
   const weeklyTrendChartRef = useRef(null)
   const loadDistributionChartRef = useRef(null)
-  const hourlyOutputChartRef = useRef(null)
 
   useEffect(() => {
-    if (!weeklyTrendChartRef.current || !loadDistributionChartRef.current || !hourlyOutputChartRef.current) {
+    if (!weeklyTrendChartRef.current || !loadDistributionChartRef.current) {
       return
     }
 
@@ -185,7 +186,6 @@ function ExampleTwoContent() {
 
     const weeklyTrendChart = echarts.init(weeklyTrendChartRef.current)
     const loadDistributionChart = echarts.init(loadDistributionChartRef.current)
-    const hourlyOutputChart = echarts.init(hourlyOutputChartRef.current)
 
     const edsChartOptions = {
       color: [interactiveDefault, interactiveHover, textLink],
@@ -249,37 +249,9 @@ function ExampleTwoContent() {
       ]
     })
 
-    hourlyOutputChart.setOption({
-      ...edsChartOptions,
-      tooltip: { trigger: 'axis' },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-        axisLabel: { color: textSecondary }
-      },
-      yAxis: {
-        type: 'value',
-        axisLabel: { color: textSecondary },
-        splitLine: { lineStyle: { color: borderDefault } }
-      },
-      series: [
-        {
-          name: 'Output',
-          type: 'line',
-          smooth: true,
-          showSymbol: false,
-          data: [148, 162, 174, 168, 183, 191, 186, 172],
-          lineStyle: { width: 3 },
-          areaStyle: { opacity: 0.15 }
-        }
-      ]
-    })
-
     const onResize = () => {
       weeklyTrendChart.resize()
       loadDistributionChart.resize()
-      hourlyOutputChart.resize()
     }
 
     const resizeObserver = new ResizeObserver(() => {
@@ -288,7 +260,6 @@ function ExampleTwoContent() {
 
     resizeObserver.observe(weeklyTrendChartRef.current)
     resizeObserver.observe(loadDistributionChartRef.current)
-    resizeObserver.observe(hourlyOutputChartRef.current)
 
     requestAnimationFrame(() => {
       onResize()
@@ -301,7 +272,6 @@ function ExampleTwoContent() {
       resizeObserver.disconnect()
       weeklyTrendChart.dispose()
       loadDistributionChart.dispose()
-      hourlyOutputChart.dispose()
     }
   }, [])
 
@@ -346,11 +316,6 @@ function ExampleTwoContent() {
           <div ref={loadDistributionChartRef} className="example2-echart" aria-label="Load distribution chart"></div>
         </sl-card>
       </div>
-
-      <sl-card className="example2-chart-card">
-        <h2 className="example2-section-heading">Hourly output trend</h2>
-        <div ref={hourlyOutputChartRef} className="example2-echart example2-echart-hourly" aria-label="Hourly output trend chart"></div>
-      </sl-card>
 
       <sl-card className="example2-table-card">
         <h2 className="example2-section-heading">Asset summary</h2>
@@ -420,7 +385,7 @@ const partnerIntegrations = [
 
 function ExampleThreeContent() {
   return (
-    <section className="example3-form-layout" aria-label="Example 3">
+    <section aria-label="Example 3">
     </section>
   )
 }

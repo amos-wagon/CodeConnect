@@ -172,17 +172,6 @@ function App() {
               navigateToPage('application2')
             }}
           ></eds-sidenav-item>
-          <eds-sidenav-item
-            type="node"
-            label="Application 3"
-            icon="apps"
-            href="#application3"
-            active={activePage === 'application3'}
-            onClick={(event) => {
-              event.preventDefault()
-              navigateToPage('application3')
-            }}
-          ></eds-sidenav-item>
 
         </eds-sidenav>
         <eds-appbar slot="appbar" role="banner" className={themeClassName} theme={theme}>
