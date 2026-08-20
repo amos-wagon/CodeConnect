@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import * as echarts from 'echarts'
+import { AgGridReact } from 'ag-grid-react'
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'
+import 'ag-grid-community/styles/ag-grid.css'
+import 'ag-grid-community/styles/ag-theme-quartz.css'
+import '@aspentech/pf-ui-core/integrations/eds-aggrid.css'
 import '@shoelace-style/shoelace/dist/components/card/card.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
+import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import '@shoelace-style/shoelace/dist/components/button/button.js'
 import '@shoelace-style/shoelace/dist/components/badge/badge.js'
 import '@shoelace-style/shoelace/dist/components/input/input.js'
@@ -18,6 +24,8 @@ import '@shoelace-style/shoelace/dist/components/alert/alert.js'
 import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
 import '@shoelace-style/shoelace/dist/components/tab/tab.js'
+
+ModuleRegistry.registerModules([AllCommunityModule])
 
 function ExampleOneContent() {
   return (
@@ -168,10 +176,10 @@ function ExampleOneContent() {
 
 function ExampleTwoContent() {
   const weeklyTrendChartRef = useRef(null)
-  const loadDistributionChartRef = useRef(null)
+  const sitePerformanceChartRef = useRef(null)
 
   useEffect(() => {
-    if (!weeklyTrendChartRef.current || !loadDistributionChartRef.current) {
+    if (!weeklyTrendChartRef.current || !sitePerformanceChartRef.current) {
       return
     }
 
@@ -185,7 +193,7 @@ function ExampleTwoContent() {
     const fontSans = rootStyles.getPropertyValue('--sl-font-sans').trim() || 'sans-serif'
 
     const weeklyTrendChart = echarts.init(weeklyTrendChartRef.current)
-    const loadDistributionChart = echarts.init(loadDistributionChartRef.current)
+    const sitePerformanceChart = echarts.init(sitePerformanceChartRef.current)
 
     const edsChartOptions = {
       color: [interactiveDefault, interactiveHover, textLink],
@@ -220,38 +228,58 @@ function ExampleTwoContent() {
       ]
     })
 
-    loadDistributionChart.setOption({
+    sitePerformanceChart.setOption({
       ...edsChartOptions,
       tooltip: { trigger: 'item' },
       legend: {
-        orient: 'vertical',
-        right: 0,
-        top: 'center',
+        bottom: 0,
+        left: 'center',
         textStyle: {
           fontFamily: fontSans,
-          color: textDefault
+          color: textDefault,
         }
+      },
+      radar: {
+        center: ['50%', '46%'],
+        radius: '58%',
+        indicator: [
+          { name: 'Site A', max: 100 },
+          { name: 'Site B', max: 100 },
+          { name: 'Site C', max: 100 },
+          { name: 'Site D', max: 100 },
+          { name: 'Site E', max: 100 },
+        ],
+        axisName: {
+          color: textSecondary,
+          fontFamily: fontSans,
+        },
+        splitLine: {
+          lineStyle: { color: borderDefault },
+        },
+        splitArea: {
+          areaStyle: {
+            color: ['transparent', 'transparent'],
+          },
+        },
+        axisLine: {
+          lineStyle: { color: borderDefault },
+        },
       },
       series: [
         {
-          name: 'Load',
-          type: 'pie',
-          radius: ['48%', '72%'],
-          center: ['34%', '50%'],
-          label: { color: textSecondary },
-          data: [
-            { value: 42, name: 'Site A' },
-            { value: 31, name: 'Site B' },
-            { value: 19, name: 'Site C' },
-            { value: 8, name: 'Site D' }
-          ]
+          name: 'Site performance',
+          type: 'radar',
+          lineStyle: { color: interactiveDefault, width: 2 },
+          itemStyle: { color: interactiveDefault },
+          areaStyle: { color: interactiveDefault, opacity: 0.18 },
+          data: [{ value: [82, 68, 91, 74, 86], name: 'Site performance' }],
         }
       ]
     })
 
     const onResize = () => {
       weeklyTrendChart.resize()
-      loadDistributionChart.resize()
+      sitePerformanceChart.resize()
     }
 
     const resizeObserver = new ResizeObserver(() => {
@@ -259,7 +287,7 @@ function ExampleTwoContent() {
     })
 
     resizeObserver.observe(weeklyTrendChartRef.current)
-    resizeObserver.observe(loadDistributionChartRef.current)
+    resizeObserver.observe(sitePerformanceChartRef.current)
 
     requestAnimationFrame(() => {
       onResize()
@@ -271,7 +299,7 @@ function ExampleTwoContent() {
       window.removeEventListener('resize', onResize)
       resizeObserver.disconnect()
       weeklyTrendChart.dispose()
-      loadDistributionChart.dispose()
+      sitePerformanceChart.dispose()
     }
   }, [])
 
@@ -312,8 +340,8 @@ function ExampleTwoContent() {
         </sl-card>
 
         <sl-card className="example2-chart-card">
-          <h2 className="example2-section-heading">Load distribution</h2>
-          <div ref={loadDistributionChartRef} className="example2-echart" aria-label="Load distribution chart"></div>
+          <h2 className="example2-section-heading">Site performance</h2>
+          <div ref={sitePerformanceChartRef} className="example2-echart" aria-label="Site performance radar chart"></div>
         </sl-card>
       </div>
 
@@ -382,19 +410,114 @@ const partnerIntegrations = [
   { id: 'mybi', heading: 'MyBI', description: 'Manages project timelines, resource allocation, and task sequencing.' },
 ]
 
+const assets = [
+  { name: 'Compressor 01', id: 'CMP-001', type: 'Compressor' },
+  { name: 'Bearing 01', id: 'BRG-001', type: 'Bearing' },
+  { name: 'Pump 01', id: 'PMP-001', type: 'Pump' },
+]
+
+const assetColumnDefs = [
+  { field: 'name', headerName: 'Name', flex: 1, minWidth: 180 },
+  { field: 'id', headerName: 'ID', flex: 1, minWidth: 140 },
+  { field: 'type', headerName: 'Type', flex: 1, minWidth: 160 },
+]
+
+const assetDefaultColDef = {
+  sortable: true,
+  resizable: true,
+  filter: true,
+}
 
 function ExampleThreeContent() {
+  const [searchValue, setSearchValue] = useState('')
+  const [isSearchVisible, setIsSearchVisible] = useState(false)
+  const [isSearchMounted, setIsSearchMounted] = useState(false)
+  const [gridApi, setGridApi] = useState(null)
+  const searchInputRef = useRef(null)
+
+  useEffect(() => {
+    if (isSearchVisible) {
+      window.requestAnimationFrame(() => searchInputRef.current?.focus())
+    }
+  }, [isSearchVisible])
+
+  useEffect(() => {
+    const searchInput = searchInputRef.current
+    const handleSearchInput = (event) => {
+      const input = event.composedPath()[0]
+      setSearchValue(input.value)
+    }
+
+    searchInput?.addEventListener('input', handleSearchInput)
+
+    return () => {
+      searchInput?.removeEventListener('input', handleSearchInput)
+    }
+  }, [isSearchVisible])
+
+  useEffect(() => {
+    gridApi?.setGridOption('quickFilterText', searchValue)
+  }, [gridApi, searchValue])
+
   return (
-    <section aria-label="Example 3">
+    <section className="example3-assets" aria-label="Assets">
+      <eds-alert variant="danger">
+        Assets information is not connected to a server.
+      </eds-alert>
+      <div className="example3-table-toolbar">
+        <div className="example3-table-filters">
+          <span className="example3-item-count">{assets.length} assets</span>
+        </div>
+        <div className="example3-table-actions">
+          {isSearchMounted ? (
+            <sl-input
+              ref={searchInputRef}
+              class={`example3-search-input${isSearchVisible ? ' is-visible' : ''}`}
+              size="medium"
+              placeholder="Search..."
+              value={searchValue}
+              onBlur={() => setIsSearchVisible(false)}
+              onTransitionEnd={(event) => {
+                if (!isSearchVisible && event.propertyName === 'width') {
+                  setIsSearchMounted(false)
+                }
+              }}
+              aria-label="Search assets"
+            ></sl-input>
+          ) : (
+            <sl-icon-button
+              library="material"
+              name="search"
+              label="Search assets"
+              onClick={() => {
+                setIsSearchMounted(true)
+                window.requestAnimationFrame(() => setIsSearchVisible(true))
+              }}
+            ></sl-icon-button>
+          )}
+          <sl-button variant="primary">Add asset</sl-button>
+          <sl-icon-button
+            library="material"
+            name="more_vert"
+            label="More asset actions"
+          ></sl-icon-button>
+        </div>
+      </div>
+      <div className="example3-grid-wrapper ag-theme-quartz eds-aggrid-theme">
+        <AgGridReact
+          theme="legacy"
+          columnDefs={assetColumnDefs}
+          rowData={assets}
+          defaultColDef={assetDefaultColDef}
+          onGridReady={(event) => setGridApi(event.api)}
+        />
+      </div>
     </section>
   )
 }
 
 function ExampleFourContent() {
-  return (
-    <section className="example4-form-layout" aria-label="Example 4">
-    </section>
-  )
+  return <section aria-label="Example 4"></section>
 }
 
 function ExampleFiveContent() {
