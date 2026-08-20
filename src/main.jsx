@@ -10,6 +10,7 @@ import { setBasePath } from "@shoelace-style/shoelace";
 import { registerIconLibrary } from "@shoelace-style/shoelace/dist/utilities/icon-library.js";
 
 // Register only the Aspentech components used by this app to keep bundles smaller.
+import "@aspentech/pf-ui-core/components/eds-alert";
 import "@aspentech/pf-ui-compound/components/eds-appbar";
 import "@aspentech/pf-ui-compound/components/eds-page-header";
 import "@aspentech/pf-ui-compound/components/eds-page-info";
