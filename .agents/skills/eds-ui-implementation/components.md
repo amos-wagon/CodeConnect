@@ -10,11 +10,12 @@
 - Place the table toolbar directly above the AG Grid and use `var(--sl-spacing-small)` for the gap between the toolbar and grid.
 - Structure the toolbar with two containers: a `filters` area on the left and an `actions` area on the right.
 - The left `filters` area must always include the item count. Add filters only when the table needs them; use `sl-radio-group` for mutually exclusive filter choices and keep controls ordered by function.
-- The right `actions` area includes a search icon button, one content-width `sl-button` with `variant="primary"` and the default medium size for the main action, and an overflow menu icon button, in that order.
+- The right `actions` area includes a search icon button, one content-width `sl-button` with `variant="primary"`, and an overflow menu icon button, in that order. Inputs and buttons use their default medium size.
 - Use `sl-icon-button` for familiar icon actions and provide an accessible `label` for every icon button.
 - Style the item count with `var(--eds-text-secondary)` and `var(--sl-font-size-small)`.
 - Use `var(--sl-spacing-small)` for uniform spacing between controls within both areas.
 - When the search icon button is selected, replace it with a standard-size `sl-input` using the placeholder `Search...` and keep focus in the input.
+- Set the search input to `clearable` and handle `sl-clear` to reset the AG Grid quick filter.
 - Connect the search input to the AG Grid quick filter as the user types. When focus leaves the search input, restore the search icon button while preserving the current filter value.
 - Animate the search input when it appears and disappears using a short ease-out transition for width, opacity, and horizontal movement. Expand it to `10rem`; keep the input mounted during the exit transition, then restore the search icon button after the transition completes.
 
@@ -224,9 +225,7 @@
 - Do not use the `heading` property in `eds-alert`.
 - Always set `closable` on `eds-alert` elements with the `primary`, `neutral`, or `warning` variant.
 - Never set `closable` on an `eds-alert` with the `danger` variant.
-- Use the `success` variant only in dialogs; use an `eds-toast` for success messages in the main page area.
-- Use banners only for critical system-level messages, such as warnings about data loss or lost functionality.
-- Use section messages to alert users to events that affect a specific section of the screen.
+- Use the `success` variant only in dialogs; use a toast for success messages in the main page area.
 
 ### Toasts
 
