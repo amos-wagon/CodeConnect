@@ -1,29 +1,16 @@
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
-      'sl-avatar': any;
-      'sl-breadcrumb': any;
-      'sl-breadcrumb-item': any;
-      'sl-button': any;
-      'sl-card': any;
-      'sl-checkbox': any;
-      'sl-divider': any;
       'sl-dialog': any;
-      'sl-icon': any;
-      'sl-icon-button': any;
-      'sl-input': any;
-      'sl-option': any;
       'sl-radio': any;
       'sl-radio-group': any;
-      'sl-select': any;
-      'sl-switch': any;
-      'sl-textarea': any;
-      'sl-tooltip': any;
       'ava-input': any;
       'ava-layout': any;
+      'ava-logo': any;
       'ava-response-message': any;
       'ava-user-message': any;
       'ava-welcome-message': any;
+      'sl-radio-button': any;
       'eds-appbar': any;
       'eds-button-card': any;
       'eds-page-header': any;
@@ -34,6 +21,25 @@ declare module 'react' {
       'eds-shell-template': any;
       'eds-slider': any;
       'eds-toast': any;
+      'eds-badge': any;
+      'eds-breadcrumb': any;
+      'eds-breadcrumb-item': any;
+      'eds-button': any;
+      'eds-card': any;
+      'eds-checkbox': any;
+      'eds-divider': any;
+      'eds-icon': any;
+      'eds-icon-button': any;
+      'eds-input': any;
+      'eds-option': any;
+      'eds-select': any;
+      'eds-spinner': any;
+      'eds-switch': any;
+      'eds-tab': any;
+      'eds-tab-group': any;
+      'eds-tab-panel': any;
+      'eds-tree': any;
+      'eds-tree-item': any;
     }
   }
 }

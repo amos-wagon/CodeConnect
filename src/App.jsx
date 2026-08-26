@@ -1,7 +1,5 @@
 import './App.css'
 import { useEffect, useRef, useState } from 'react'
-import '@shoelace-style/shoelace/dist/components/divider/divider.js'
-import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import ApplicationOnePage from './ApplicationOnePage.jsx'
 import ApplicationTwoPage from './ApplicationTwoPage.jsx'
 import ApplicationThreePage from './ApplicationThreePage.jsx'
@@ -29,7 +27,10 @@ const getPageFromHash = () => {
 function App() {
   const [activePage, setActivePage] = useState(getPageFromHash)
   const [theme, setTheme] = useState('light')
+  const [isAvaOpen, setIsAvaOpen] = useState(false)
   const mainContentRef = useRef(null)
+  const avaLayoutRef = useRef(null)
+  const avaInputRef = useRef(null)
   const hasInitializedFocus = useRef(false)
 
   const isDarkTheme = theme === 'dark'
@@ -38,6 +39,45 @@ function App() {
   const toggleTheme = () => {
     setTheme(currentTheme => (currentTheme === 'dark' ? 'light' : 'dark'))
   }
+
+  const closeAva = () => {
+    setIsAvaOpen(false)
+  }
+
+  useEffect(() => {
+    const avaLayout = avaLayoutRef.current
+    const avaInput = avaInputRef.current
+    if (!isAvaOpen || !avaLayout || !avaInput) {
+      return undefined
+    }
+
+    const handleAvaClose = () => closeAva()
+    const handleAvaSend = (event) => {
+      const message = event.detail || avaInput.inputValue
+      if (!message) {
+        return
+      }
+
+      avaLayout.waiting = true
+      const userMessage = document.createElement('ava-user-message')
+      userMessage.textContent = message
+      avaLayout.append(userMessage)
+
+      const responseMessage = document.createElement('ava-response-message')
+      responseMessage.textContent = 'I can help you find information and get started.'
+      avaLayout.append(responseMessage)
+      avaLayout.waiting = false
+      requestAnimationFrame(() => avaLayout.scrollToBottom())
+    }
+
+    avaLayout.addEventListener('ava-close', handleAvaClose)
+    avaInput.addEventListener('ava-send', handleAvaSend)
+
+    return () => {
+      avaLayout.removeEventListener('ava-close', handleAvaClose)
+      avaInput.removeEventListener('ava-send', handleAvaSend)
+    }
+  }, [isAvaOpen])
 
   const navigateToPage = (page) => {
     if (!VALID_PAGES.has(page)) {
@@ -148,7 +188,7 @@ function App() {
               }}
             ></eds-sidenav-item>
           ))}
-          <sl-divider></sl-divider>
+          <eds-divider></eds-divider>
           <eds-sidenav-item type="heading" label="Apps"></eds-sidenav-item>
           <eds-sidenav-item
             type="node"
@@ -176,13 +216,20 @@ function App() {
         </eds-sidenav>
         <eds-appbar slot="appbar" role="banner" className={themeClassName} theme={theme}>
           <eds-page-info slot="page-info" heading={activePageTitle} className={themeClassName} theme={theme}> </eds-page-info>
-          <sl-icon-button
+          <button
+            type="button"
             slot="right"
-            library="material"
-            name={isDarkTheme ? 'dark_mode' : 'light_mode'}
+            aria-label="Open AVA assistant"
+            onClick={() => setIsAvaOpen(true)}
+          >
+            <ava-logo variant="isotype"></ava-logo>
+          </button>
+          <eds-icon-button
+            slot="right"
+            src={`/assets/icons/material/outlined/${isDarkTheme ? 'dark_mode' : 'light_mode'}.svg`}
             label={isDarkTheme ? 'Dark Mode' : 'Light Mode'}
             onClick={toggleTheme}
-          ></sl-icon-button>
+          ></eds-icon-button>
         </eds-appbar>
         <main
           id="main-content"
@@ -193,6 +240,17 @@ function App() {
         >
           <ExamplesContent activePage={activePage} />
         </main>
+        {isAvaOpen && (
+          <aside className="ava-panel" aria-label="AVA assistant">
+            <ava-layout ref={avaLayoutRef}>
+              <ava-welcome-message>
+                <span slot="title">How can AVA help?</span>
+                <span slot="description">Ask a question about your workspace.</span>
+              </ava-welcome-message>
+              <ava-input ref={avaInputRef} slot="footer" placeholder="Ask AVA..."></ava-input>
+            </ava-layout>
+          </aside>
+        )}
       </eds-shell-template>
     </div>
   )

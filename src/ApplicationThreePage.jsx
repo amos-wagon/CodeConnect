@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import '@shoelace-style/shoelace/dist/components/input/input.js'
-import '@shoelace-style/shoelace/dist/components/button/button.js'
 
 function ApplicationThreePage({ theme, themeClassName, mainContentRef }) {
   const [formData, setFormData] = useState({
@@ -36,38 +34,38 @@ function ApplicationThreePage({ theme, themeClassName, mainContentRef }) {
               <label htmlFor="name" style={styles.label}>
                 Name
               </label>
-              <sl-input
+              <eds-input
                 id="name"
                 name="name"
                 value={formData.name}
                 onInput={handleChange}
                 placeholder="Enter your name"
                 style={styles.input}
-              ></sl-input>
+              ></eds-input>
             </div>
 
             <div className="form-field" style={styles.formField}>
               <label htmlFor="dateOfBirth" style={styles.label}>
                 Date of birth
               </label>
-              <sl-input
+              <eds-input
                 id="dateOfBirth"
                 name="dateOfBirth"
                 type="date"
                 value={formData.dateOfBirth}
                 onInput={handleChange}
                 style={styles.input}
-              ></sl-input>
+              ></eds-input>
             </div>
           </div>
 
           <div className="form-actions" style={styles.formActions}>
-            <sl-button
+            <eds-button
               variant="primary"
               onClick={handleSave}
             >
               Save
-            </sl-button>
+            </eds-button>
           </div>
         </div>
       </main>

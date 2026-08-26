@@ -1,23 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import * as echarts from 'echarts'
-import '@shoelace-style/shoelace/dist/components/card/card.js'
-import '@shoelace-style/shoelace/dist/components/icon/icon.js'
-import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
-import '@shoelace-style/shoelace/dist/components/button/button.js'
-import '@shoelace-style/shoelace/dist/components/badge/badge.js'
-import '@shoelace-style/shoelace/dist/components/input/input.js'
-import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js'
 import '@shoelace-style/shoelace/dist/components/radio/radio.js'
 import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js'
-import '@shoelace-style/shoelace/dist/components/select/select.js'
-import '@shoelace-style/shoelace/dist/components/option/option.js'
-import '@shoelace-style/shoelace/dist/components/switch/switch.js'
 import '@shoelace-style/shoelace/dist/components/details/details.js'
-import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
-import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
 import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
-import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
-import '@shoelace-style/shoelace/dist/components/tab/tab.js'
 
 function ExampleOneContent() {
   return (
@@ -26,77 +12,77 @@ function ExampleOneContent() {
       <p className="example1-feedback">The same components are shown side by side with poor copy and improved copy.</p>
 
       <div className="example1-demo-grid">
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Buttons</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-button variant="primary">The dashboard should be created</sl-button>
+              <eds-button variant="primary">The dashboard should be created</eds-button>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-button variant="primary">Create dashboard</sl-button>
+              <eds-button variant="primary">Create dashboard</eds-button>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Tabs</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-tab-group>
-                <sl-tab slot="nav">Documents list</sl-tab>
-                <sl-tab slot="nav">View Images</sl-tab>
-                <sl-tab slot="nav">Download options</sl-tab>
-              </sl-tab-group>
+              <eds-tab-group>
+                <eds-tab slot="nav">Documents list</eds-tab>
+                <eds-tab slot="nav">View Images</eds-tab>
+                <eds-tab slot="nav">Download options</eds-tab>
+              </eds-tab-group>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-tab-group>
-                <sl-tab slot="nav">Documents</sl-tab>
-                <sl-tab slot="nav">Images</sl-tab>
-                <sl-tab slot="nav">Downloads</sl-tab>
-              </sl-tab-group>
+              <eds-tab-group>
+                <eds-tab slot="nav">Documents</eds-tab>
+                <eds-tab slot="nav">Images</eds-tab>
+                <eds-tab slot="nav">Downloads</eds-tab>
+              </eds-tab-group>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Inputs</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-input
+              <eds-input
                 label="Enter the serial number on your device below:"
                 help-text="Please include punctuation."
-              ></sl-input>
+              ></eds-input>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-input
+              <eds-input
                 label="Device serial number"
                 help-text="Find this on the device label."
-              ></sl-input>
+              ></eds-input>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Checkbox</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-checkbox>Do not disable message alerts</sl-checkbox>
+              <eds-checkbox>Do not disable message alerts</eds-checkbox>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-checkbox>Enable message alerts</sl-checkbox>
+              <eds-checkbox>Enable message alerts</eds-checkbox>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Radio buttons</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
@@ -116,23 +102,23 @@ function ExampleOneContent() {
               </sl-radio-group>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Switch</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-switch>Enabled</sl-switch>
+              <eds-switch>Enabled</eds-switch>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-switch>Send weekly report</sl-switch>
+              <eds-switch>Send weekly report</eds-switch>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Table headers</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
@@ -160,7 +146,7 @@ function ExampleOneContent() {
               </table>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
       </div>
     </section>
   )
@@ -303,41 +289,41 @@ function ExampleTwoContent() {
       </header>
 
       <div className="example2-kpi-grid">
-        <sl-card className="example2-kpi-card">
+        <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Total output</p>
           <p className="example2-kpi-value">12,480 bbl</p>
           <p className="example2-kpi-delta positive">+4.2% vs last week</p>
-        </sl-card>
-        <sl-card className="example2-kpi-card">
+        </eds-card>
+        <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Efficiency</p>
           <p className="example2-kpi-value">91.6%</p>
           <p className="example2-kpi-delta positive">+1.1 pts vs target</p>
-        </sl-card>
-        <sl-card className="example2-kpi-card">
+        </eds-card>
+        <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Downtime</p>
           <p className="example2-kpi-value">3.8 hrs</p>
           <p className="example2-kpi-delta negative">+0.6 hrs this week</p>
-        </sl-card>
-        <sl-card className="example2-kpi-card">
+        </eds-card>
+        <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Energy use</p>
           <p className="example2-kpi-value">7.4 MWh</p>
           <p className="example2-kpi-delta positive">-3.5% vs baseline</p>
-        </sl-card>
+        </eds-card>
       </div>
 
       <div className="example2-chart-grid">
-        <sl-card className="example2-chart-card">
+        <eds-card className="example2-chart-card">
           <h2 className="example2-section-heading">Weekly output trend</h2>
           <div ref={weeklyTrendChartRef} className="example2-echart" aria-label="Weekly output trend chart"></div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example2-chart-card">
+        <eds-card className="example2-chart-card">
           <h2 className="example2-section-heading">Site performance</h2>
           <div ref={sitePerformanceChartRef} className="example2-echart" aria-label="Site performance radar chart"></div>
-        </sl-card>
+        </eds-card>
       </div>
 
-      <sl-card className="example2-table-card">
+      <eds-card className="example2-table-card">
         <h2 className="example2-section-heading">Asset summary</h2>
         <table className="example2-table">
           <thead>
@@ -380,7 +366,7 @@ function ExampleTwoContent() {
             </tr>
           </tbody>
         </table>
-      </sl-card>
+      </eds-card>
     </section>
   )
 }

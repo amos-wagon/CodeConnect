@@ -11,6 +11,25 @@ import { registerIconLibrary } from "@shoelace-style/shoelace/dist/utilities/ico
 
 // Register only the Aspentech components used by this app to keep bundles smaller.
 import "@aspentech/pf-ui-core/components/eds-alert";
+import "@aspentech/pf-ui-core/components/eds-badge";
+import "@aspentech/pf-ui-core/components/eds-breadcrumb";
+import "@aspentech/pf-ui-core/components/eds-breadcrumb-item";
+import "@aspentech/pf-ui-core/components/eds-button";
+import "@aspentech/pf-ui-core/components/eds-card";
+import "@aspentech/pf-ui-core/components/eds-checkbox";
+import "@aspentech/pf-ui-core/components/eds-divider";
+import "@aspentech/pf-ui-core/components/eds-icon";
+import "@aspentech/pf-ui-core/components/eds-icon-button";
+import "@aspentech/pf-ui-core/components/eds-input";
+import "@aspentech/pf-ui-core/components/eds-option";
+import "@aspentech/pf-ui-core/components/eds-select";
+import "@aspentech/pf-ui-core/components/eds-spinner";
+import "@aspentech/pf-ui-core/components/eds-switch";
+import "@aspentech/pf-ui-core/components/eds-tab";
+import "@aspentech/pf-ui-core/components/eds-tab-group";
+import "@aspentech/pf-ui-core/components/eds-tab-panel";
+import "@aspentech/pf-ui-core/components/eds-tree";
+import "@aspentech/pf-ui-core/components/eds-tree-item";
 import "@aspentech/pf-ui-compound/components/eds-appbar";
 import "@aspentech/pf-ui-compound/components/eds-page-header";
 import "@aspentech/pf-ui-compound/components/eds-page-info";
@@ -24,9 +43,12 @@ import "@aspentech/pf-ui-compound/components/eds-sidenav";
 import "@aspentech/pf-ui-compound/components/eds-sidenav-item";
 import "@aspentech/pf-ui-compound/components/eds-slider";
 import "@aspentech/pf-ui-compound/components/eds-toast"
-
-import '@shoelace-style/shoelace/dist/components/tree/tree.js'
-import '@shoelace-style/shoelace/dist/components/tree-item/tree-item.js';
+import '@aspentech/pf-ui-assistance/components/ava-layout'
+import '@aspentech/pf-ui-assistance/components/ava-input'
+import '@aspentech/pf-ui-assistance/components/ava-logo'
+import '@aspentech/pf-ui-assistance/components/ava-welcome-message'
+import '@aspentech/pf-ui-assistance/components/ava-user-message'
+import '@aspentech/pf-ui-assistance/components/ava-response-message'
 
 // Icon Registry Setup
 const iconRegExp = /^(.*?)(_(round|sharp|filled))?$/;
