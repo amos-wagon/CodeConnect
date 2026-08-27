@@ -13,7 +13,7 @@ Use this file as a practical implementation guide for writing maintainable, cons
 - Build small, single-responsibility components.
 - Keep rendering logic simple and predictable.
 - Prefer composition over inheritance and avoid tightly coupled component trees.
-- Do not add new components, wrappers, or CSS classes by default. Add a class only when a targeted style or behavior cannot be expressed with existing selectors, component APIs, or tokens.
+- Do not add new components, wrappers, or CSS classes unless an existing structure or selector cannot express the required behavior or styling clearly.
 - Extract repeated UI or behavior into shared components/utilities.
 - Keep props and public APIs minimal, explicit, and stable.
 
@@ -44,7 +44,7 @@ Framework implementation notes:
 
 - Use EDS and Shoelace tokens for color, size, spacing, typography, border, and elevation.
 - Avoid hardcoded visual values unless there is no token alternative and the exception is justified.
-- Do not add classes to components by default. Reuse existing class hooks, component APIs, and tokens first; add a class only when it has a clear, necessary, targeted responsibility.
+- Reuse existing class hooks and component APIs before creating new classes; add a new class only when it has a clear, necessary responsibility.
 - Keep spacing and sizing consistent with token scale.
 - Co-locate styles with the component they affect and keep selectors narrowly scoped.
 - Preserve visual consistency with existing app patterns unless restyling is explicitly requested.
