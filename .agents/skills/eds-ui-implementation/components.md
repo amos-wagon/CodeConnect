@@ -74,17 +74,6 @@
 - The view-sidebar icon button should toggle `open-left` on `eds-application-layout`: remove the attribute when present to collapse the left panel, add it when absent to show the left panel.
 - If tabs or a tree in `slot='left-panel'` drive main-region navigation, update the main-region content and the `eds-page-header` heading together from one active state.
 
-### Card layout rules
-
-- Use approved card components (`sl-card`, `eds-selectable-card`, `eds-catalog-card`) based on behavior.
-- Use `var(--sl-spacing-large)` for both horizontal and vertical spacing between cards (for example, `column-gap` and `row-gap` in card grids).
-- Cards in the same row must render at equal height.
-- If the card `base` part is styleable, set `::part(base) { height: 100%; }`.
-- If the card is wrapped or its `base` is not directly styleable, use `grid-auto-rows: 1fr` and item wrapper `height: 100%`, then apply `::part(base) { height: 100%; }` inside the component boundary when possible.
-- Verify card heights in the browser on at least two rows before finalizing.
-- Enforce card width at grid track level (for example with tokenized minmax tracks).
-- Keep card sizing and spacing tokenized.
-
 ### Form layout baseline
 
 - Prefer single-column form flow; expand to two columns only when space and readability support it.
@@ -107,6 +96,28 @@
 - Use `eds-page-header` for page-level context and actions inside content.
 - Keep landmark structure clear: nav in sidenav, app actions in appbar, content in main.
 
+## Dashboards
+
+- Dashboard pages should be laid out in a multi-column grid
+- Dashboards should be responsive and should wrap to fewer columns at narrow browser widths
+- at large viewport widths, the charts themselves should get bigger, and should also grow in height maintaining the same aspect ratio
+- KPI cards should be presented in a distinct, compact grid separate from chart cards
+- KPI cards should contain a concise metric label, a prominent current value, and an optional status or change indicator
+- KPI cards should be flexible width with a max-width of 250px
+
+## Grid layouts
+
+- Use `grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));` for responsive grids that should automatically fit columns to the available width.
+
+## Full screen view
+
+- Some card content can be specified to allow full screen view.
+- Use a consistent icon button with an accessible label to enter full screen view. Label and tooltip should read "View full screen"
+- Use a browser-viewport overlay rather than the monitor-level Fullscreen API.
+- The active card must fill the browser viewport, remove rounded corners, and allow its main content to use the available vertical space.
+- Replace the entry icon with an X close icon while full screen is active.
+- Support Escape as an alternate way to close the full-screen view.
+
 ## Buttons
 
 - Use `sl-button` for button actions unless an explicit requirement states otherwise.
@@ -117,6 +128,10 @@
 - In React, use the literal `class` attribute rather than `className` on Shoelace and EDS custom elements when a CSS class hook is required; verify the rendered custom element has the expected class before relying on that selector.
 - Before finalizing a form, verify that every button is content-fit in the rendered layout and that any custom-element CSS hook is present on the element.
 
+## Icon buttons
+
+- All icon buttons should have an accessible `label` and be wrapped in an `sl-tooltip` with matching content
+
 ## Cards
 
 - Use `eds-button-card` when the entire card triggers one action (for example open details, navigate, or start a flow) and does not represent a persistent selected state.
@@ -124,11 +139,11 @@
 - Set `heading` for the card title and use `control="checkbox"` or `control="switch"` based on the interaction pattern.
 - Do not compose a selectable tile manually from `sl-card` plus a separate checkbox or switch unless a documented component limitation requires it.
 - Use generic `sl-card` only for non-selectable, presentational containers.
-- Use approved card components (`sl-card`, `eds-selectable-card`, `eds-catalog-card`) based on behavior.
 - Use `var(--sl-spacing-large)` for both horizontal and vertical spacing between cards (for example, `column-gap` and `row-gap` in card grids).
 - Cards in the same row must render at equal height: set `::part(base) { height: 100%; }` if the `base` part is styleable; otherwise use `grid-auto-rows: 1fr` on the grid, `height: 100%` on the item wrapper, and apply `::part(base) { height: 100%; }` inside the component boundary when possible.
 - Verify card heights in the browser on at least two rows before finalizing.
 - Enforce card width at grid track level (for example with tokenized `minmax` tracks).
+- Keep card sizing and spacing tokenized.
 
 ## Panels
 

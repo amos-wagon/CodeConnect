@@ -6,6 +6,7 @@ import '@shoelace-style/shoelace/dist/components/button/button.js'
 import '@shoelace-style/shoelace/dist/components/divider/divider.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js'
 import '@shoelace-style/shoelace/dist/components/menu-item/menu-item.js'
 import '@shoelace-style/shoelace/dist/components/tab/tab.js'
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
@@ -237,13 +238,14 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <eds-shell-template className={`app-shell-template application1 ${themeClassName}`} theme={theme}>
           <eds-appbar slot="appbar" show-menu-button is-application role="banner" className={themeClassName} theme={theme}>
-            <sl-icon-button
-              slot="menu-button"
-              library="material"
-              name="menu"
-              label="Menu"
-              onClick={openModalSidenav}
-            ></sl-icon-button>
+            <sl-tooltip slot="menu-button" content="Menu">
+              <sl-icon-button
+                library="material"
+                name="menu"
+                label="Menu"
+                onClick={openModalSidenav}
+              ></sl-icon-button>
+            </sl-tooltip>
           <sl-icon library="material" name="precision_manufacturing" slot="icon"></sl-icon>
           <sl-breadcrumb slot="breadcrumb">
             <span slot="separator">/</span>
@@ -261,7 +263,9 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
               <sl-tab slot="nav">Settings</sl-tab>
             </sl-tab-group>
           <sl-button slot="right">Share</sl-button>
-          <sl-icon-button slot="right" library="material" name="more_horiz" label="More"></sl-icon-button>
+          <sl-tooltip slot="right" content="More">
+            <sl-icon-button library="material" name="more_horiz" label="More"></sl-icon-button>
+          </sl-tooltip>
         </eds-appbar>
         <eds-sidenav
           ref={modalSidenavRef}
@@ -327,13 +331,14 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
             </div>
             <section className="example3-integrations" aria-label="Integrations">
               <eds-page-header heading={activeLeftPage.label}>
-                <sl-icon-button
-                  slot="icon"
-                  library="material"
-                  name="view_sidebar"
-                  label="Toggle navigation panel"
-                  onClick={toggleLeftPanel}
-                ></sl-icon-button>
+                <sl-tooltip slot="icon" content="Toggle navigation panel">
+                  <sl-icon-button
+                    library="material"
+                    name="view_sidebar"
+                    label="Toggle navigation panel"
+                    onClick={toggleLeftPanel}
+                  ></sl-icon-button>
+                </sl-tooltip>
                 <sl-button slot="controls" variant="default">Add</sl-button>
               </eds-page-header>
               <div className="page-content example3-content">

@@ -43,14 +43,10 @@ p {
 .content-area {
   box-sizing: border-box;
   width: 100%;
-  max-width: 1140px;
-  justify-content: center;
-  margin: 0 auto;
-  padding: var(--sl-spacing-medium-plus);
-}
-
-.content-area.example2 {
-  max-width: 1140px;
+  max-width: none;
+  margin: 0;
+  padding-inline: var(--sl-spacing-x-large);
+  padding-block: var(--sl-spacing-large);
 }
 
 .content-area > * {
@@ -161,13 +157,6 @@ sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
 .example1-fields sl-input,
 .example1-fields sl-select {
   max-width: 30rem;
-}
-
-.example1-title {
-  margin: 0;
-  color: var(--eds-text-default);
-  font-size: var(--sl-font-size-large);
-  font-family: var(--sl-font-sans);
 }
 
 .example1-feedback {
@@ -313,14 +302,24 @@ eds-toast::part(base) {
 
 .example2-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, 250px);
   gap: var(--sl-spacing-medium);
+  justify-content: start;
+}
+
+.example2-kpi-card {
+  width: 250px;
 }
 
 .example2-kpi-card::part(base),
 .example2-chart-card::part(base),
 .example2-table-card::part(base) {
   height: 100%;
+}
+
+.example2-table-card {
+  display: block;
+  width: 100%;
 }
 
 .example2-chart-card::part(body) {
@@ -357,10 +356,17 @@ eds-toast::part(base) {
   color: var(--eds-text-secondary);
 }
 
-.example2-chart-grid {
+.example2-chart-grid,
+.example4-chart-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: var(--sl-spacing-medium);
+}
+
+.example2-chart-grid .example2-chart-card,
+.example4-chart-grid .example2-chart-card {
+  width: 100%;
 }
 
 .example2-echart {
@@ -486,6 +492,47 @@ eds-toast::part(base) {
   color: var(--eds-text-default);
 }
 
+.example4-dashboard {
+  width: 100%;
+}
+
+.example4-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sl-spacing-medium);
+}
+
+.example4-chart-grid .example2-chart-card.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+}
+
+.example4-chart-grid .example2-chart-card.is-fullscreen::part(base) {
+  border-radius: 0;
+}
+
+.example4-chart-grid .example2-chart-card.is-fullscreen::part(base) {
+  height: 100%;
+}
+
+.example4-chart-grid .example2-chart-card.is-fullscreen::part(body) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.example4-chart-grid .example2-chart-card.is-fullscreen .example2-echart {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+}
+
 .example3-assets {
   display: grid;
   gap: var(--sl-spacing-medium);
@@ -495,10 +542,6 @@ eds-toast::part(base) {
 .example3-assets > eds-alert {
   display: block;
   inline-size: 100%;
-}
-
-.content-area.example3 {
-  padding: 0;
 }
 
 .example3-table-toolbar {
@@ -539,6 +582,12 @@ eds-toast::part(base) {
 .example3-grid-wrapper {
   width: 100%;
   min-height: calc(var(--sl-spacing-x-large) * 8);
+}
+
+.example2-grid-wrapper {
+  width: 100%;
+  /* explicit height (not min-height) is required for AG Grid's internal height:100% chain to resolve inside sl-card's block content */
+  height: calc(var(--sl-spacing-x-large) * 8);
 }
 
 .example3-form-layout {
@@ -650,23 +699,21 @@ eds-toast::part(base) {
 
 @media (max-width: 1024px) {
   .example2-kpi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 250px);
   }
 
-  .example2-chart-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 640px) {
   .example2-kpi-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 250px;
   }
 
   .example2-donut-wrap {
     grid-template-columns: 1fr;
     justify-items: start;
   }
+
 }
 
 /* Example 3 — Integrations */

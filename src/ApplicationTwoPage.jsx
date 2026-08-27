@@ -6,6 +6,7 @@ import '@shoelace-style/shoelace/dist/components/button/button.js'
 import '@shoelace-style/shoelace/dist/components/divider/divider.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js'
 import '@shoelace-style/shoelace/dist/components/tab/tab.js'
 import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
 
@@ -208,13 +209,14 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <eds-shell-template className={`app-shell-template application2 ${themeClassName}`} theme={theme}>
         <eds-appbar slot="appbar" show-menu-button is-application role="banner" className={themeClassName} theme={theme}>
-          <sl-icon-button
-            slot="menu-button"
-            library="material"
-            name="menu"
-            label="Menu"
-            onClick={openModalSidenav}
-          ></sl-icon-button>
+          <sl-tooltip slot="menu-button" content="Menu">
+            <sl-icon-button
+              library="material"
+              name="menu"
+              label="Menu"
+              onClick={openModalSidenav}
+            ></sl-icon-button>
+          </sl-tooltip>
           <sl-icon library="material" name="apps" slot="icon"></sl-icon>
           <sl-breadcrumb slot="breadcrumb">
             <span slot="separator">/</span>
@@ -293,13 +295,14 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
             </div>
             <section className="application2-default-page" aria-label="Application 2 content">
               <eds-page-header heading={activeSection.heading} className="application2-page-header">
-                <sl-icon-button
-                  slot="icon"
-                  library="material"
-                  name="view_sidebar"
-                  label="View sidebar"
-                  onClick={toggleLeftPanel}
-                ></sl-icon-button>
+                <sl-tooltip slot="icon" content="View sidebar">
+                  <sl-icon-button
+                    library="material"
+                    name="view_sidebar"
+                    label="View sidebar"
+                    onClick={toggleLeftPanel}
+                  ></sl-icon-button>
+                </sl-tooltip>
               </eds-page-header>
               <div className="page-content application2-page-content">
                 <section className="application2-content-grid" aria-label={`${activeSection.heading} sections`}>

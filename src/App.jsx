@@ -2,6 +2,7 @@ import './App.css'
 import { useEffect, useRef, useState } from 'react'
 import '@shoelace-style/shoelace/dist/components/divider/divider.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js'
 import ApplicationOnePage from './ApplicationOnePage.jsx'
 import ApplicationTwoPage from './ApplicationTwoPage.jsx'
 import ApplicationThreePage from './ApplicationThreePage.jsx'
@@ -10,10 +11,10 @@ import ExamplesContent from './ExamplesContent.jsx'
 const VALID_PAGES = new Set(['example1', 'example2', 'example3', 'example4', 'example5', 'application1', 'application2', 'application3'])
 
 const SIDE_NAV_ITEMS = [
-  { page: 'example1', label: 'Example 1', icon: 'dashboard' },
-  { page: 'example2', label: 'Example 2', icon: 'tune' },
-  { page: 'example3', label: 'Example 3', icon: 'auto_awesome' },
-  { page: 'example4', label: 'Example 4', icon: 'grid_view' },
+  { page: 'example1', label: 'Bad vs good UI language', icon: 'dashboard' },
+  { page: 'example2', label: 'Operations dashboard', icon: 'tune' },
+  { page: 'example3', label: 'Assets', icon: 'auto_awesome' },
+  { page: 'example4', label: 'Dashboard', icon: 'grid_view' },
   { page: 'example5', label: 'Example 5', icon: 'insights' },
 ]
 
@@ -34,6 +35,7 @@ function App() {
 
   const isDarkTheme = theme === 'dark'
   const themeClassName = isDarkTheme ? 'eds-dark sl-theme-dark' : 'sl-theme-light'
+  const activeNavItem = SIDE_NAV_ITEMS.find(({ page }) => page === activePage)
 
   const toggleTheme = () => {
     setTheme(currentTheme => (currentTheme === 'dark' ? 'light' : 'dark'))
@@ -76,16 +78,11 @@ function App() {
     mainContentRef.current?.focus()
   }, [activePage])
 
-  const activePageTitle = {
-    example1: 'Example 1',
-    example2: 'Example 2',
-    example3: 'Example 3',
-    example4: 'Example 4',
-    example5: 'Example 5',
+  const activePageTitle = activeNavItem?.label ?? {
     application1: 'Application 1',
     application2: 'Application 2',
     application3: 'Application 3',
-  }[activePage] ?? 'Example 1'
+  }[activePage] ?? 'Bad vs good UI language'
 
   if (activePage === 'application1') {
     return (
@@ -175,14 +172,18 @@ function App() {
 
         </eds-sidenav>
         <eds-appbar slot="appbar" role="banner" className={themeClassName} theme={theme}>
+          {activeNavItem && (
+            <sl-icon slot="icon" library="material" name={activeNavItem.icon}></sl-icon>
+          )}
           <eds-page-info slot="page-info" heading={activePageTitle} className={themeClassName} theme={theme}> </eds-page-info>
-          <sl-icon-button
-            slot="right"
-            library="material"
-            name={isDarkTheme ? 'dark_mode' : 'light_mode'}
-            label={isDarkTheme ? 'Dark Mode' : 'Light Mode'}
-            onClick={toggleTheme}
-          ></sl-icon-button>
+          <sl-tooltip slot="right" content={isDarkTheme ? 'Dark Mode' : 'Light Mode'}>
+            <sl-icon-button
+              library="material"
+              name={isDarkTheme ? 'dark_mode' : 'light_mode'}
+              label={isDarkTheme ? 'Dark Mode' : 'Light Mode'}
+              onClick={toggleTheme}
+            ></sl-icon-button>
+          </sl-tooltip>
         </eds-appbar>
         <main
           id="main-content"

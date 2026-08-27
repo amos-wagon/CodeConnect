@@ -33,7 +33,7 @@ Always use this skill whenever the task involves building, modifying, reviewing,
 - Read implementation.md
 
 ## Mandatory execution order
-1. Read all five supporting files before proposing or writing UI code.
+1. Read all supporting files before proposing or writing UI code.
 2. Extract required component rules for the specific request and list them in working notes.
 3. Implement with EDS/Shoelace components first, then apply token-only styling.
 4. Run a compliance self-check against the required component rules before finalizing.

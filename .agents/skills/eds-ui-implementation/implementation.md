@@ -4,7 +4,7 @@ Use this file as a practical implementation guide for writing maintainable, cons
 
 ## 1) Plan before coding
 
-- Reuse existing EDS and Shoelace patterns before introducing new composition.
+- Use EDS and Shoelace components and utilities first; avoid creating new wrapper components or custom patterns until existing ones cannot meet the requirement.
 - Keep scope tight: implement only what is requested unless a dependency requires additional work.
 - Prefer incremental, verifiable changes over large rewrites.
 
@@ -88,6 +88,7 @@ Framework implementation notes:
 - Bind chart colors and text to EDS tokens.
 - Do not use default ECharts palette or typography.
 - Start with this order: interactive default, interactive hover, text link.
+- Do not make any other changes to Echarts default styling unless explicitly told to do so. Do not infer any styling from EDS styles for things like border-radius, etc.
 
 ### AG Grid
 

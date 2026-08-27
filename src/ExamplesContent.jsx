@@ -8,6 +8,7 @@ import '@aspentech/pf-ui-core/integrations/eds-aggrid.css'
 import '@shoelace-style/shoelace/dist/components/card/card.js'
 import '@shoelace-style/shoelace/dist/components/icon/icon.js'
 import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js'
 import '@shoelace-style/shoelace/dist/components/button/button.js'
 import '@shoelace-style/shoelace/dist/components/badge/badge.js'
 import '@shoelace-style/shoelace/dist/components/input/input.js'
@@ -30,7 +31,6 @@ ModuleRegistry.registerModules([AllCommunityModule])
 function ExampleOneContent() {
   return (
     <section className="example1-before-after" aria-label="Bad and good language component examples">
-      <h1 className="example1-title">Bad vs good UI language</h1>
       <p className="example1-feedback">The same components are shown side by side with poor copy and improved copy.</p>
 
       <div className="example1-demo-grid">
@@ -177,31 +177,51 @@ function ExampleOneContent() {
 function ExampleTwoContent() {
   const weeklyTrendChartRef = useRef(null)
   const sitePerformanceChartRef = useRef(null)
+  const productionMixChartRef = useRef(null)
+  const throughputScatterChartRef = useRef(null)
+  const efficiencyGaugeChartRef = useRef(null)
+  const conversionFunnelChartRef = useRef(null)
 
   useEffect(() => {
-    if (!weeklyTrendChartRef.current || !sitePerformanceChartRef.current) {
+    const refs = [
+      weeklyTrendChartRef,
+      sitePerformanceChartRef,
+      productionMixChartRef,
+      throughputScatterChartRef,
+      efficiencyGaugeChartRef,
+      conversionFunnelChartRef
+    ]
+
+    if (refs.some(ref => !ref.current)) {
       return
     }
 
     const rootStyles = getComputedStyle(document.documentElement)
-    const interactiveDefault = rootStyles.getPropertyValue('--eds-interactive-default').trim() || '#0f62fe'
-    const interactiveHover = rootStyles.getPropertyValue('--eds-interactive-hover').trim() || '#0353e9'
-    const textLink = rootStyles.getPropertyValue('--eds-text-link').trim() || '#0f62fe'
-    const textDefault = rootStyles.getPropertyValue('--eds-text-default').trim() || '#161616'
-    const textSecondary = rootStyles.getPropertyValue('--eds-text-secondary').trim() || '#525252'
-    const borderDefault = rootStyles.getPropertyValue('--eds-border-default').trim() || '#d0d0d0'
+    const interactiveDefault = rootStyles.getPropertyValue('--eds-interactive-default').trim()
+    const interactiveHover = rootStyles.getPropertyValue('--eds-interactive-hover').trim()
+    const textLink = rootStyles.getPropertyValue('--eds-text-link').trim()
     const fontSans = rootStyles.getPropertyValue('--sl-font-sans').trim() || 'sans-serif'
 
     const weeklyTrendChart = echarts.init(weeklyTrendChartRef.current)
     const sitePerformanceChart = echarts.init(sitePerformanceChartRef.current)
+    const productionMixChart = echarts.init(productionMixChartRef.current)
+    const throughputScatterChart = echarts.init(throughputScatterChartRef.current)
+    const efficiencyGaugeChart = echarts.init(efficiencyGaugeChartRef.current)
+    const conversionFunnelChart = echarts.init(conversionFunnelChartRef.current)
+    const charts = [
+      weeklyTrendChart,
+      sitePerformanceChart,
+      productionMixChart,
+      throughputScatterChart,
+      efficiencyGaugeChart,
+      conversionFunnelChart
+    ]
 
     const edsChartOptions = {
       color: [interactiveDefault, interactiveHover, textLink],
       textStyle: {
-        fontFamily: fontSans,
-        color: textSecondary
-      },
-      grid: { containLabel: true, top: 16, bottom: 16, left: 12, right: 12 }
+        fontFamily: fontSans
+      }
     }
 
     weeklyTrendChart.setOption({
@@ -209,21 +229,16 @@ function ExampleTwoContent() {
       tooltip: { trigger: 'axis' },
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        axisLabel: { color: textSecondary }
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       },
       yAxis: {
-        type: 'value',
-        axisLabel: { color: textSecondary },
-        splitLine: { lineStyle: { color: borderDefault } }
+        type: 'value'
       },
       series: [
         {
           name: 'Output',
           type: 'bar',
-          data: [420, 530, 560, 510, 640, 700, 760],
-          barMaxWidth: 28,
-          itemStyle: { borderRadius: [6, 6, 0, 0] }
+          data: [420, 530, 560, 510, 640, 700, 760]
         }
       ]
     })
@@ -233,61 +248,99 @@ function ExampleTwoContent() {
       tooltip: { trigger: 'item' },
       legend: {
         bottom: 0,
-        left: 'center',
-        textStyle: {
-          fontFamily: fontSans,
-          color: textDefault,
-        }
+        left: 'center'
       },
       radar: {
-        center: ['50%', '46%'],
-        radius: '58%',
         indicator: [
           { name: 'Site A', max: 100 },
           { name: 'Site B', max: 100 },
           { name: 'Site C', max: 100 },
           { name: 'Site D', max: 100 },
-          { name: 'Site E', max: 100 },
-        ],
-        axisName: {
-          color: textSecondary,
-          fontFamily: fontSans,
-        },
-        splitLine: {
-          lineStyle: { color: borderDefault },
-        },
-        splitArea: {
-          areaStyle: {
-            color: ['transparent', 'transparent'],
-          },
-        },
-        axisLine: {
-          lineStyle: { color: borderDefault },
-        },
+          { name: 'Site E', max: 100 }
+        ]
       },
       series: [
         {
           name: 'Site performance',
           type: 'radar',
-          lineStyle: { color: interactiveDefault, width: 2 },
-          itemStyle: { color: interactiveDefault },
-          areaStyle: { color: interactiveDefault, opacity: 0.18 },
-          data: [{ value: [82, 68, 91, 74, 86], name: 'Site performance' }],
+          data: [{ value: [82, 68, 91, 74, 86], name: 'Site performance' }]
+        }
+      ]
+    })
+
+    productionMixChart.setOption({
+      ...edsChartOptions,
+      tooltip: { trigger: 'axis' },
+      xAxis: {
+        type: 'category',
+        data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Production',
+          type: 'line',
+          areaStyle: {},
+          data: [180, 220, 205, 260, 290, 315]
+        }
+      ]
+    })
+
+    throughputScatterChart.setOption({
+      ...edsChartOptions,
+      tooltip: { trigger: 'item' },
+      xAxis: { type: 'value' },
+      yAxis: { type: 'value' },
+      series: [
+        {
+          name: 'Throughput',
+          type: 'scatter',
+          data: [[12, 42], [18, 55], [25, 62], [31, 71], [39, 78], [46, 86]]
+        }
+      ]
+    })
+
+    efficiencyGaugeChart.setOption({
+      ...edsChartOptions,
+      series: [
+        {
+          name: 'Efficiency',
+          type: 'gauge',
+          min: 0,
+          max: 100,
+          data: [{ value: 88, name: 'Efficiency' }]
+        }
+      ]
+    })
+
+    conversionFunnelChart.setOption({
+      ...edsChartOptions,
+      tooltip: { trigger: 'item' },
+      series: [
+        {
+          name: 'Work orders',
+          type: 'funnel',
+          data: [
+            { value: 100, name: 'Created' },
+            { value: 76, name: 'Assigned' },
+            { value: 54, name: 'In progress' },
+            { value: 38, name: 'Completed' }
+          ]
         }
       ]
     })
 
     const onResize = () => {
-      weeklyTrendChart.resize()
-      sitePerformanceChart.resize()
+      charts.forEach(chart => chart.resize())
     }
 
     const resizeObserver = new ResizeObserver(() => {
       onResize()
     })
 
-    resizeObserver.observe(weeklyTrendChartRef.current)
-    resizeObserver.observe(sitePerformanceChartRef.current)
+    refs.forEach(ref => resizeObserver.observe(ref.current))
 
     requestAnimationFrame(() => {
       onResize()
@@ -298,15 +351,13 @@ function ExampleTwoContent() {
     return () => {
       window.removeEventListener('resize', onResize)
       resizeObserver.disconnect()
-      weeklyTrendChart.dispose()
-      sitePerformanceChart.dispose()
+      charts.forEach(chart => chart.dispose())
     }
   }, [])
 
   return (
     <section className="example2-dashboard" aria-label="Operations dashboard">
       <header className="example2-header">
-        <h1 className="example1-title">Operations dashboard</h1>
         <p className="example1-feedback">Monitor core KPIs, trend movement, and recent site performance.</p>
       </header>
 
@@ -343,51 +394,38 @@ function ExampleTwoContent() {
           <h2 className="example2-section-heading">Site performance</h2>
           <div ref={sitePerformanceChartRef} className="example2-echart" aria-label="Site performance radar chart"></div>
         </sl-card>
+
+        <sl-card className="example2-chart-card">
+          <h2 className="example2-section-heading">Production trend</h2>
+          <div ref={productionMixChartRef} className="example2-echart" aria-label="Production trend area chart"></div>
+        </sl-card>
+
+        <sl-card className="example2-chart-card">
+          <h2 className="example2-section-heading">Throughput correlation</h2>
+          <div ref={throughputScatterChartRef} className="example2-echart" aria-label="Throughput correlation scatter chart"></div>
+        </sl-card>
+
+        <sl-card className="example2-chart-card">
+          <h2 className="example2-section-heading">Efficiency score</h2>
+          <div ref={efficiencyGaugeChartRef} className="example2-echart" aria-label="Efficiency gauge chart"></div>
+        </sl-card>
+
+        <sl-card className="example2-chart-card">
+          <h2 className="example2-section-heading">Work order progression</h2>
+          <div ref={conversionFunnelChartRef} className="example2-echart" aria-label="Work order progression funnel chart"></div>
+        </sl-card>
       </div>
 
       <sl-card className="example2-table-card">
         <h2 className="example2-section-heading">Asset summary</h2>
-        <table className="example2-table">
-          <thead>
-            <tr>
-              <th>Asset</th>
-              <th>Status</th>
-              <th>Output</th>
-              <th>Efficiency</th>
-              <th>Downtime</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Compressor 01</td>
-              <td>Online</td>
-              <td>2,130 bbl</td>
-              <td>93.1%</td>
-              <td>0.4 hrs</td>
-            </tr>
-            <tr>
-              <td>Turbine 03</td>
-              <td>Online</td>
-              <td>1,980 bbl</td>
-              <td>89.7%</td>
-              <td>1.2 hrs</td>
-            </tr>
-            <tr>
-              <td>Separator 06</td>
-              <td>Maintenance</td>
-              <td>1,420 bbl</td>
-              <td>87.2%</td>
-              <td>2.2 hrs</td>
-            </tr>
-            <tr>
-              <td>Pump 11</td>
-              <td>Online</td>
-              <td>2,560 bbl</td>
-              <td>95.4%</td>
-              <td>0.0 hrs</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="example2-grid-wrapper ag-theme-quartz eds-aggrid-theme">
+          <AgGridReact
+            theme="legacy"
+            columnDefs={dashboardAssetColumnDefs}
+            rowData={dashboardAssetRows}
+            defaultColDef={dashboardAssetDefaultColDef}
+          />
+        </div>
       </sl-card>
     </section>
   )
@@ -426,6 +464,28 @@ const assetDefaultColDef = {
   sortable: true,
   resizable: true,
   filter: true,
+}
+
+const dashboardAssetColumnDefs = [
+  { field: 'asset', headerName: 'Asset', flex: 1, minWidth: 180 },
+  { field: 'status', headerName: 'Status', flex: 1, minWidth: 140 },
+  { field: 'output', headerName: 'Output', flex: 1, minWidth: 140 },
+  { field: 'efficiency', headerName: 'Efficiency', flex: 1, minWidth: 140 },
+  { field: 'downtime', headerName: 'Downtime', flex: 1, minWidth: 140 },
+]
+
+const dashboardAssetRows = [
+  { asset: 'Compressor 01', status: 'Online', output: '2,130 bbl', efficiency: '93.1%', downtime: '0.4 hrs' },
+  { asset: 'Turbine 03', status: 'Online', output: '1,980 bbl', efficiency: '89.7%', downtime: '1.2 hrs' },
+  { asset: 'Separator 06', status: 'Maintenance', output: '1,420 bbl', efficiency: '87.2%', downtime: '2.2 hrs' },
+  { asset: 'Pump 11', status: 'Online', output: '2,560 bbl', efficiency: '95.4%', downtime: '0.0 hrs' },
+]
+
+const dashboardAssetDefaultColDef = {
+  sortable: true,
+  resizable: true,
+  filter: true,
+  editable: true,
 }
 
 function ExampleThreeContent() {
@@ -485,22 +545,26 @@ function ExampleThreeContent() {
               aria-label="Search assets"
             ></sl-input>
           ) : (
-            <sl-icon-button
-              library="material"
-              name="search"
-              label="Search assets"
-              onClick={() => {
-                setIsSearchMounted(true)
-                window.requestAnimationFrame(() => setIsSearchVisible(true))
-              }}
-            ></sl-icon-button>
+            <sl-tooltip content="Search assets">
+              <sl-icon-button
+                library="material"
+                name="search"
+                label="Search assets"
+                onClick={() => {
+                  setIsSearchMounted(true)
+                  window.requestAnimationFrame(() => setIsSearchVisible(true))
+                }}
+              ></sl-icon-button>
+            </sl-tooltip>
           )}
           <sl-button variant="primary">Add asset</sl-button>
-          <sl-icon-button
-            library="material"
-            name="more_vert"
-            label="More asset actions"
-          ></sl-icon-button>
+          <sl-tooltip content="More asset actions">
+            <sl-icon-button
+              library="material"
+              name="more_vert"
+              label="More asset actions"
+            ></sl-icon-button>
+          </sl-tooltip>
         </div>
       </div>
       <div className="example3-grid-wrapper ag-theme-quartz eds-aggrid-theme">
@@ -517,7 +581,381 @@ function ExampleThreeContent() {
 }
 
 function ExampleFourContent() {
-  return <section aria-label="Example 4"></section>
+  const chart1Ref = useRef(null)
+  const chart2Ref = useRef(null)
+  const chart3Ref = useRef(null)
+  const chart4Ref = useRef(null)
+  const chart5Ref = useRef(null)
+  const chart6Ref = useRef(null)
+  const chart7Ref = useRef(null)
+  const chart8Ref = useRef(null)
+  const chart9Ref = useRef(null)
+  const [fullScreenChart, setFullScreenChart] = useState(null)
+
+  const toggleChartFullScreen = (chartIndex) => {
+    setFullScreenChart(currentChart => currentChart === chartIndex ? null : chartIndex)
+  }
+
+  useEffect(() => {
+    if (fullScreenChart === null) {
+      return undefined
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setFullScreenChart(null)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [fullScreenChart])
+
+  useEffect(() => {
+    const refs = [chart1Ref, chart2Ref, chart3Ref, chart4Ref, chart5Ref, chart6Ref, chart7Ref, chart8Ref, chart9Ref]
+    
+    if (refs.some(ref => !ref.current)) {
+      return
+    }
+
+    const rootStyles = getComputedStyle(document.documentElement)
+    const interactiveDefault = rootStyles.getPropertyValue('--eds-interactive-default').trim()
+    const interactiveHover = rootStyles.getPropertyValue('--eds-interactive-hover').trim()
+    const textLink = rootStyles.getPropertyValue('--eds-text-link').trim()
+    const fontSans = rootStyles.getPropertyValue('--sl-font-sans').trim()
+
+    const charts = refs.map(ref => echarts.init(ref.current))
+
+    const baseChartOptions = {
+      color: [interactiveDefault, interactiveHover, textLink],
+      textStyle: {
+        fontFamily: fontSans
+      }
+    }
+
+    // Chart 1: Line chart
+    charts[0].setOption({
+      ...baseChartOptions,
+      tooltip: { trigger: 'axis' },
+      xAxis: {
+        type: 'category',
+        data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Revenue',
+          type: 'line',
+          data: [320, 332, 301, 334, 390, 430]
+        }
+      ]
+    })
+
+    // Chart 2: Bar chart
+    charts[1].setOption({
+      ...baseChartOptions,
+      tooltip: { trigger: 'axis' },
+      xAxis: {
+        type: 'category',
+        data: ['A', 'B', 'C', 'D', 'E', 'F']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Sales',
+          type: 'bar',
+          data: [120, 200, 150, 80, 220, 180]
+        }
+      ]
+    })
+
+    // Chart 3: Pie chart
+    charts[2].setOption({
+      ...baseChartOptions,
+      tooltip: { trigger: 'item' },
+      legend: {
+        bottom: 0,
+        left: 'center'
+      },
+      series: [
+        {
+          name: 'Distribution',
+          type: 'pie',
+          radius: ['35%', '60%'],
+          data: [
+            { value: 335, name: 'Category A' },
+            { value: 310, name: 'Category B' },
+            { value: 234, name: 'Category C' },
+            { value: 135, name: 'Category D' }
+          ]
+        }
+      ]
+    })
+
+    // Chart 4: Area chart
+    charts[3].setOption({
+      ...baseChartOptions,
+      tooltip: { trigger: 'axis' },
+      xAxis: {
+        type: 'category',
+        data: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Production',
+          type: 'line',
+          data: [240, 290, 340, 380],
+          areaStyle: {}
+        }
+      ]
+    })
+
+    // Chart 5: Stacked bar chart
+    charts[4].setOption({
+      ...baseChartOptions,
+      tooltip: { trigger: 'axis' },
+      xAxis: {
+        type: 'category',
+        data: ['Q1', 'Q2', 'Q3', 'Q4']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Product A',
+          type: 'bar',
+          data: [320, 332, 301, 334],
+          stack: 'total'
+        },
+        {
+          name: 'Product B',
+          type: 'bar',
+          data: [120, 132, 101, 134],
+          stack: 'total'
+        }
+      ]
+    })
+
+    // Chart 6: Scatter chart
+    charts[5].setOption({
+      ...baseChartOptions,
+      tooltip: { trigger: 'item' },
+      xAxis: {
+        type: 'value'
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Data points',
+          type: 'scatter',
+          data: [[10, 20], [20, 50], [30, 80], [40, 45], [50, 70], [60, 35]]
+        }
+      ]
+    })
+
+    // Chart 7: Gauge chart
+    charts[6].setOption({
+      ...baseChartOptions,
+      series: [
+        {
+          name: 'Performance',
+          type: 'gauge',
+          min: 0,
+          max: 100,
+          data: [{ value: 75, name: 'Efficiency' }]
+        }
+      ]
+    })
+
+    // Chart 8: Multi-line chart
+    charts[7].setOption({
+      ...baseChartOptions,
+      tooltip: { trigger: 'axis' },
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Metric A',
+          type: 'line',
+          data: [100, 120, 150, 130, 160]
+        },
+        {
+          name: 'Metric B',
+          type: 'line',
+          data: [80, 100, 120, 140, 150]
+        }
+      ]
+    })
+
+    // Chart 9: Funnel chart
+    charts[8].setOption({
+      ...baseChartOptions,
+      tooltip: { trigger: 'item' },
+      legend: {
+        bottom: 0,
+        left: 'center'
+      },
+      series: [
+        {
+          name: 'Funnel',
+          type: 'funnel',
+          left: '10%',
+          top: 50,
+          bottom: 60,
+          width: '80%',
+          min: 0,
+          max: 100,
+          minSize: '50%',
+          maxSize: '100%',
+          sort: 'descending',
+          gap: 2,
+          data: [
+            { value: 100, name: 'Visitors' },
+            { value: 80, name: 'Signups' },
+            { value: 55, name: 'Conversions' },
+            { value: 30, name: 'Purchases' }
+          ]
+        }
+      ]
+    })
+
+    const onResize = () => {
+      charts.forEach(chart => chart.resize())
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      onResize()
+    })
+
+    refs.forEach(ref => {
+      if (ref.current) {
+        resizeObserver.observe(ref.current)
+      }
+    })
+
+    requestAnimationFrame(() => {
+      onResize()
+    })
+
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      window.removeEventListener('resize', onResize)
+      resizeObserver.disconnect()
+      charts.forEach(chart => chart.dispose())
+    }
+  }, [])
+
+  return (
+    <section className="example4-dashboard" aria-label="Chart examples">
+      <div className="example4-chart-grid">
+        <sl-card class={`example2-chart-card${fullScreenChart === 0 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Line chart</h2>
+            <sl-tooltip content={fullScreenChart === 0 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 0 ? 'close' : 'fullscreen'} label={fullScreenChart === 0 ? 'Close line chart full screen' : 'View line chart full screen'} onClick={() => toggleChartFullScreen(0)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart1Ref} className="example2-echart" aria-label="Line chart"></div>
+        </sl-card>
+
+        <sl-card class={`example2-chart-card${fullScreenChart === 1 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Bar chart</h2>
+            <sl-tooltip content={fullScreenChart === 1 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 1 ? 'close' : 'fullscreen'} label={fullScreenChart === 1 ? 'Close bar chart full screen' : 'View bar chart full screen'} onClick={() => toggleChartFullScreen(1)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart2Ref} className="example2-echart" aria-label="Bar chart"></div>
+        </sl-card>
+
+        <sl-card class={`example2-chart-card${fullScreenChart === 2 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Pie chart</h2>
+            <sl-tooltip content={fullScreenChart === 2 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 2 ? 'close' : 'fullscreen'} label={fullScreenChart === 2 ? 'Close pie chart full screen' : 'View pie chart full screen'} onClick={() => toggleChartFullScreen(2)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart3Ref} className="example2-echart" aria-label="Pie chart"></div>
+        </sl-card>
+
+        <sl-card class={`example2-chart-card${fullScreenChart === 3 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Area chart</h2>
+            <sl-tooltip content={fullScreenChart === 3 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 3 ? 'close' : 'fullscreen'} label={fullScreenChart === 3 ? 'Close area chart full screen' : 'View area chart full screen'} onClick={() => toggleChartFullScreen(3)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart4Ref} className="example2-echart" aria-label="Area chart"></div>
+        </sl-card>
+
+        <sl-card class={`example2-chart-card${fullScreenChart === 4 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Stacked bars</h2>
+            <sl-tooltip content={fullScreenChart === 4 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 4 ? 'close' : 'fullscreen'} label={fullScreenChart === 4 ? 'Close stacked bars full screen' : 'View stacked bars full screen'} onClick={() => toggleChartFullScreen(4)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart5Ref} className="example2-echart" aria-label="Stacked bar chart"></div>
+        </sl-card>
+
+        <sl-card class={`example2-chart-card${fullScreenChart === 5 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Scatter plot</h2>
+            <sl-tooltip content={fullScreenChart === 5 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 5 ? 'close' : 'fullscreen'} label={fullScreenChart === 5 ? 'Close scatter plot full screen' : 'View scatter plot full screen'} onClick={() => toggleChartFullScreen(5)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart6Ref} className="example2-echart" aria-label="Scatter plot chart"></div>
+        </sl-card>
+
+        <sl-card class={`example2-chart-card${fullScreenChart === 6 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Gauge</h2>
+            <sl-tooltip content={fullScreenChart === 6 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 6 ? 'close' : 'fullscreen'} label={fullScreenChart === 6 ? 'Close gauge full screen' : 'View gauge full screen'} onClick={() => toggleChartFullScreen(6)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart7Ref} className="example2-echart" aria-label="Gauge chart"></div>
+        </sl-card>
+
+        <sl-card class={`example2-chart-card${fullScreenChart === 7 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Multi-line trends</h2>
+            <sl-tooltip content={fullScreenChart === 7 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 7 ? 'close' : 'fullscreen'} label={fullScreenChart === 7 ? 'Close multi-line trends full screen' : 'View multi-line trends full screen'} onClick={() => toggleChartFullScreen(7)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart8Ref} className="example2-echart" aria-label="Multi-line chart"></div>
+        </sl-card>
+
+        <sl-card class={`example2-chart-card${fullScreenChart === 8 ? ' is-fullscreen' : ''}`}>
+          <div className="example4-chart-header">
+            <h2 className="example2-section-heading">Funnel</h2>
+            <sl-tooltip content={fullScreenChart === 8 ? 'Close full screen' : 'View full screen'}>
+              <sl-icon-button library="material" name={fullScreenChart === 8 ? 'close' : 'fullscreen'} label={fullScreenChart === 8 ? 'Close funnel full screen' : 'View funnel full screen'} onClick={() => toggleChartFullScreen(8)}></sl-icon-button>
+            </sl-tooltip>
+          </div>
+          <div ref={chart9Ref} className="example2-echart" aria-label="Funnel chart"></div>
+        </sl-card>
+      </div>
+    </section>
+  )
 }
 
 function ExampleFiveContent() {
