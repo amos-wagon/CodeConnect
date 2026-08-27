@@ -83,10 +83,16 @@ Framework implementation notes:
 
 ## 10) Third-party UI libraries
 
+### Icon references
+
+- Reference Material icons by library and name (`library="material" name="..."`); do not use full SVG asset paths.
+
 ### ECharts
 
-- Bind chart colors and text to EDS tokens.
-- Do not use default ECharts palette or typography.
+- Bind only chart text colors to `var(--eds-text-default)` and `var(--eds-text-secondary)`.
+- Do not bind chart series or data colors to EDS tokens; keep the default ECharts palette.
+- Do not bind chart typography to custom colors or non-EDS values.
+- Always enable tooltips: use `trigger: 'axis'` for line and category charts, or `trigger: 'item'` for discrete data such as bars.
 - Start with this order: interactive default, interactive hover, text link.
 
 ### AG Grid

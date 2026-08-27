@@ -98,7 +98,6 @@ This document focuses on WCAG developer practices you apply directly in code and
 - Use EDS and Shoelace form components first: eds-input, eds-textarea, eds-select, eds-option, eds-checkbox, sl-radio, sl-radio-group, eds-switch, eds-button.
 - Keep keyboard access and visible focus intact when styling components.
 - Use AG Grid Community for interactive grids.
-- Bind ECharts colors and typography to EDS theme tokens.
 
 ## Review checklist
 - Keyboard-only flow works end to end.
