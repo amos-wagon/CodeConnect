@@ -1,20 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import * as echarts from 'echarts'
-import '@shoelace-style/shoelace/dist/components/card/card.js'
-import '@shoelace-style/shoelace/dist/components/icon/icon.js'
-import '@shoelace-style/shoelace/dist/components/button/button.js'
-import '@shoelace-style/shoelace/dist/components/badge/badge.js'
-import '@shoelace-style/shoelace/dist/components/input/input.js'
-import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js'
 import '@shoelace-style/shoelace/dist/components/radio/radio.js'
 import '@shoelace-style/shoelace/dist/components/radio-group/radio-group.js'
-import '@shoelace-style/shoelace/dist/components/select/select.js'
-import '@shoelace-style/shoelace/dist/components/option/option.js'
-import '@shoelace-style/shoelace/dist/components/switch/switch.js'
 import '@shoelace-style/shoelace/dist/components/details/details.js'
-import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
-import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
-import '@shoelace-style/shoelace/dist/components/alert/alert.js'
 import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
 
 function ExampleOneContent() {
@@ -24,77 +12,77 @@ function ExampleOneContent() {
       <p className="example1-feedback">The same components are shown side by side with poor copy and improved copy.</p>
 
       <div className="example1-demo-grid">
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Buttons</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-button variant="primary">The dashboard should be created</sl-button>
+              <eds-button variant="primary">The dashboard should be created</eds-button>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-button variant="primary">Create dashboard</sl-button>
+              <eds-button variant="primary">Create dashboard</eds-button>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Tabs</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-tab-group>
-                <sl-tab slot="nav">Documents list</sl-tab>
-                <sl-tab slot="nav">View Images</sl-tab>
-                <sl-tab slot="nav">Download options</sl-tab>
-              </sl-tab-group>
+              <eds-tab-group>
+                <eds-tab slot="nav">Documents list</eds-tab>
+                <eds-tab slot="nav">View Images</eds-tab>
+                <eds-tab slot="nav">Download options</eds-tab>
+              </eds-tab-group>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-tab-group>
-                <sl-tab slot="nav">Documents</sl-tab>
-                <sl-tab slot="nav">Images</sl-tab>
-                <sl-tab slot="nav">Downloads</sl-tab>
-              </sl-tab-group>
+              <eds-tab-group>
+                <eds-tab slot="nav">Documents</eds-tab>
+                <eds-tab slot="nav">Images</eds-tab>
+                <eds-tab slot="nav">Downloads</eds-tab>
+              </eds-tab-group>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Inputs</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-input
+              <eds-input
                 label="Enter the serial number on your device below:"
                 help-text="Please include punctuation."
-              ></sl-input>
+              ></eds-input>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-input
+              <eds-input
                 label="Device serial number"
                 help-text="Find this on the device label."
-              ></sl-input>
+              ></eds-input>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Checkbox</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-checkbox>Do not disable message alerts</sl-checkbox>
+              <eds-checkbox>Do not disable message alerts</eds-checkbox>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-checkbox>Enable message alerts</sl-checkbox>
+              <eds-checkbox>Enable message alerts</eds-checkbox>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Radio buttons</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
@@ -114,23 +102,23 @@ function ExampleOneContent() {
               </sl-radio-group>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Switch</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
               <p className="example1-demo-label bad">Bad language</p>
-              <sl-switch>Enabled</sl-switch>
+              <eds-switch>Enabled</eds-switch>
             </div>
             <div className="example1-preview">
               <p className="example1-demo-label good">Good language</p>
-              <sl-switch>Send weekly report</sl-switch>
+              <eds-switch>Send weekly report</eds-switch>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example1-demo-card">
+        <eds-card className="example1-demo-card">
           <h2 className="example1-section-title">Table headers</h2>
           <div className="example1-compare-columns">
             <div className="example1-preview">
@@ -158,7 +146,7 @@ function ExampleOneContent() {
               </table>
             </div>
           </div>
-        </sl-card>
+        </eds-card>
       </div>
     </section>
   )
@@ -166,11 +154,10 @@ function ExampleOneContent() {
 
 function ExampleTwoContent() {
   const weeklyTrendChartRef = useRef(null)
-  const loadDistributionChartRef = useRef(null)
-  const hourlyOutputChartRef = useRef(null)
+  const sitePerformanceChartRef = useRef(null)
 
   useEffect(() => {
-    if (!weeklyTrendChartRef.current || !loadDistributionChartRef.current || !hourlyOutputChartRef.current) {
+    if (!weeklyTrendChartRef.current || !sitePerformanceChartRef.current) {
       return
     }
 
@@ -184,8 +171,7 @@ function ExampleTwoContent() {
     const fontSans = rootStyles.getPropertyValue('--sl-font-sans').trim() || 'sans-serif'
 
     const weeklyTrendChart = echarts.init(weeklyTrendChartRef.current)
-    const loadDistributionChart = echarts.init(loadDistributionChartRef.current)
-    const hourlyOutputChart = echarts.init(hourlyOutputChartRef.current)
+    const sitePerformanceChart = echarts.init(sitePerformanceChartRef.current)
 
     const edsChartOptions = {
       color: [interactiveDefault, interactiveHover, textLink],
@@ -220,66 +206,58 @@ function ExampleTwoContent() {
       ]
     })
 
-    loadDistributionChart.setOption({
+    sitePerformanceChart.setOption({
       ...edsChartOptions,
       tooltip: { trigger: 'item' },
       legend: {
-        orient: 'vertical',
-        right: 0,
-        top: 'center',
+        bottom: 0,
+        left: 'center',
         textStyle: {
           fontFamily: fontSans,
-          color: textDefault
+          color: textDefault,
         }
+      },
+      radar: {
+        center: ['50%', '46%'],
+        radius: '58%',
+        indicator: [
+          { name: 'Site A', max: 100 },
+          { name: 'Site B', max: 100 },
+          { name: 'Site C', max: 100 },
+          { name: 'Site D', max: 100 },
+          { name: 'Site E', max: 100 },
+        ],
+        axisName: {
+          color: textSecondary,
+          fontFamily: fontSans,
+        },
+        splitLine: {
+          lineStyle: { color: borderDefault },
+        },
+        splitArea: {
+          areaStyle: {
+            color: ['transparent', 'transparent'],
+          },
+        },
+        axisLine: {
+          lineStyle: { color: borderDefault },
+        },
       },
       series: [
         {
-          name: 'Load',
-          type: 'pie',
-          radius: ['48%', '72%'],
-          center: ['34%', '50%'],
-          label: { color: textSecondary },
-          data: [
-            { value: 42, name: 'Site A' },
-            { value: 31, name: 'Site B' },
-            { value: 19, name: 'Site C' },
-            { value: 8, name: 'Site D' }
-          ]
-        }
-      ]
-    })
-
-    hourlyOutputChart.setOption({
-      ...edsChartOptions,
-      tooltip: { trigger: 'axis' },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-        axisLabel: { color: textSecondary }
-      },
-      yAxis: {
-        type: 'value',
-        axisLabel: { color: textSecondary },
-        splitLine: { lineStyle: { color: borderDefault } }
-      },
-      series: [
-        {
-          name: 'Output',
-          type: 'line',
-          smooth: true,
-          showSymbol: false,
-          data: [148, 162, 174, 168, 183, 191, 186, 172],
-          lineStyle: { width: 3 },
-          areaStyle: { opacity: 0.15 }
+          name: 'Site performance',
+          type: 'radar',
+          lineStyle: { color: interactiveDefault, width: 2 },
+          itemStyle: { color: interactiveDefault },
+          areaStyle: { color: interactiveDefault, opacity: 0.18 },
+          data: [{ value: [82, 68, 91, 74, 86], name: 'Site performance' }],
         }
       ]
     })
 
     const onResize = () => {
       weeklyTrendChart.resize()
-      loadDistributionChart.resize()
-      hourlyOutputChart.resize()
+      sitePerformanceChart.resize()
     }
 
     const resizeObserver = new ResizeObserver(() => {
@@ -287,8 +265,7 @@ function ExampleTwoContent() {
     })
 
     resizeObserver.observe(weeklyTrendChartRef.current)
-    resizeObserver.observe(loadDistributionChartRef.current)
-    resizeObserver.observe(hourlyOutputChartRef.current)
+    resizeObserver.observe(sitePerformanceChartRef.current)
 
     requestAnimationFrame(() => {
       onResize()
@@ -300,8 +277,7 @@ function ExampleTwoContent() {
       window.removeEventListener('resize', onResize)
       resizeObserver.disconnect()
       weeklyTrendChart.dispose()
-      loadDistributionChart.dispose()
-      hourlyOutputChart.dispose()
+      sitePerformanceChart.dispose()
     }
   }, [])
 
@@ -313,46 +289,41 @@ function ExampleTwoContent() {
       </header>
 
       <div className="example2-kpi-grid">
-        <sl-card className="example2-kpi-card">
+        <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Total output</p>
           <p className="example2-kpi-value">12,480 bbl</p>
           <p className="example2-kpi-delta positive">+4.2% vs last week</p>
-        </sl-card>
-        <sl-card className="example2-kpi-card">
+        </eds-card>
+        <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Efficiency</p>
           <p className="example2-kpi-value">91.6%</p>
           <p className="example2-kpi-delta positive">+1.1 pts vs target</p>
-        </sl-card>
-        <sl-card className="example2-kpi-card">
+        </eds-card>
+        <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Downtime</p>
           <p className="example2-kpi-value">3.8 hrs</p>
           <p className="example2-kpi-delta negative">+0.6 hrs this week</p>
-        </sl-card>
-        <sl-card className="example2-kpi-card">
+        </eds-card>
+        <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Energy use</p>
           <p className="example2-kpi-value">7.4 MWh</p>
           <p className="example2-kpi-delta positive">-3.5% vs baseline</p>
-        </sl-card>
+        </eds-card>
       </div>
 
       <div className="example2-chart-grid">
-        <sl-card className="example2-chart-card">
+        <eds-card className="example2-chart-card">
           <h2 className="example2-section-heading">Weekly output trend</h2>
           <div ref={weeklyTrendChartRef} className="example2-echart" aria-label="Weekly output trend chart"></div>
-        </sl-card>
+        </eds-card>
 
-        <sl-card className="example2-chart-card">
-          <h2 className="example2-section-heading">Load distribution</h2>
-          <div ref={loadDistributionChartRef} className="example2-echart" aria-label="Load distribution chart"></div>
-        </sl-card>
+        <eds-card className="example2-chart-card">
+          <h2 className="example2-section-heading">Site performance</h2>
+          <div ref={sitePerformanceChartRef} className="example2-echart" aria-label="Site performance radar chart"></div>
+        </eds-card>
       </div>
 
-      <sl-card className="example2-chart-card">
-        <h2 className="example2-section-heading">Hourly output trend</h2>
-        <div ref={hourlyOutputChartRef} className="example2-echart example2-echart-hourly" aria-label="Hourly output trend chart"></div>
-      </sl-card>
-
-      <sl-card className="example2-table-card">
+      <eds-card className="example2-table-card">
         <h2 className="example2-section-heading">Asset summary</h2>
         <table className="example2-table">
           <thead>
@@ -395,7 +366,7 @@ function ExampleTwoContent() {
             </tr>
           </tbody>
         </table>
-      </sl-card>
+      </eds-card>
     </section>
   )
 }
@@ -417,26 +388,16 @@ const partnerIntegrations = [
   { id: 'mybi', heading: 'MyBI', description: 'Manages project timelines, resource allocation, and task sequencing.' },
 ]
 
-
 function ExampleThreeContent() {
-  return (
-    <section className="example3-form-layout" aria-label="Example 3">
-    </section>
-  )
+  return <section aria-label="Example 3"></section>
 }
 
 function ExampleFourContent() {
-  return (
-    <section className="example4-form-layout" aria-label="Example 4">
-    </section>
-  )
+  return <section aria-label="Example 4"></section>
 }
 
 function ExampleFiveContent() {
-  return (
-    <section className="example5-form-layout" aria-label="Example 5">
-    </section>
-  )
+  return <section aria-label="Example 5"></section>
 }
 
 function ExamplesContent({ activePage }) {

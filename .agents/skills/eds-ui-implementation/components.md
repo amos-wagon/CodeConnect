@@ -1,5 +1,24 @@
 # Components
 
+## Tables and data grids
+
+- All tables and data grids must use AG Grid Community. Do not implement tables with native `<table>` markup or another grid library.
+- Follow the AG Grid implementation guidelines in `implementation.md`, including the required imports, module registration, `legacy` theme configuration, EDS theme classes, filtering defaults, and token-based styling rules.
+
+### Table toolbar
+
+- Place the table toolbar directly above the AG Grid and use `var(--sl-spacing-small)` for the gap between the toolbar and grid.
+- Structure the toolbar with two containers: a `filters` area on the left and an `actions` area on the right.
+- The left `filters` area must always include the item count. Add filters only when the table needs them; use `sl-radio-group` for mutually exclusive filter choices and keep controls ordered by function.
+- The right `actions` area includes a search icon button, one content-width `sl-button` with `variant="primary"`, and an overflow menu icon button, in that order. Inputs and buttons use their default medium size.
+- Use `sl-icon-button` for familiar icon actions and provide an accessible `label` for every icon button.
+- Style the item count with `var(--eds-text-secondary)` and `var(--sl-font-size-small)`.
+- Use `var(--sl-spacing-small)` for uniform spacing between controls within both areas.
+- When the search icon button is selected, replace it with a standard-size `sl-input` using the placeholder `Search...` and keep focus in the input.
+- Set the search input to `clearable` and handle `sl-clear` to reset the AG Grid quick filter.
+- Connect the search input to the AG Grid quick filter as the user types. When focus leaves the search input, restore the search icon button while preserving the current filter value.
+- Animate the search input when it appears and disappears using a short ease-out transition for width, opacity, and horizontal movement. Expand it to `10rem`; keep the input mounted during the exit transition, then restore the search icon button after the transition completes.
+
 ## Layout
 
 - Always confirm the web component host receives a real `class` attribute in rendered DOM.
@@ -70,9 +89,10 @@
 ### Form layout baseline
 
 - Prefer single-column form flow; expand to two columns only when space and readability support it.
-- Keep form control max width at 30rem for typical input/select controls unless requirement differs.
-- Use two spacing levels: section-to-section `var(--sl-spacing-x-large)` and control-to-control `var(--sl-spacing-medium)`.
-- Use separate wrappers for section spacing vs field spacing.
+- Keep typical `sl-input`, `sl-select`, and other form controls at `max-width: 30rem`; do not use unconstrained `width: 100%` on the controls unless the design explicitly requires full-width fields.
+- Use two spacing levels: section-to-section `var(--sl-spacing-x-large)` and control-to-control `var(--sl-spacing-medium)`. Do not use `var(--sl-spacing-3x-small)` or `var(--sl-spacing-2x-small)` as the default form field gap.
+- Use separate wrappers for section spacing vs field spacing: the section wrapper owns `var(--sl-spacing-x-large)`, and the field wrapper owns `var(--sl-spacing-medium)`.
+- Before finalizing a form, verify both the rendered control width and the measured vertical gap between two adjacent fields against these rules.
 
 ## Radio group
 
@@ -91,10 +111,12 @@
 ## Buttons
 
 - Use `sl-button` for button actions unless an explicit requirement states otherwise.
-- Default button size is `medium`.
+- Always use the default button size is `medium`.
 - Use `variant="primary"` for the single main call-to-action; use `variant="default"` for secondary actions; use `variant="text"` for low-emphasis or inline actions.
 - Keep button width content-based by default; do not stretch to full width unless explicitly required.
 - Keep labels concise and action-oriented (see `content.md`).
+- In React, use the literal `class` attribute rather than `className` on Shoelace and EDS custom elements when a CSS class hook is required; verify the rendered custom element has the expected class before relying on that selector.
+- Before finalizing a form, verify that every button is content-fit in the rendered layout and that any custom-element CSS hook is present on the element.
 
 ## Cards
 
@@ -193,7 +215,19 @@
 - After message updates, call `ava-layout.scrollToBottom()` in `requestAnimationFrame` to keep the latest message in view.
 - Keep AVA copy concise and action-oriented per `content.md`; avoid long, dense response text in starter templates.
 
-## Toasts
+## Errors and alerts
+
+### Alerts
+
+- Use the alert component for alert messages.
+- Set alerts to stretch to 100% of their containing section.
+- Place `eds-alert` above the section it relates to, typically at the top of the page below the page header or at the top of a dialog body.
+- Do not use the `heading` property in `eds-alert`.
+- Always set `closable` on `eds-alert` elements with the `primary`, `neutral`, or `warning` variant.
+- Never set `closable` on an `eds-alert` with the `danger` variant.
+- Use the `success` variant only in dialogs; use a toast for success messages in the main page area.
+
+### Toasts
 
 - Always use `eds-toast` for toast notifications.
 - Keep toast text short, specific, and action-result oriented (see `content.md`).

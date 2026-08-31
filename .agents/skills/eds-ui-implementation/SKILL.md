@@ -5,7 +5,7 @@ description: "Use when building, modifying, reviewing, or restyling UI with the 
 
 # EDS UI Implementation Skill
 
-Use this skill whenever the task involves building, modifying, reviewing, or restyling UI in this repository using the Emerson Design System.
+Always use this skill whenever the task involves building, modifying, reviewing, or restyling UI in this repository using the Emerson Design System.
 
 ## When to use
 - Creating or editing forms

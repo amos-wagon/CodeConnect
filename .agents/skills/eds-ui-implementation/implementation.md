@@ -4,7 +4,6 @@ Use this file as a practical implementation guide for writing maintainable, cons
 
 ## 1) Plan before coding
 
-- Confirm user goals, required behavior, and acceptance criteria before implementation.
 - Reuse existing EDS and Shoelace patterns before introducing new composition.
 - Keep scope tight: implement only what is requested unless a dependency requires additional work.
 - Prefer incremental, verifiable changes over large rewrites.
@@ -50,13 +49,12 @@ Framework implementation notes:
 - Co-locate styles with the component they affect and keep selectors narrowly scoped.
 - Preserve visual consistency with existing app patterns unless restyling is explicitly requested.
 
-## 6) Content quality in UI
+## 6) Figma and EDS conflicts
 
-- Use concise, action-oriented, sentence-case copy.
-- Keep labels and helper text clear and consistent with product terminology.
-- Prefer verbs for actions and nouns for labels/titles.
-- Use success and error messages that explain outcome and next action when needed.
-- Avoid placeholder-only instructions and ambiguous wording.
+- Treat Figma as the source of visual intent for layout, hierarchy, content, and interaction states.
+- When Figma conflicts with EDS components, design tokens, accessibility, or responsive requirements, EDS constraints take precedence.
+- Preserve the closest possible Figma appearance using the approved EDS component or token rather than recreating a control or hardcoding a visual value.
+- Record meaningful visual deviations in the implementation summary when an exact match is not possible.
 
 ## 7) Performance and reliability
 

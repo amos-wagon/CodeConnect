@@ -11,25 +11,25 @@
   },
   "dependencies": {
     "@aspentech/pf-ui-assistance": "^0.10.0",
-    "@aspentech/pf-ui-compound": "^0.15.0",
-    "@aspentech/pf-ui-core": "^0.21.0",
+    "@aspentech/pf-ui-compound": "^0.16.0",
+    "@aspentech/pf-ui-core": "^0.23.0",
     "@material-design-icons/font": "^0.14.15",
     "@material-design-icons/svg": "^0.14.15",
     "@shoelace-style/shoelace": "^2.20.1",
-    "ag-grid-community": "^35.3.0",
-    "ag-grid-react": "^35.3.0",
+    "ag-grid-community": "^36.1.0",
+    "ag-grid-react": "^36.1.0",
     "echarts": "^6.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
-    "vite": "^5.2.0"
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@vitejs/plugin-react": "^6.1.0",
+    "eslint": "^10.9.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.4",
+    "vite": "^8.2.2"
   }
 }

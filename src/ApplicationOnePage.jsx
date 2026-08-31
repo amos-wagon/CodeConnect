@@ -1,15 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import '@shoelace-style/shoelace/dist/components/badge/badge.js'
-import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
-import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
-import '@shoelace-style/shoelace/dist/components/button/button.js'
-import '@shoelace-style/shoelace/dist/components/divider/divider.js'
-import '@shoelace-style/shoelace/dist/components/dialog/dialog.js'
-import '@shoelace-style/shoelace/dist/components/icon/icon.js'
-import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
 import '@shoelace-style/shoelace/dist/components/menu-item/menu-item.js'
-import '@shoelace-style/shoelace/dist/components/tab/tab.js'
-import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
 
 const generalItems = [
   {
@@ -148,11 +138,9 @@ const leftPanelPages = [
 function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItems, activePage, onNavigate }) {
   const modalSidenavRef = useRef(null)
   const applicationLayoutRef = useRef(null)
-  const addDialogRef = useRef(null)
   const rightPanelRef = useRef(null)
   const leftTabGroupRef = useRef(null)
   const [activeLeftPageId, setActiveLeftPageId] = useState('connections')
-
   const activeLeftPage = leftPanelPages.find((page) => page.id === activeLeftPageId) ?? leftPanelPages[0]
 
   useEffect(() => {
@@ -180,7 +168,7 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
       return
     }
 
-    const tabs = tabGroup.querySelectorAll('sl-tab[slot="nav"]')
+    const tabs = tabGroup.querySelectorAll('eds-tab[slot="nav"]')
 
     tabs.forEach((tab) => {
       const isActive = tab.getAttribute('data-nav-id') === activeLeftPageId
@@ -193,24 +181,6 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
       tab.removeAttribute('active')
     })
   }, [activeLeftPageId])
-
-  useEffect(() => {
-    const dialog = addDialogRef.current
-    if (!dialog) return
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        e.stopPropagation()
-        dialog.hide()
-      }
-    }
-
-    dialog.addEventListener('keydown', handleKeyDown, true)
-    return () => {
-      dialog.removeEventListener('keydown', handleKeyDown, true)
-    }
-  }, [])
 
   const openModalSidenav = () => {
     const sidenav = modalSidenavRef.current
@@ -243,20 +213,6 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
     layout.setAttribute('open-left', '')
   }
 
-  const openAddDialog = () => {
-    addDialogRef.current?.show?.()
-  }
-
-  const openRightPanel = () => {
-    const layout = applicationLayoutRef.current
-
-    if (!layout) {
-      return
-    }
-
-    layout.setAttribute('open-right', '')
-  }
-
   const closeRightPanel = () => {
     const layout = applicationLayoutRef.current
 
@@ -272,31 +228,29 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <eds-shell-template className={`app-shell-template application1 ${themeClassName}`} theme={theme}>
           <eds-appbar slot="appbar" show-menu-button is-application role="banner" className={themeClassName} theme={theme}>
-            <sl-icon-button
+            <eds-icon-button
               slot="menu-button"
-              library="material"
-              name="menu"
+              src="/assets/icons/material/outlined/menu.svg"
               label="Menu"
               onClick={openModalSidenav}
-            ></sl-icon-button>
-          <sl-icon library="material" name="precision_manufacturing" slot="icon"></sl-icon>
-          <sl-breadcrumb slot="breadcrumb">
-            <span slot="separator">/</span>
-            <sl-breadcrumb-item>Breadcrumb</sl-breadcrumb-item>
-            <sl-breadcrumb-item>Application Heading</sl-breadcrumb-item>
-          </sl-breadcrumb>
+            ></eds-icon-button>
+          <eds-icon src="/assets/icons/material/outlined/precision_manufacturing.svg" slot="icon"></eds-icon>
+          <eds-breadcrumb slot="breadcrumb">
+            <eds-breadcrumb-item>Breadcrumb</eds-breadcrumb-item>
+            <eds-breadcrumb-item>Breadcrumb</eds-breadcrumb-item>
+          </eds-breadcrumb>
           <eds-page-info slot="page-info" heading="Application Heading" className={themeClassName} theme={theme}>
             <sl-menu-item slot="heading-menu-items" onClick={() => {}}>Option 1</sl-menu-item>
             <sl-menu-item slot="heading-menu-items" onClick={() => {}}>Option 2</sl-menu-item>
-            <sl-badge variant="success" slot="badge">New</sl-badge>
+            <eds-badge variant="success" slot="badge">New</eds-badge>
           </eds-page-info>
-            <sl-tab-group activation="manual" slot="center">
-              <sl-tab slot="nav">Design</sl-tab>
-              <sl-tab slot="nav">Case Studies</sl-tab>
-              <sl-tab slot="nav">Settings</sl-tab>
-            </sl-tab-group>
-          <sl-button slot="right">Share</sl-button>
-          <sl-icon-button slot="right" library="material" name="more_horiz" label="More"></sl-icon-button>
+            <eds-tab-group activation="manual" slot="center">
+              <eds-tab slot="nav">Design</eds-tab>
+              <eds-tab slot="nav">Case Studies</eds-tab>
+              <eds-tab slot="nav">Settings</eds-tab>
+            </eds-tab-group>
+          <eds-button slot="right">Share</eds-button>
+          <eds-icon-button slot="right" library="material" name="more_horiz" label="More"></eds-icon-button>
         </eds-appbar>
         <eds-sidenav
           ref={modalSidenavRef}
@@ -317,7 +271,7 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
               onClick={(event) => navigateFromModal(event, page)}
             ></eds-sidenav-item>
           ))}
-          <sl-divider></sl-divider>
+          <eds-divider></eds-divider>
           <eds-sidenav-item type="heading" label="Apps"></eds-sidenav-item>
           <eds-sidenav-item
             type="node"
@@ -346,37 +300,31 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
         <eds-application-layout ref={applicationLayoutRef} open-left>
             <div slot="left-panel" className="application1-left-panel">
               <eds-panel-layout heading="Navigation">
-                <sl-tab-group ref={leftTabGroupRef} placement="end" activation="manual" aria-label="Settings sections">
+                <eds-tab-group ref={leftTabGroupRef} placement="end" aria-label="Settings sections">
                   {leftPanelPages.map((page) => (
-                    <sl-tab
+                    <eds-tab
                       key={page.id}
                       slot="nav"
                       data-nav-id={page.id}
                       onClick={() => setActiveLeftPageId(page.id)}
                     >
                       {page.label}
-                    </sl-tab>
+                    </eds-tab>
                   ))}
-                </sl-tab-group>
+                </eds-tab-group>
               </eds-panel-layout>
             </div>
             <section className="example3-integrations" aria-label="Integrations">
-              <eds-page-header heading={activeLeftPage.label} className="example3-page-header">
-                <sl-icon-button slot="icon" library="material" name="view_sidebar" label="View sidebar" onClick={toggleLeftPanel}></sl-icon-button>
-                <sl-breadcrumb slot="breadcrumb">
-                  <sl-breadcrumb-item>Home</sl-breadcrumb-item>
-                </sl-breadcrumb>
-                <sl-badge slot="badge" variant="success">Active</sl-badge>
-                <sl-button slot="controls" variant="default" onClick={openRightPanel}>View details</sl-button>
-                <sl-button slot="controls" variant="default" onClick={openAddDialog}>Add</sl-button>
+              <eds-page-header heading={activeLeftPage.label}>
+                <eds-icon-button
+                  slot="icon"
+                  library="material"
+                  name="view_sidebar"
+                  label="Toggle navigation panel"
+                  onClick={toggleLeftPanel}
+                ></eds-icon-button>
+                <eds-button slot="controls" variant="default">Add</eds-button>
               </eds-page-header>
-
-              <sl-dialog ref={addDialogRef} label="Add integration">
-                Add integration details here.
-                <sl-button slot="footer" variant="default" onClick={() => addDialogRef.current?.hide()}>Cancel</sl-button>
-                <sl-button slot="footer" variant="primary" onClick={() => addDialogRef.current?.hide()}>Submit</sl-button>
-              </sl-dialog>
-
               <div className="page-content example3-content">
                 {activeLeftPage.groups.map((group) => (
                   <section key={group.label} aria-label={group.label}>
@@ -387,7 +335,7 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
                           key={id}
                           control="switch"
                           heading={heading}
-                          className="example3-card"
+                          class="example3-card"
                         >
                           <p className="example3-card-description">{description}</p>
                         </eds-selectable-card>
@@ -399,7 +347,6 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
             </section>
             <div slot="right-panel" className="application1-right-panel">
               <eds-panel-layout ref={rightPanelRef} heading="Details" closable close-label="Close details">
-                <p className="example3-card-description">Right panel content</p>
               </eds-panel-layout>
             </div>
         </eds-application-layout>

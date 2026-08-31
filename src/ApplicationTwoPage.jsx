@@ -1,13 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import '@shoelace-style/shoelace/dist/components/badge/badge.js'
-import '@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js'
-import '@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js'
-import '@shoelace-style/shoelace/dist/components/button/button.js'
-import '@shoelace-style/shoelace/dist/components/divider/divider.js'
-import '@shoelace-style/shoelace/dist/components/icon/icon.js'
-import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
-import '@shoelace-style/shoelace/dist/components/tab/tab.js'
-import '@shoelace-style/shoelace/dist/components/tab-group/tab-group.js'
 
 const sectionPages = [
   {
@@ -91,8 +82,11 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
   const applicationLayoutRef = useRef(null)
   const rightPanelRef = useRef(null)
   const leftTabGroupRef = useRef(null)
+  const avaLayoutRef = useRef(null)
+  const avaInputRef = useRef(null)
   const [activeSectionId, setActiveSectionId] = useState(sectionPages[0].id)
   const [selectedCardId, setSelectedCardId] = useState(null)
+  const [isAvaOpen, setIsAvaOpen] = useState(false)
 
   const activeSection = sectionPages.find((section) => section.id === activeSectionId) ?? sectionPages[0]
   const activeCards = activeSection.cards
@@ -108,7 +102,7 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
       return
     }
 
-    const tabs = tabGroup.querySelectorAll('sl-tab[slot="nav"]')
+    const tabs = tabGroup.querySelectorAll('eds-tab[slot="nav"]')
 
     tabs.forEach((tab) => {
       const isActive = tab.getAttribute('data-nav-id') === activeSectionId
@@ -148,6 +142,42 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
       rightPanel.removeEventListener('eds-close', closeRightPanel)
     }
   }, [])
+
+  useEffect(() => {
+    const avaLayout = avaLayoutRef.current
+    const avaInput = avaInputRef.current
+
+    if (!isAvaOpen || !avaLayout || !avaInput) {
+      return undefined
+    }
+
+    const handleAvaClose = () => setIsAvaOpen(false)
+    const handleAvaSend = (event) => {
+      const message = event.detail || avaInput.inputValue
+      if (!message) {
+        return
+      }
+
+      avaLayout.waiting = true
+      const userMessage = document.createElement('ava-user-message')
+      userMessage.textContent = message
+      avaLayout.append(userMessage)
+
+      const responseMessage = document.createElement('ava-response-message')
+      responseMessage.textContent = 'I can help you find information and get started.'
+      avaLayout.append(responseMessage)
+      avaLayout.waiting = false
+      requestAnimationFrame(() => avaLayout.scrollToBottom())
+    }
+
+    avaLayout.addEventListener('ava-close', handleAvaClose)
+    avaInput.addEventListener('ava-send', handleAvaSend)
+
+    return () => {
+      avaLayout.removeEventListener('ava-close', handleAvaClose)
+      avaInput.removeEventListener('ava-send', handleAvaSend)
+    }
+  }, [isAvaOpen])
 
   const openModalSidenav = () => {
     const sidenav = modalSidenavRef.current
@@ -208,26 +238,33 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <eds-shell-template className={`app-shell-template application2 ${themeClassName}`} theme={theme}>
         <eds-appbar slot="appbar" show-menu-button is-application role="banner" className={themeClassName} theme={theme}>
-          <sl-icon-button
+          <eds-icon-button
             slot="menu-button"
-            library="material"
-            name="menu"
+            src="/assets/icons/material/outlined/menu.svg"
             label="Menu"
             onClick={openModalSidenav}
-          ></sl-icon-button>
-          <sl-icon library="material" name="apps" slot="icon"></sl-icon>
-          <sl-breadcrumb slot="breadcrumb">
+          ></eds-icon-button>
+          <eds-icon src="/assets/icons/material/outlined/apps.svg" slot="icon"></eds-icon>
+          <eds-breadcrumb slot="breadcrumb">
             <span slot="separator">/</span>
-            <sl-breadcrumb-item>Breadcrumb</sl-breadcrumb-item>
-            <sl-breadcrumb-item>Application 2</sl-breadcrumb-item>
-          </sl-breadcrumb>
+            <eds-breadcrumb-item>Breadcrumb</eds-breadcrumb-item>
+            <eds-breadcrumb-item>Application 2</eds-breadcrumb-item>
+          </eds-breadcrumb>
           <eds-page-info slot="page-info" heading="Application 2" className={themeClassName} theme={theme}></eds-page-info>
-            <sl-tab-group activation="manual" slot="center">
-              <sl-tab slot="nav">Design</sl-tab>
-              <sl-tab slot="nav">Case Studies</sl-tab>
-              <sl-tab slot="nav">Settings</sl-tab>
-            </sl-tab-group>
-          <sl-button slot="right">Share</sl-button>
+            <eds-tab-group activation="manual" slot="center">
+              <eds-tab slot="nav">Design</eds-tab>
+              <eds-tab slot="nav">Case Studies</eds-tab>
+              <eds-tab slot="nav">Settings</eds-tab>
+            </eds-tab-group>
+            <eds-button slot="right">Share</eds-button>
+            <button
+              type="button"
+              slot="right"
+              aria-label="Open AVA assistant"
+              onClick={() => setIsAvaOpen(true)}
+            >
+              <ava-logo variant="isotype"></ava-logo>
+            </button>
         </eds-appbar>
         <eds-sidenav
           ref={modalSidenavRef}
@@ -248,7 +285,7 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
               onClick={(event) => navigateFromModal(event, page)}
             ></eds-sidenav-item>
           ))}
-          <sl-divider></sl-divider>
+          <eds-divider></eds-divider>
           <eds-sidenav-item type="heading" label="Apps"></eds-sidenav-item>
           <eds-sidenav-item
             type="node"
@@ -277,29 +314,29 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
           <eds-application-layout ref={applicationLayoutRef} open-left>
             <div slot="left-panel" className="application2-left-panel">
               <eds-panel-layout heading="Navigation">
-                <sl-tab-group ref={leftTabGroupRef} placement="end" activation="manual" aria-label="Left panel navigation">
+                <eds-tab-group ref={leftTabGroupRef} placement="end" activation="manual" aria-label="Left panel navigation">
                   {sectionPages.map((section) => (
-                    <sl-tab
+                    <eds-tab
                       key={section.id}
                       slot="nav"
                       data-nav-id={section.id}
                       onClick={() => setActiveSectionId(section.id)}
                     >
                       {section.label}
-                    </sl-tab>
+                    </eds-tab>
                   ))}
-                </sl-tab-group>
+                </eds-tab-group>
               </eds-panel-layout>
             </div>
             <section className="application2-default-page" aria-label="Application 2 content">
               <eds-page-header heading={activeSection.heading} className="application2-page-header">
-                <sl-icon-button
+                <eds-icon-button
                   slot="icon"
                   library="material"
                   name="view_sidebar"
                   label="View sidebar"
                   onClick={toggleLeftPanel}
-                ></sl-icon-button>
+                ></eds-icon-button>
               </eds-page-header>
               <div className="page-content application2-page-content">
                 <section className="application2-content-grid" aria-label={`${activeSection.heading} sections`}>
@@ -327,6 +364,17 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
             </div>
           </eds-application-layout>
         </main>
+        {isAvaOpen && (
+          <aside className="ava-panel" aria-label="AVA assistant">
+            <ava-layout ref={avaLayoutRef}>
+              <ava-welcome-message>
+                <span slot="title">How can AVA help?</span>
+                <span slot="description">Ask a question about your workspace.</span>
+              </ava-welcome-message>
+              <ava-input ref={avaInputRef} slot="footer" placeholder="Ask AVA..."></ava-input>
+            </ava-layout>
+          </aside>
+        )}
       </eds-shell-template>
     </div>
   )

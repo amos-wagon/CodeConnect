@@ -59,6 +59,53 @@ p {
   max-width: 100%;
 }
 
+.ava-panel {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-end: 0;
+  z-index: 5;
+  display: block;
+  inline-size: min(28rem, 100vw);
+  background: var(--eds-background-default);
+  border-inline-start: 1px solid var(--eds-border-default);
+  box-shadow: var(--sl-shadow-large);
+}
+
+.ava-panel ava-layout {
+  display: block;
+  block-size: 100%;
+}
+
+eds-appbar button[aria-label='Open AVA assistant'] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 32px;
+  block-size: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--sl-border-radius-medium);
+  background: transparent;
+  color: var(--eds-text-default);
+  cursor: pointer;
+}
+
+eds-appbar button[aria-label='Open AVA assistant']:hover {
+  background: var(--eds-interactive-weak);
+}
+
+eds-appbar button[aria-label='Open AVA assistant']:focus-visible {
+  outline: var(--sl-focus-ring);
+  outline-offset: var(--sl-spacing-3x-small);
+}
+
+eds-appbar button[aria-label='Open AVA assistant'] ava-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
 .content-area.application1,
 .content-area.application2 {
   box-sizing: border-box;
@@ -100,14 +147,6 @@ p {
   block-size: 100%;
 }
 
-/* Ensure vertical Shoelace tabs fill container width, not label width. */
-sl-tab-group:is([placement='start'], [placement='end'])::part(nav),
-sl-tab-group:is([placement='start'], [placement='end']) sl-tab,
-sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
-  inline-size: 100%;
-  gap: 0;
-}
-
 .centered-text {
   display: flex;
   align-items: center;
@@ -122,11 +161,11 @@ sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
   gap: var(--sl-spacing-medium);
 }
 
-.example1-form sl-input {
+.example1-form eds-input {
   max-width: 30rem;
 }
 
-.example1-form sl-button {
+.example1-form eds-button {
   justify-self: start;
 }
 
@@ -158,8 +197,8 @@ sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
   gap: var(--sl-spacing-medium);
 }
 
-.example1-fields sl-input,
-.example1-fields sl-select {
+.example1-fields eds-input,
+.example1-fields eds-select {
   max-width: 30rem;
 }
 
@@ -219,12 +258,12 @@ sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
   color: var(--eds-text-default);
 }
 
-.example1-preview sl-input,
+.example1-preview eds-input,
 .example1-preview sl-radio-group {
   max-width: 100%;
 }
 
-.example1-preview sl-button {
+.example1-preview eds-button {
   justify-self: start;
 }
 
@@ -272,27 +311,9 @@ sl-tab-group:is([placement='start'], [placement='end']) sl-tab::part(base) {
   font-weight: var(--sl-font-weight-semibold);
 }
 
-.example2-form sl-input,
-.example2-form sl-select {
+.example2-form eds-input,
+.example2-form eds-select {
   max-width: 30rem;
-}
-
-.example3-form-layout {
-  display: grid;
-  padding: var(--sl-spacing-medium-plus);
-}
-
-.example3-form {
-  display: grid;
-  gap: var(--sl-spacing-medium);
-}
-
-.example3-form sl-input {
-  max-width: 30rem;
-}
-
-.example3-save-button {
-  justify-self: start;
 }
 
 eds-toast::part(base) {
@@ -310,12 +331,6 @@ eds-toast::part(base) {
 }
 
 @media (max-width: 1024px) {
-}
-
-@media (max-width: 640px) {
-  .example3-form-layout {
-    padding: var(--sl-spacing-medium);
-  }
 }
 
 .example2-placeholder {
@@ -510,9 +525,42 @@ eds-toast::part(base) {
   color: var(--eds-text-default);
 }
 
-.example4-form-layout {
+.example3-form-layout {
   display: grid;
   gap: var(--sl-spacing-medium);
+}
+
+.example3-form {
+  display: grid;
+  gap: var(--sl-spacing-x-large);
+  width: 100%;
+}
+
+.example3-section {
+  display: grid;
+  gap: var(--sl-spacing-medium);
+}
+
+.example3-heading {
+  margin: 0;
+  color: var(--eds-text-default);
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-large);
+  font-weight: var(--sl-font-weight-semibold);
+}
+
+.example3-form eds-input,
+.example3-form eds-select {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.example3-form eds-input [slot='suffix'] {
+  color: var(--eds-text-secondary);
+}
+
+.example3-form eds-button {
+  justify-self: start;
 }
 
 .example4-breadcrumb::part(base) {
@@ -563,7 +611,7 @@ eds-toast::part(base) {
   line-height: var(--sl-line-height-dense);
 }
 
-.example4-form-layout sl-button {
+.example4-form-layout eds-button {
   justify-self: start;
 }
 
@@ -682,6 +730,13 @@ eds-toast::part(base) {
   overflow-y: auto;
 }
 
+.application1-left-panel,
+.application1-left-panel eds-panel-layout,
+.application2-left-panel,
+.application2-left-panel eds-panel-layout {
+  inline-size: 100%;
+}
+
 .application2-panel-title {
   margin: 0;
   color: var(--eds-text-default);
@@ -738,7 +793,7 @@ eds-toast::part(base) {
   gap: var(--sl-spacing-medium);
 }
 
-.example4-field-group sl-input {
+.example4-field-group eds-input {
   max-width: 30rem;
 }
 
