@@ -26,6 +26,11 @@ Use this skill whenever the task involves building, modifying, reviewing, or res
 - Meet WCAG AA expectations
 - Follow content guidelines for all UI language and communication displayed in UI components
 
+## Library files and descriptions
+- @aspentech/pf-ui-core - Provides EDS/Shoelace basic components and token-based styling.
+- @aspentech/pf-ui-compound - Provides EDS/Shoelace compound components, such as form fields, notification, catalog cards, etc.
+- @aspentech/pf-ui-assistance - Provides EDS/Shoelace components to create AI interface for Aspentech and Emerson.
+
 ## Required supporting files
 - Read accessibility.md
 - Read content.md

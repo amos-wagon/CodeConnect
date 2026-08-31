@@ -148,3 +148,53 @@ Use these as first-choice tokens:
 - Text: `var(--eds-text-default)`, `var(--eds-text-secondary)`, `var(--eds-text-link)`
 - Typography: `var(--sl-font-sans)`, `var(--sl-font-size-small)`, `var(--sl-font-size-medium)`, `var(--sl-font-size-large)`, `var(--sl-font-size-2x-large)`
 - Spacing scale: `var(--sl-spacing-3x-small)` through `var(--sl-spacing-x-large)`
+
+## 12) Icons
+
+- Use only icons from the Material Design Icons library (`@material-design-icons/svg`).
+- Install and import icons from `@material-design-icons/svg/dist/[variant]/` where `[variant]` is one of: `filled`, `outlined`, `round`, `sharp`, or `two-tone`.
+- Do not introduce icons from other libraries or sources; maintain a single icon source across the application.
+- Always render icons as `<img>`, `<svg>`, or Shoelace `<sl-icon>` elements—never as `<span>` or other elements with CSS classes to simulate icons.
+- Pair icon elements with appropriate `aria-label` or context for accessibility when icons are used as interactive controls.
+
+### Installation example:
+```bash
+npm install @material-design-icons/svg
+```
+
+### Usage example:
+```jsx
+// Import from the specific variant directory
+import settingsIcon from '@material-design-icons/svg/dist/filled/settings.svg'
+
+// Render as img
+<img src={settingsIcon} alt="Settings" />
+
+// Or use Shoelace icon component for consistency with design system
+<sl-icon name="settings" library="material"></sl-icon>
+```
+
+## 13) Accessibility testing
+
+- Run accessibility checks (Playwright tests, automated audits) only when:
+  - Implementing new user-facing components or interactive features
+  - Making changes to form inputs, navigation, or modal/dialog structures
+  - Explicitly requested as part of the acceptance criteria
+  - Addressing known accessibility issues or regressions
+- Avoid running automated accessibility checks on every minor change; focus on meaningful UI additions and interactions.
+- Verify keyboard navigation, screen reader behavior, and semantic HTML for critical user flows.
+
+## 14) Dark theme implementation
+
+- Apply dark theme by binding all color values to EDS tokens that support light/dark variants.
+- The design system automatically switches token values based on the `data-theme` attribute on the root HTML element or CSS media query `prefers-color-scheme`.
+- Use only `var(--eds-*)` and `var(--sl-*)` tokens for colors; do not hardcode color values.
+- Test UI in both light and dark modes during development to ensure sufficient contrast and visual clarity.
+- Verify that text, backgrounds, borders, and interactive elements remain readable and distinct in dark mode.
+- Apply dark theme toggles or system preference detection at the application level, not per-component.
+
+### Dark theme token examples:
+- Backgrounds: `var(--eds-background-default)` adapts from light to dark automatically
+- Text: `var(--eds-text-default)` and `var(--eds-text-secondary)` adjust for contrast
+- Interactive: `var(--eds-interactive-default)` and `var(--eds-interactive-hover)` maintain visibility in both modes
+- Do not override these tokens with hardcoded hex or rgb values
