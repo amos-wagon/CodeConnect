@@ -737,6 +737,34 @@ eds-toast::part(base) {
   inline-size: 100%;
 }
 
+.application1-left-panel eds-panel-layout,
+.application2-left-panel eds-panel-layout {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+.application1-left-panel eds-tab-group,
+.application2-left-panel eds-tab-group {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  block-size: 100%;
+}
+
+.application1-left-panel eds-tab-group::part(base),
+.application2-left-panel eds-tab-group::part(base) {
+  --flex-direction: unset;
+  --nav-order: unset;
+  block-size: 100%;
+}
+
+.application1-left-panel eds-tab-group::part(tabs),
+.application2-left-panel eds-tab-group::part(tabs) {
+  flex: 1 1 auto;
+  block-size: 100%;
+}
+
 .application2-panel-title {
   margin: 0;
   color: var(--eds-text-default);

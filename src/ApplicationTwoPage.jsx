@@ -245,11 +245,11 @@ function ApplicationTwoPage({ theme, themeClassName, mainContentRef, sideNavItem
             onClick={openModalSidenav}
           ></eds-icon-button>
           <eds-icon src="/assets/icons/material/outlined/apps.svg" slot="icon"></eds-icon>
-          <eds-breadcrumb slot="breadcrumb">
+          <sl-breadcrumb slot="breadcrumb">
             <span slot="separator">/</span>
-            <eds-breadcrumb-item>Breadcrumb</eds-breadcrumb-item>
-            <eds-breadcrumb-item>Application 2</eds-breadcrumb-item>
-          </eds-breadcrumb>
+            <sl-breadcrumb-item>Breadcrumb</sl-breadcrumb-item>
+            <sl-breadcrumb-item>Application 2</sl-breadcrumb-item>
+          </sl-breadcrumb>
           <eds-page-info slot="page-info" heading="Application 2" className={themeClassName} theme={theme}></eds-page-info>
             <eds-tab-group activation="manual" slot="center">
               <eds-tab slot="nav">Design</eds-tab>

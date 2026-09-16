@@ -235,11 +235,12 @@ function ApplicationOnePage({ theme, themeClassName, mainContentRef, sideNavItem
               onClick={openModalSidenav}
             ></eds-icon-button>
           <eds-icon src="/assets/icons/material/outlined/precision_manufacturing.svg" slot="icon"></eds-icon>
-          <eds-breadcrumb slot="breadcrumb">
-            <eds-breadcrumb-item>Breadcrumb</eds-breadcrumb-item>
-            <eds-breadcrumb-item>Breadcrumb</eds-breadcrumb-item>
-          </eds-breadcrumb>
-          <eds-page-info slot="page-info" heading="Application Heading" className={themeClassName} theme={theme}>
+          <sl-breadcrumb slot="breadcrumb">
+            <span slot="separator">/</span>
+            <sl-breadcrumb-item>Breadcrumb</sl-breadcrumb-item>
+            <sl-breadcrumb-item>Breadcrumb</sl-breadcrumb-item>
+          </sl-breadcrumb>
+          <eds-page-info slot="page-info" heading="Application 1" className={themeClassName} theme={theme}>
             <sl-menu-item slot="heading-menu-items" onClick={() => {}}>Option 1</sl-menu-item>
             <sl-menu-item slot="heading-menu-items" onClick={() => {}}>Option 2</sl-menu-item>
             <eds-badge variant="success" slot="badge">New</eds-badge>

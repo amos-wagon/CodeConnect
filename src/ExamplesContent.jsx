@@ -283,11 +283,6 @@ function ExampleTwoContent() {
 
   return (
     <section className="example2-dashboard" aria-label="Operations dashboard">
-      <header className="example2-header">
-        <h1 className="example1-title">Operations dashboard</h1>
-        <p className="example1-feedback">Monitor core KPIs, trend movement, and recent site performance.</p>
-      </header>
-
       <div className="example2-kpi-grid">
         <eds-card className="example2-kpi-card">
           <p className="example2-kpi-label">Total output</p>

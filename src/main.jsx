@@ -8,12 +8,12 @@ import '@aspentech/pf-ui-core/main.css';
 
 import { setBasePath } from "@shoelace-style/shoelace";
 import { registerIconLibrary } from "@shoelace-style/shoelace/dist/utilities/icon-library.js";
+import "@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js";
+import "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js";
 
 // Register only the Aspentech components used by this app to keep bundles smaller.
 import "@aspentech/pf-ui-core/components/eds-alert";
 import "@aspentech/pf-ui-core/components/eds-badge";
-import "@aspentech/pf-ui-core/components/eds-breadcrumb";
-import "@aspentech/pf-ui-core/components/eds-breadcrumb-item";
 import "@aspentech/pf-ui-core/components/eds-button";
 import "@aspentech/pf-ui-core/components/eds-card";
 import "@aspentech/pf-ui-core/components/eds-checkbox";
